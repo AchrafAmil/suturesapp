@@ -17,7 +17,7 @@ import java.util.List;
 public class CutTool extends Tool {
 
     private static final float DISTANCE_LIMIT = 0.3f;
-
+    private boolean cutDone = false;
 
     public CutTool(World world, OrthographicCamera camera) {
         super(world, camera);
@@ -32,7 +32,8 @@ public class CutTool extends Tool {
             if(sp==null)
                 return false;
             return this.destroySuturePoint(sp);
-        }
+        }else
+            cutDone = false;
 
         return false;
     }
@@ -54,6 +55,8 @@ public class CutTool extends Tool {
     }
 
     private boolean destroySuturePoint(SuturePoint sp){
+        if(cutDone)
+            return false;
 
         OrganPart organPart = (OrganPart) hitBody.getUserData();
 
@@ -63,7 +66,7 @@ public class CutTool extends Tool {
 
         world.destroyJoint(sp.getRelatedJoint());
 
-        return true;
+        return cutDone=true;
     }
 
     @Override
