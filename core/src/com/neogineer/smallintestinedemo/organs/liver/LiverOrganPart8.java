@@ -12,16 +12,16 @@ import aurelienribon.bodyeditor.BodyEditorLoader;
 /**
  * Created by neogineer on 10/11/16.
  */
-public class LiverOrganPart5 extends LiverOrganPart{
+public class LiverOrganPart8 extends LiverOrganPart{
 
-    public static final String ID = "5";
+    public static final String ID = "8";
 
-    public static final float BASE_WIDTH = 127;
-    public static final float BASE_HEIGHT = 196;
+    public static final float BASE_WIDTH = 310;
+    public static final float BASE_HEIGHT = 175;
 
-    public static final float VERTICES_SCALE = 6.3f;
+    public static final float VERTICES_SCALE = 15.45f;
 
-    public LiverOrganPart5(World world, OrthographicCamera camera, Organ callback, float scale, Vector2 position, float rotation) {
+    public LiverOrganPart8(World world, OrthographicCamera camera, Organ callback, float scale, Vector2 position, float rotation) {
         super(world, camera, callback, scale, position, rotation);
         setupBody("LiverOrganPart.json",ID);
     }

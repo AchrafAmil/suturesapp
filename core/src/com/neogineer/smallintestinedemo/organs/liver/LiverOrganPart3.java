@@ -19,7 +19,7 @@ public class LiverOrganPart3 extends LiverOrganPart{
     public static final float BASE_WIDTH = 114;
     public static final float BASE_HEIGHT = 218;
 
-    public static final float VERTICES_SCALE = 5.7f;
+    public static final float VERTICES_SCALE = 5.6f;
 
     public LiverOrganPart3(World world, OrthographicCamera camera, Organ callback, float scale, Vector2 position, float rotation) {
         super(world, camera, callback, scale, position, rotation);

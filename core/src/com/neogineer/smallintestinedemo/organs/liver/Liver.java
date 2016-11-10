@@ -47,7 +47,6 @@ public class Liver extends Organ {
 
         addActor(part3);
 
-
         OrganPart part4 = new LiverOrganPart4(world, camera, null, SCALE, new Vector2(5,0), 0);
 
         addActor(part4);
@@ -58,9 +57,18 @@ public class Liver extends Organ {
         addActor(part5);
 
 
-        OrganPart part6 = new LiverOrganPart6(world, camera, null, SCALE, new Vector2(10,20), 0);
+        OrganPart part6 = new LiverOrganPart6(world, camera, null, SCALE, new Vector2(10,0), 0);
 
         addActor(part6);
+
+        OrganPart part7 = new LiverOrganPart7(world, camera, null, SCALE, new Vector2(15,15), 0);
+
+        addActor(part7);
+
+
+        OrganPart part8 = new LiverOrganPart8(world, camera, null, SCALE, new Vector2(20,15), 0);
+
+        addActor(part8);
 
     }
 }
