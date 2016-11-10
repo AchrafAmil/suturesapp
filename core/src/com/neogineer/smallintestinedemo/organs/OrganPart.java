@@ -34,16 +34,16 @@ public abstract class OrganPart extends Actor implements Connectable {
 
     public Body body;
 
-    World mWorld;
+    protected World mWorld;
     OrthographicCamera camera;
-    Sprite baseSprite ;
+    protected Sprite baseSprite ;
     Sprite highlightedBaseSprite;
     boolean highlighted;
-    Vector2 baseSpriteOrigin ;
+    protected Vector2 baseSpriteOrigin ;
     Organ organCallback ;
-    float scale = 1f ;
-    Vector2 position = new Vector2(8, 19);
-    float rotation = 0;
+    protected float scale = 1f ;
+    protected Vector2 position = new Vector2(8, 19);
+    protected float rotation = 0;
 
 
     protected ArrayList<SuturePoint> suturePoints = new ArrayList<SuturePoint>();
@@ -61,7 +61,7 @@ public abstract class OrganPart extends Actor implements Connectable {
         this.rotation = rotation;
     }
 
-    void setupBody(String path){
+    protected void setupBody(String path, String id){
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal(path));
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.DynamicBody;
@@ -73,16 +73,20 @@ public abstract class OrganPart extends Actor implements Connectable {
         body.setUserData(this);
 
         FixtureDef fix = new FixtureDef();
-        fix.density = 0.01f;
+        fix.density = 0.5f;
         fix.friction = 0.6f;
-        fix.restitution = 0.1f;
+        fix.restitution = 0.5f;
 
-        Texture baseSpriteTexture = new Texture(Gdx.files.internal( loader.getImagePath("base") ));
+        Texture baseSpriteTexture = new Texture(Gdx.files.internal( loader.getImagePath("base"+id) ));
         baseSprite = new Sprite(baseSpriteTexture);
 
-        loader.attachFixture(body, "base",fix, 1f, Utils.getPixelPerMeter().x * scale, Utils.getPixelPerMeter().y * scale);
-        baseSpriteOrigin = loader.getOrigin("base", getWidth()).cpy();
+        attachFixture(loader, id, fix);
+
+        baseSpriteOrigin = loader.getOrigin("base"+id, getWidth()).cpy();
     }
+
+
+    protected abstract void attachFixture(BodyEditorLoader loader, String id, FixtureDef fix);
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -99,8 +103,8 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         Vector3 bodyPixelPos = camera.project(new Vector3(body.getPosition().x, body.getPosition().y, 0));
 
-        float w = scale * getWidth()/camera.zoom;
-        float h = scale * getHeight()/camera.zoom;
+        float w = scale * (getWidth())/camera.zoom ;
+        float h = scale * (getHeight())/camera.zoom ;
 
         baseSprite.setSize(w,h);
         baseSprite.setOrigin(w/2, h/2);
@@ -216,6 +220,8 @@ public abstract class OrganPart extends Actor implements Connectable {
             ( (Openable) this).open(vec.x, vec.y);
         }
 
+        this.body.applyLinearImpulse(new Vector2(sp.getLocalCoord().x*100.5f,sp.getLocalCoord().y*100.5f), body.getWorldCenter(),true);
+
         return true;
     }
 
@@ -234,16 +240,30 @@ public abstract class OrganPart extends Actor implements Connectable {
         return this.suturePoints;
     }
 
+    /**
+     * called from connectTool, to check if we can connect at this point.
+     * @param point
+     * @return
+     */
     @Override
     public boolean connectionIntent(Vector2 point) {
-        return true;
+        return false;
     }
 
+    /**
+     * called from addSuturePoint
+     * @param suturePoint
+     * @return
+     */
     @Override
     public SuturePoint correctAnchorAndRotation(SuturePoint suturePoint) {
         return suturePoint;
     }
 
+    /**
+     * called from connectTool
+     * @param def
+     */
     @Override
     public void correctJointDef(RevoluteJointDef def) {
     }

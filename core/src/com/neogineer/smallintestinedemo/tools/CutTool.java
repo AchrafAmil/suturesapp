@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Openable;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class CutTool extends Tool {
 
-    private static final float DISTANCE_LIMIT = 0.3f;
+    private static final float DISTANCE_LIMIT = 2.0f;
     private boolean cutDone = false;
 
     public CutTool(World world, OrthographicCamera camera) {
@@ -66,7 +67,10 @@ public class CutTool extends Tool {
 
         world.destroyJoint(sp.getRelatedJoint());
 
-        return cutDone=true;
+        //small intestine cutting should not destroy more than one suture point. So we're done.
+        if(organPart instanceof SmallIntestineOrganPart)
+            cutDone = true;
+        return true;
     }
 
     @Override

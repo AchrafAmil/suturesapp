@@ -16,6 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.SmallIntestine;
+import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.liver.Liver;
+import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart1;
+import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart2;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.tools.CutTool;
@@ -51,8 +55,9 @@ public class GameStage extends Stage{
 
         setupCamera();
 
-        organsHolder.smallIntestine = new SmallIntestine(world, camera);
-        addActor(organsHolder.smallIntestine);
+        //organsHolder.smallIntestine = new SmallIntestine(world, camera);
+        //addActor(organsHolder.smallIntestine);
+        addActor(new Liver(world, camera));
 
         setupInputMultiplexer();
 
@@ -128,7 +133,7 @@ public class GameStage extends Stage{
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.draw();
-        //renderer.render(world, camera.combined);
+        renderer.render(world, camera.combined);
     }
 
     private void setupGround(){

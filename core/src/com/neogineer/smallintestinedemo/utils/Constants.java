@@ -6,8 +6,8 @@ package com.neogineer.smallintestinedemo.utils;
 public class Constants {
 
     // This will be our viewport measurements while working with the debug renderer (N.B: meters)
-    public static final int VIEWPORT_WIDTH = 40;
-    public static final int VIEWPORT_HEIGHT = 26;
+    public static final int VIEWPORT_WIDTH = 32;
+    public static final int VIEWPORT_HEIGHT = 24;
 
     public static final int SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE = 5 ;
 }

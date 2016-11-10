@@ -11,11 +11,19 @@ public class OrgansHolder {
 
     public void highlight(){
         // TODO: 02/11/16 iterate over all organs.
-        smallIntestine.highlightCutting();
+        try {
+            smallIntestine.highlightCutting();
+        }catch (NullPointerException npe){
+
+        }
     }
 
     public void unhighlight(){
         // TODO: 02/11/16 iterate over all organs.
-        smallIntestine.unhighlightCutting();
+        try {
+            smallIntestine.unhighlightCutting();
+        }catch (NullPointerException npe){
+
+        }
     }
 }

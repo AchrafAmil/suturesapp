@@ -54,11 +54,6 @@ public class ConnectTool extends Tool {
         return false;
     }
 
-    /*@Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return this.touchDown(screenX, screenY, pointer, 0);
-    }*/
-
     public boolean proceed(){
         if( !( helper.checkSimilar()
                 && helper.checkPossibility() && helper.checkConnectionIntents()) ){
@@ -155,8 +150,9 @@ public class ConnectTool extends Tool {
         }
 
         /**
-         * usually called from proceed(), if we're connection due to user's gesture.
+         * usually called from proceed(), if we're connecting due to user's gesture.
          * but this can be directly called from organs' constructors.
+         * @return the created joint. Never null.
          */
         public RevoluteJoint makeConnection(boolean visible){
 

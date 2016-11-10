@@ -46,9 +46,6 @@ public class DndTool extends Tool {
             def.maxForce = 1000.0f * SmallIntestine.LENGTH * hitBody.getMass();
             mouseJoint = (MouseJoint)world.createJoint(def);
 
-            Gdx.app.log("OpenableSide", ""
-                    + ((SmallIntestineOrganPart) hitBody.getUserData()).getOpenableSide(testPoint.x, testPoint.y) );
-
             return true;
         }
 

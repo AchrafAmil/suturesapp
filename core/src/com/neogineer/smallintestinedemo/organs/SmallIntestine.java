@@ -15,7 +15,7 @@ import com.neogineer.smallintestinedemo.utils.Utils;
 public class SmallIntestine extends Organ {
 
     // number of SmallIntestineOrganPart instances
-    public static final int LENGTH = 350 ;
+    public static final int LENGTH = 180 ;
 
     public static final float SCALE = 0.2f;
 
