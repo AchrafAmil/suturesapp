@@ -29,4 +29,14 @@ public abstract class LiverOrganPart extends OrganPart {
         return false;
     }
 
+    public Vector2 getVertex(double x, double y){
+        return
+                new Vector2( (float)(x-this.origin.x)*getVerticesScale()*scale , (float)(y-this.origin.y)*getVerticesScale()*scale) ;
+    }
+
+
+    public abstract String getID();
+
+    public abstract float getVerticesScale();
+
 }

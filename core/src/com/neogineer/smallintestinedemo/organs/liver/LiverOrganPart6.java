@@ -19,7 +19,7 @@ public class LiverOrganPart6 extends LiverOrganPart{
     public static final float BASE_WIDTH = 131;
     public static final float BASE_HEIGHT = 203;
 
-    public static final float VERTICES_SCALE = 6.4f;
+    public static final float VERTICES_SCALE = 6.6f;
 
     public LiverOrganPart6(World world, OrthographicCamera camera, Organ callback, float scale, Vector2 position, float rotation) {
         super(world, camera, callback, scale, position, rotation);
@@ -39,6 +39,16 @@ public class LiverOrganPart6 extends LiverOrganPart{
     @Override
     public float getHeight() {
         return BASE_HEIGHT;
+    }
+
+    @Override
+    public String getID() {
+        return this.ID;
+    }
+
+    @Override
+    public float getVerticesScale() {
+        return this.VERTICES_SCALE;
     }
 
 }

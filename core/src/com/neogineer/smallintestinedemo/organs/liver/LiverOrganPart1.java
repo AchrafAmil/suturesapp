@@ -31,31 +31,6 @@ public class LiverOrganPart1 extends LiverOrganPart{
         setupBody("LiverOrganPart.json",ID);
     }
 
-
-    protected void setupBody(String path, String id){
-        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal(path));
-        BodyDef bDef = new BodyDef();
-        bDef.type = BodyDef.BodyType.KinematicBody;
-        //if(this.position.y==20)
-        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        bDef.position.set(this.position);
-        bDef.angle = this.rotation;
-        body = mWorld.createBody(bDef);
-        body.setUserData(this);
-
-        FixtureDef fix = new FixtureDef();
-        fix.density = 0.5f;
-        fix.friction = 0.6f;
-        fix.restitution = 0.5f;
-
-        Texture baseSpriteTexture = new Texture(Gdx.files.internal( loader.getImagePath("base"+id) ));
-        baseSprite = new Sprite(baseSpriteTexture);
-
-        attachFixture(loader, id, fix);
-
-        baseSpriteOrigin = loader.getOrigin("base"+id, getWidth()).cpy();
-    }
-
     @Override
     protected void attachFixture(BodyEditorLoader loader, String id, FixtureDef fix) {
         loader.attachFixture(body, "base"+id,fix, VERTICES_SCALE*scale, 1, 1 );
@@ -71,4 +46,13 @@ public class LiverOrganPart1 extends LiverOrganPart{
         return BASE_HEIGHT;
     }
 
+    @Override
+    public String getID() {
+        return this.ID;
+    }
+
+    @Override
+    public float getVerticesScale() {
+        return this.VERTICES_SCALE;
+    }
 }

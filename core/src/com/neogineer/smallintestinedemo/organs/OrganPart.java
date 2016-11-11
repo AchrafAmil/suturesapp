@@ -39,7 +39,7 @@ public abstract class OrganPart extends Actor implements Connectable {
     protected Sprite baseSprite ;
     Sprite highlightedBaseSprite;
     boolean highlighted;
-    protected Vector2 baseSpriteOrigin ;
+    public Vector2 origin ;
     Organ organCallback ;
     protected float scale = 1f ;
     protected Vector2 position = new Vector2(8, 19);
@@ -82,7 +82,7 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         attachFixture(loader, id, fix);
 
-        baseSpriteOrigin = loader.getOrigin("base"+id, getWidth()).cpy();
+        origin = loader.getOrigin("base"+id, 1).cpy();
     }
 
 
@@ -220,7 +220,7 @@ public abstract class OrganPart extends Actor implements Connectable {
             ( (Openable) this).open(vec.x, vec.y);
         }
 
-        this.body.applyLinearImpulse(new Vector2(sp.getLocalCoord().x*100.5f,sp.getLocalCoord().y*100.5f), body.getWorldCenter(),true);
+        this.body.applyLinearImpulse(new Vector2(sp.getLocalCoord().x*10*scale,sp.getLocalCoord().y*10*scale), body.getWorldCenter(),true);
 
         return true;
     }

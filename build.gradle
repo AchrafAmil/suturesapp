@@ -88,6 +88,7 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile group: 'org.json', name: 'json', version: '20160810'
 
         compile fileTree(dir: 'libs', include: '*.jar')
     }

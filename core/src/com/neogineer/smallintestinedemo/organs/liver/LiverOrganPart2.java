@@ -42,4 +42,13 @@ public class LiverOrganPart2 extends LiverOrganPart{
         return BASE_HEIGHT;
     }
 
+    @Override
+    public String getID() {
+        return this.ID;
+    }
+
+    @Override
+    public float getVerticesScale() {
+        return this.VERTICES_SCALE;
+    }
 }

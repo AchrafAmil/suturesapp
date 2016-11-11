@@ -55,9 +55,10 @@ public class GameStage extends Stage{
 
         setupCamera();
 
-        //organsHolder.smallIntestine = new SmallIntestine(world, camera);
-        //addActor(organsHolder.smallIntestine);
-        addActor(new Liver(world, camera));
+        organsHolder.smallIntestine = new SmallIntestine(world, camera);
+        addActor(organsHolder.smallIntestine);
+        organsHolder.liver = new Liver(world, camera);
+        addActor(organsHolder.liver);
 
         setupInputMultiplexer();
 

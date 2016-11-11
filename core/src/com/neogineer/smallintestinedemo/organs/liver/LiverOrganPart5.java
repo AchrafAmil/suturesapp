@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Organ;
-import com.neogineer.smallintestinedemo.utils.Utils;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 
@@ -19,7 +18,7 @@ public class LiverOrganPart5 extends LiverOrganPart{
     public static final float BASE_WIDTH = 127;
     public static final float BASE_HEIGHT = 196;
 
-    public static final float VERTICES_SCALE = 6.3f;
+    public static final float VERTICES_SCALE = 6.365f;
 
     public LiverOrganPart5(World world, OrthographicCamera camera, Organ callback, float scale, Vector2 position, float rotation) {
         super(world, camera, callback, scale, position, rotation);
@@ -39,6 +38,16 @@ public class LiverOrganPart5 extends LiverOrganPart{
     @Override
     public float getHeight() {
         return BASE_HEIGHT;
+    }
+
+    @Override
+    public String getID() {
+        return this.ID;
+    }
+
+    @Override
+    public float getVerticesScale() {
+        return this.VERTICES_SCALE;
     }
 
 }

@@ -3,6 +3,13 @@ package com.neogineer.smallintestinedemo.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 /**
  * Created by neogineer on 27/10/16.
  */
@@ -22,6 +29,29 @@ public class Utils {
         float distanceY = vec1.y - vec2.y;
         float distance = (float) Math.sqrt(distanceX*distanceX + distanceY*distanceY);
         return distance;
+    }
+
+    /**
+     * reads the json file (from given path) and returns the JSONArray inside with the key "joints".
+     * @param path json file path.
+     */
+    public static JSONArray loadJoints(String path){
+        String str = "";
+        try {
+            File file = Gdx.files.internal(path).file();
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+
+            str = new String(data, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject data = new JSONObject(str);
+        JSONArray joints = data.getJSONArray("joints");
+        return joints;
     }
 
 }

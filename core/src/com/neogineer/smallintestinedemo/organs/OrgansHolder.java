@@ -1,5 +1,7 @@
 package com.neogineer.smallintestinedemo.organs;
 
+import com.neogineer.smallintestinedemo.organs.liver.Liver;
+
 /**
  * Created by neogineer on 02/11/16.
  *
@@ -9,10 +11,13 @@ public class OrgansHolder {
 
     public SmallIntestine smallIntestine;
 
+    public Liver liver ;
+
     public void highlight(){
         // TODO: 02/11/16 iterate over all organs.
         try {
             smallIntestine.highlightCutting();
+            liver.highlightCutting();
         }catch (NullPointerException npe){
 
         }
@@ -22,6 +27,7 @@ public class OrgansHolder {
         // TODO: 02/11/16 iterate over all organs.
         try {
             smallIntestine.unhighlightCutting();
+            liver.unhighlightCutting();
         }catch (NullPointerException npe){
 
         }
