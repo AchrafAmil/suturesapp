@@ -1,29 +1,26 @@
 package com.neogineer.smallintestinedemo.organs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.neogineer.smallintestinedemo.GameStage;
+import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 
@@ -37,8 +34,8 @@ public abstract class OrganPart extends Actor implements Connectable {
     protected World mWorld;
     OrthographicCamera camera;
     protected Sprite baseSprite ;
-    Sprite highlightedBaseSprite;
-    boolean highlighted;
+    protected Sprite highlightedBaseSprite;
+    protected boolean highlighted;
     public Vector2 origin ;
     Organ organCallback ;
     protected float scale = 1f ;
@@ -77,7 +74,10 @@ public abstract class OrganPart extends Actor implements Connectable {
         fix.friction = 0.6f;
         fix.restitution = 0.5f;
 
-        Texture baseSpriteTexture = new Texture(Gdx.files.internal( loader.getImagePath("base"+id) ));
+        ResolutionFileResolver fileResolver = new ResolutionFileResolver(new InternalFileHandleResolver(), new ResolutionFileResolver.Resolution(800, 480, "480"),
+                new ResolutionFileResolver.Resolution(1280, 720, "720"), new ResolutionFileResolver.Resolution(1920, 1080, "1080"));
+
+        Texture baseSpriteTexture = new Texture(fileResolver.resolve( loader.getImagePath("base"+id) ));
         baseSprite = new Sprite(baseSpriteTexture);
 
         attachFixture(loader, id, fix);
@@ -100,15 +100,25 @@ public abstract class OrganPart extends Actor implements Connectable {
 
     private void drawBaseSprite(Batch batch){
         Sprite baseSprite = this.getBaseSprite();
+        batch.setProjectionMatrix(camera.combined);
+        float someScale = 0.1f;
 
-        Vector3 bodyPixelPos = camera.project(new Vector3(body.getPosition().x, body.getPosition().y, 0));
 
-        float w = scale * (getWidth())/camera.zoom ;
-        float h = scale * (getHeight())/camera.zoom ;
+        // TODO: 17/11/16 why the fuck is these dimensions broken?
+        float w = scale * (baseSprite.getTexture().getWidth())/camera.zoom *someScale;
+        float h = scale * (baseSprite.getTexture().getHeight())/camera.zoom *someScale;
+
+        //* camera.viewportHeight/(Gdx.graphics.getHeight()/20)
+        Vector3 bodyPixelPos = camera.project(new Vector3(body.getPosition().x, body.getPosition().y, 0))
+                .scl(someScale*camera.viewportHeight/(Gdx.graphics.getHeight()/20f)).sub(w/2, h/2, 0);
+
+
+        //if(this.getClass().getSimpleName().equals("LiverOrganPart1"))
+        //    Gdx.app.log(this.getClass().getSimpleName(),"w: "+w+" h: "+h+" zoom: "+camera.zoom);
 
         baseSprite.setSize(w,h);
         baseSprite.setOrigin(w/2, h/2);
-        baseSprite.setPosition(bodyPixelPos.x -w/2, bodyPixelPos.y - h/2);
+        baseSprite.setPosition(bodyPixelPos.x, bodyPixelPos.y);
         baseSprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
 
         /*Gdx.app.log("values"," body.getPosition: "+body.getPosition()+" foo: "+bodyPixelPos

@@ -24,8 +24,10 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
     public static final float BASE_WIDTH = 273;
     public static final float BASE_HEIGHT = 139;
+    public static final float VERTICES_SCALE = 13.4f;
     private static final int MAX_SUTURE_POINTS = 3 ;
     private static final float HORIZONTAL_SUTUREPOINT_POSITION = 0.18f;
+
 
     public int id;
 
@@ -47,7 +49,7 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
     @Override
     protected void attachFixture(BodyEditorLoader loader, String id, FixtureDef fix) {
-        loader.attachFixture(body, "base"+id,fix, 0.67f, Utils.getPixelPerMeter().x * scale, Utils.getPixelPerMeter().y * scale);
+        loader.attachFixture(body, "base"+id,fix, VERTICES_SCALE*scale, 1, 1);
     }
 
     void setupOpenableSides(String path){

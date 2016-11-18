@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by neogineer on 27/10/16.
@@ -38,12 +39,9 @@ public class Utils {
     public static JSONArray loadJoints(String path){
         String str = "";
         try {
-            File file = Gdx.files.internal(path).file();
-            FileInputStream fis = new FileInputStream(file);
-            byte[] data = new byte[(int) file.length()];
-            fis.read(data);
-            fis.close();
-
+            InputStream is = Gdx.files.internal(path).read();
+            byte[] data = new byte[10000];
+            is.read(data);
             str = new String(data, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();

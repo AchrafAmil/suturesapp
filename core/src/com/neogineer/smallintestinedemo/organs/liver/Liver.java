@@ -16,9 +16,9 @@ import org.json.JSONObject;
  */
 public class Liver extends Organ {
 
-    public static final float SCALE = 0.8f;
+    public static final float SCALE = 0.85f;
 
-    public static final Vector2 POSITION = new Vector2(-5,30);
+    public static final Vector2 POSITION = new Vector2(15, 15);
 
     private static final Vector2 STEP = new Vector2(2.5f*SCALE, 10*SCALE);
 

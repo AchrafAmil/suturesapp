@@ -89,6 +89,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile group: 'org.json', name: 'json', version: '20160810'
+        compile group: 'org.jbox2d', name: 'jbox2d-library', version: '2.2.1.1'
 
         compile fileTree(dir: 'libs', include: '*.jar')
     }

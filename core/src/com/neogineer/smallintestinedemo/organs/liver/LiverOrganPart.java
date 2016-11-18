@@ -25,8 +25,13 @@ public abstract class LiverOrganPart extends OrganPart {
 
     @Override
     public boolean setHighlighted(boolean highlighted) {
-        // TODO: 08/11/16 implement highlight 
-        return false;
+        return this.highlighted = highlighted;
+    }
+
+    @Override
+    protected void attachFixture(BodyEditorLoader loader, String id, FixtureDef fix) {
+        Texture texture = new Texture(Gdx.files.internal( loader.getImagePath("base_highlighted"+id) ));
+        highlightedBaseSprite = new Sprite(texture);
     }
 
     public Vector2 getVertex(double x, double y){

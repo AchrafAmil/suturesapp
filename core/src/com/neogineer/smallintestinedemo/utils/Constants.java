@@ -10,4 +10,7 @@ public class Constants {
     public static final int VIEWPORT_HEIGHT = 24;
 
     public static final int SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE = 5 ;
+
+    // 1 for desktop, ~0.45f for android
+    public static final float PLATFORM_SCALE = 1 ;
 }

@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Organ;
-import com.neogineer.smallintestinedemo.utils.Utils;
+import com.neogineer.smallintestinedemo.utils.Constants;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 
@@ -33,7 +33,8 @@ public class LiverOrganPart1 extends LiverOrganPart{
 
     @Override
     protected void attachFixture(BodyEditorLoader loader, String id, FixtureDef fix) {
-        loader.attachFixture(body, "base"+id,fix, VERTICES_SCALE*scale, 1, 1 );
+        super.attachFixture(loader, id, fix);
+        loader.attachFixture(body, "base"+id,fix, getVerticesScale()*scale, 1, 1 );
     }
 
     @Override
@@ -53,6 +54,6 @@ public class LiverOrganPart1 extends LiverOrganPart{
 
     @Override
     public float getVerticesScale() {
-        return this.VERTICES_SCALE;
+        return Constants.PLATFORM_SCALE*this.VERTICES_SCALE;
     }
 }

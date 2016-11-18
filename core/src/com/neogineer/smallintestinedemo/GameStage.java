@@ -16,17 +16,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.SmallIntestine;
-import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
-import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart1;
-import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart2;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.tools.CutTool;
 import com.neogineer.smallintestinedemo.tools.DndTool;
 import com.neogineer.smallintestinedemo.tools.Tool;
 import com.neogineer.smallintestinedemo.utils.Constants;
-import com.neogineer.smallintestinedemo.utils.Utils;
+
+import org.iforce2d.Jb2dJson;
 
 /**
  * Created by neogineer on 30/08/16.
@@ -55,8 +53,8 @@ public class GameStage extends Stage{
 
         setupCamera();
 
-        organsHolder.smallIntestine = new SmallIntestine(world, camera);
-        addActor(organsHolder.smallIntestine);
+        //organsHolder.smallIntestine = new SmallIntestine(world, camera);
+        //addActor(organsHolder.smallIntestine);
         organsHolder.liver = new Liver(world, camera);
         addActor(organsHolder.liver);
 
@@ -68,7 +66,7 @@ public class GameStage extends Stage{
 
     private void setupCamera(){
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        camera.zoom += 1.75f;
+        camera.zoom += 1f;
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
@@ -134,7 +132,7 @@ public class GameStage extends Stage{
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.draw();
-        //renderer.render(world, camera.combined);
+        renderer.render(world, camera.combined);
     }
 
     private void setupGround(){
@@ -168,6 +166,8 @@ public class GameStage extends Stage{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         stop = false;
+        if(screenX<30 && screenY<30)
+            this.keyDown(0);
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
