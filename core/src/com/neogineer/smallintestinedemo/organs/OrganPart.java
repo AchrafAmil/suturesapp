@@ -29,6 +29,8 @@ import aurelienribon.bodyeditor.BodyEditorLoader;
  */
 public abstract class OrganPart extends Actor implements Connectable {
 
+    public String identifier = "";
+
     public Body body;
 
     protected World mWorld;
@@ -38,7 +40,7 @@ public abstract class OrganPart extends Actor implements Connectable {
     protected boolean highlighted;
     public Vector2 origin ;
     Organ organCallback ;
-    protected float scale = 1f ;
+    public float scale = 1f ;
     protected Vector2 position = new Vector2(8, 19);
     protected float rotation = 0;
 
@@ -48,17 +50,23 @@ public abstract class OrganPart extends Actor implements Connectable {
     protected ArrayList<OpenableSide> openableSides = new ArrayList<OpenableSide>();
 
 
-    public OrganPart(World world, OrthographicCamera camera, Organ callback, float scale, Vector2 position, float rotation ){
+    public OrganPart(World world, OrthographicCamera camera, Organ callback, String identifier, float scale, Vector2 position, float rotation ){
         this.mWorld = world;
         this.camera = camera;
         this.organCallback = callback;
+        this.identifier = identifier;
         this.scale = scale;
         if(position!=null)
             this.position = position;
         this.rotation = rotation;
     }
 
-    protected void setupBody(String path, String id){
+    /**
+     * Called directly after object initialization.
+     * This will use the OrganPart fields' values to load and create the appropriate body shape and sprite.
+     * @param path Json file containing this organ's organParts definitions.
+     */
+    protected void setupBody(String path){
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal(path));
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.DynamicBody;
@@ -77,16 +85,29 @@ public abstract class OrganPart extends Actor implements Connectable {
         ResolutionFileResolver fileResolver = new ResolutionFileResolver(new InternalFileHandleResolver(), new ResolutionFileResolver.Resolution(800, 480, "480"),
                 new ResolutionFileResolver.Resolution(1280, 720, "720"), new ResolutionFileResolver.Resolution(1920, 1080, "1080"));
 
-        Texture baseSpriteTexture = new Texture(fileResolver.resolve( loader.getImagePath("base"+id) ));
+
+        origin = loader.getOrigin("base"+identifier, 1).cpy();
+
+        // TODO: 20/11/16 use simple Gdx.files.internal
+        Texture baseSpriteTexture = new Texture(fileResolver.resolve( loader.getImagePath("base"+identifier) ));
         baseSprite = new Sprite(baseSpriteTexture);
 
-        attachFixture(loader, id, fix);
+        loadHighlightedSprite(loader, identifier);
+        
+        attachFixture(loader, identifier, fix);
 
-        origin = loader.getOrigin("base"+id, 1).cpy();
     }
 
+    /**
+     * called from setupBody after loading the base sprite.
+     * OrganParts implement this to load the appropriate highlighted sprite.
+     */
+    protected abstract void loadHighlightedSprite(BodyEditorLoader loader, String identifier);
 
-    protected abstract void attachFixture(BodyEditorLoader loader, String id, FixtureDef fix);
+
+    protected void attachFixture(BodyEditorLoader loader, String identifier, FixtureDef fix) {
+        loader.attachFixture(body, "base"+ identifier,fix, getVerticesScale()*scale, 1, 1);
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -103,27 +124,17 @@ public abstract class OrganPart extends Actor implements Connectable {
         batch.setProjectionMatrix(camera.combined);
         float someScale = 0.1f;
 
+        float w = scale * (baseSprite.getTexture().getWidth())/2 *someScale;
+        float h = scale * (baseSprite.getTexture().getHeight())/2 *someScale;
 
-        // TODO: 17/11/16 why the fuck is these dimensions broken?
-        float w = scale * (baseSprite.getTexture().getWidth())/camera.zoom *someScale;
-        float h = scale * (baseSprite.getTexture().getHeight())/camera.zoom *someScale;
-
-        //* camera.viewportHeight/(Gdx.graphics.getHeight()/20)
         Vector3 bodyPixelPos = camera.project(new Vector3(body.getPosition().x, body.getPosition().y, 0))
-                .scl(someScale*camera.viewportHeight/(Gdx.graphics.getHeight()/20f)).sub(w/2, h/2, 0);
-
-
-        //if(this.getClass().getSimpleName().equals("LiverOrganPart1"))
-        //    Gdx.app.log(this.getClass().getSimpleName(),"w: "+w+" h: "+h+" zoom: "+camera.zoom);
+                .scl(someScale*camera.viewportHeight/(Gdx.graphics.getHeight()/10f/camera.zoom)).sub(w/2, h/2, 0);
 
         baseSprite.setSize(w,h);
         baseSprite.setOrigin(w/2, h/2);
         baseSprite.setPosition(bodyPixelPos.x, bodyPixelPos.y);
         baseSprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
 
-        /*Gdx.app.log("values"," body.getPosition: "+body.getPosition()+" foo: "+bodyPixelPos
-                +" baseSpriteOrigin: "+baseSpriteOrigin
-                +" body Origin: "+ getOriginX() +" "+getOriginY());*/
         baseSprite.draw(batch);
     }
 
@@ -134,14 +145,20 @@ public abstract class OrganPart extends Actor implements Connectable {
             if(sprite==null)
                 continue;
 
-            Vector3 bodyPixelPos = camera.project(new Vector3(body.getPosition().x, body.getPosition().y, 0));
 
-            float w = scale * getWidth()/camera.zoom;
-            float h = scale * getHeight()/camera.zoom;
+            batch.setProjectionMatrix(camera.combined);
+            float someScale = 0.1f;
+
+            float w = scale * (baseSprite.getTexture().getWidth())/camera.zoom *someScale;
+            float h = scale * (baseSprite.getTexture().getHeight())/camera.zoom *someScale;
+
+
+            Vector3 bodyPixelPos = camera.project(new Vector3(body.getPosition().x, body.getPosition().y, 0))
+                    .scl(someScale*camera.viewportHeight/(Gdx.graphics.getHeight()/20f)).sub(w/2, h/2, 0);
 
             sprite.setSize(w,h);
             sprite.setOrigin(w/2, h/2);
-            sprite.setPosition(bodyPixelPos.x -w/2, bodyPixelPos.y - h/2);
+            sprite.setPosition(bodyPixelPos.x, bodyPixelPos.y);
             sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
 
             side.draw(batch);
@@ -157,10 +174,16 @@ public abstract class OrganPart extends Actor implements Connectable {
 
             Vector2 spWorldCoord = body.getWorldPoint(sp.getLocalCoord());
 
-            Vector3 spPixelPos = camera.project(new Vector3(spWorldCoord.x, spWorldCoord.y, 0));
 
-            float w = scale * SuturePoint.IMG_SIZE_W/camera.zoom;
-            float h = scale * SuturePoint.IMG_SIZE_H/camera.zoom;
+            batch.setProjectionMatrix(camera.combined);
+            float someScale = 0.1f;
+
+            float w = scale * (sprite.getTexture().getWidth())/camera.zoom *someScale;
+            float h = scale * (sprite.getTexture().getHeight())/camera.zoom *someScale;
+
+            Vector3 spPixelPos = camera.project(new Vector3(spWorldCoord.x, spWorldCoord.y, 0))
+                    .scl(someScale*camera.viewportHeight/(Gdx.graphics.getHeight()/20f)).sub(w/2, h/2, 0);
+
 
             sprite.setSize(w,h);
 
@@ -168,7 +191,7 @@ public abstract class OrganPart extends Actor implements Connectable {
             sprite.setOrigin(w/2, h/2);
 
             // same as origin, here expressed in global screen coordinates (not relative, not local)
-            sprite.setPosition(spPixelPos.x -w/2, spPixelPos.y - h/2);
+            sprite.setPosition(spPixelPos.x, spPixelPos.y);
 
             sprite.setRotation((body.getAngle() + sp.getRotation()) * MathUtils.radiansToDegrees);
 
@@ -198,20 +221,40 @@ public abstract class OrganPart extends Actor implements Connectable {
      * @return dims in meters from view port & zooming.
      */
     public Vector2 getDimensions(){
+        return getVertex(origin.x*2, origin.y*2).scl(2);
+    }
+
+    /**
+     * get a vertex local coordinates
+     * @param x,y relative coordinates as in the json file. No scale.
+     * @return coordinates scaled and relative to origin.
+     */
+    public Vector2 getVertex(double x, double y){
         return
-                new Vector2(scale * getWidth() / ( Utils.getPixelPerMeter().x),
-                            scale * getHeight() / ( Utils.getPixelPerMeter().y));
+                new Vector2( (float)(x-this.origin.x)*getVerticesScale()*scale , (float)(y-this.origin.y)*getVerticesScale()*scale) ;
+    }
+
+    public float getVerticesScale(){
+        return getHeight()/ origin.y / Constants.VERTICES_SCALE_FACTOR;
     }
 
     /**
      * @return width in pixels
      */
-    public abstract float getWidth();
+    public float getWidth(){
+        return this.baseSprite.getWidth();
+    };
 
     /**
      * @return height in pixels
      */
-    public abstract float getHeight();
+    public float getHeight(){
+        return this.baseSprite.getHeight();
+    };
+
+    public String getIdentifier(){
+        return this.identifier;
+    }
 
     @Override
     public boolean addSuturePoint(SuturePoint sp) {

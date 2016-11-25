@@ -42,4 +42,6 @@ public abstract class Organ extends Group {
         }
         return !highlighted;
     }
+
+    public abstract float getScale();
 }

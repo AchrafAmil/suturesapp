@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
+import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.tools.CutTool;
@@ -55,8 +56,11 @@ public class GameStage extends Stage{
 
         //organsHolder.smallIntestine = new SmallIntestine(world, camera);
         //addActor(organsHolder.smallIntestine);
-        organsHolder.liver = new Liver(world, camera);
-        addActor(organsHolder.liver);
+        //organsHolder.liver = new Liver(world, camera);
+        //addActor(organsHolder.liver);
+
+        organsHolder.stomach = new Stomach(world, camera);
+        addActor(organsHolder.stomach);
 
         setupInputMultiplexer();
 
@@ -66,7 +70,7 @@ public class GameStage extends Stage{
 
     private void setupCamera(){
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        camera.zoom += 1f;
+        camera.zoom += 3f;
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
@@ -132,7 +136,7 @@ public class GameStage extends Stage{
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.draw();
-        renderer.render(world, camera.combined);
+        //renderer.render(world, camera.combined);
     }
 
     private void setupGround(){
@@ -166,7 +170,7 @@ public class GameStage extends Stage{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         stop = false;
-        if(screenX<30 && screenY<30)
+        if(screenX<180 && screenY<180)
             this.keyDown(0);
         return super.touchDown(screenX, screenY, pointer, button);
     }

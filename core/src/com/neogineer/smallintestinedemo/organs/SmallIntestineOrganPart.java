@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.utils.Utils;
@@ -23,9 +21,11 @@ import aurelienribon.bodyeditor.BodyEditorLoader;
 public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
     public static final float BASE_WIDTH = 273;
+
     public static final float BASE_HEIGHT = 139;
-    public static final float VERTICES_SCALE = 13.4f;
+
     private static final int MAX_SUTURE_POINTS = 3 ;
+
     private static final float HORIZONTAL_SUTUREPOINT_POSITION = 0.18f;
 
 
@@ -34,9 +34,9 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
 
     public SmallIntestineOrganPart(World world, OrthographicCamera camera, Organ callback,int id, float scale, Vector2 position, float rotation) {
-        super(world, camera, callback, scale, position, rotation);
+        super(world, camera, callback, "", scale, position, rotation);
         this.id = id;
-        setupBody("SmallIntestineOrganPart.json","");
+        setupBody("SmallIntestineOrganPart.json");
         setupOpenableSides("SmallIntestineOrganPart.json");
     }
 
@@ -48,9 +48,10 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
     }
 
     @Override
-    protected void attachFixture(BodyEditorLoader loader, String id, FixtureDef fix) {
-        loader.attachFixture(body, "base"+id,fix, VERTICES_SCALE*scale, 1, 1);
+    protected void loadHighlightedSprite(BodyEditorLoader loader, String identifier) {
+        // no highlighted state.
     }
+
 
     void setupOpenableSides(String path){
 
@@ -58,6 +59,7 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
         try{
             int ind=0;
+            // TODO: 20/11/16 Review & refactor this
             while (true){
                 BodyEditorLoader.PolygonModel pm = loader.getInternalModel().rigidBodies.get("open"+ind).polygons.get(0);
                 float[] vertices = new float[pm.vertices.size()*2];
@@ -153,8 +155,8 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
             OpenableSide side = openableSides.get(i);
             if(side.state== OpenableSide.State.CLOSED || side.state== OpenableSide.State.OPEN ){
                 vec.y = (dims.y/2) * ((i==0)? 1:(-1)) ;
-                float xStep = BASE_WIDTH / (Utils.getPixelPerMeter().x )
-                        * scale * HORIZONTAL_SUTUREPOINT_POSITION ;
+                float xStep = this
+                        .getVertex(this.origin.x + this.origin.x * 2 * HORIZONTAL_SUTUREPOINT_POSITION, 0).x;
                 float oldX = vec.x ;
                 vec.x = (oldX>0)? xStep:-xStep;
                 return;
@@ -188,19 +190,20 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
                     // we're suturing upon this side
 
                     // the distance between the center and the next suture point x position
-                    float xStep = BASE_WIDTH / (Utils.getPixelPerMeter().x )
-                            * scale * HORIZONTAL_SUTUREPOINT_POSITION ;
+                    float xStep = this
+                            .getVertex(this.origin.x + this.origin.x * 2 * HORIZONTAL_SUTUREPOINT_POSITION, 0).x;
+
                     float oldX = suturePoint.getLocalCoord().x ;
                     suturePoint.getLocalCoord().x = (oldX>0)? xStep:-xStep;
 
                     if(i==0){
                         // up openable side
-                        suturePoint.getLocalCoord().y = BASE_HEIGHT / (Utils.getPixelPerMeter().y )
-                                                        * scale * SmallIntestine.JOINT_OFFSET_PERCENT;
+                        suturePoint.getLocalCoord().y = this
+                                .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.JOINT_OFFSET_PERCENT ).y;
                     }else{
                         // down openable side
-                        suturePoint.getLocalCoord().y = - BASE_HEIGHT / (Utils.getPixelPerMeter().y )
-                                * scale * SmallIntestine.JOINT_OFFSET_PERCENT;
+                        suturePoint.getLocalCoord().y = - this
+                                .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.JOINT_OFFSET_PERCENT ).y;
                     }
 
                     suturePoint.setRotation((float) (Math.PI/2));
@@ -218,7 +221,7 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
     @Override
     public boolean setHighlighted(boolean highlighted) {
-        //SmallIntestine doesn't hightligh.
+        //SmallIntestine doesn't highlight.
         //this.highlighted = highlighted;
         return this.isHighlighted();
     }

@@ -11,6 +11,5 @@ public class Constants {
 
     public static final int SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE = 5 ;
 
-    // 1 for desktop, ~0.45f for android
-    public static final float PLATFORM_SCALE = 1 ;
+    public static final float VERTICES_SCALE_FACTOR = 40;
 }

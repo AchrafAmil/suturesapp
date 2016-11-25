@@ -1,4 +1,4 @@
-package com.neogineer.smallintestinedemo.organs.liver;
+package com.neogineer.smallintestinedemo.organs.stomach;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -12,35 +12,35 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Created by neogineer on 08/11/16.
+ * Created by neogineer on 19/11/16.
  */
-public class Liver extends Organ {
+public class Stomach extends Organ {
 
-    public static final float SCALE = 2f;
+    public static final float SCALE = 1f;
 
-    public static final Vector2 POSITION = new Vector2(30, 15);
-
-    private static final Vector2 STEP = new Vector2(2.5f*SCALE, 10*SCALE);
+    public static final Vector2 POSITION = new Vector2(48, 60);
 
 
-    public Liver(World world, OrthographicCamera camera) {
+    public Stomach(World world, OrthographicCamera camera) {
         super(world, camera);
 
+
         for(int i=1; i<=8; i++){
-            OrganPart part = new LiverOrganPart(world, camera, this, ""+i, SCALE, getOrganPartPosition(i), 0);
+            OrganPart part = new StomachOrganPart(world, camera, this, ""+i, SCALE, getOrganPartPosition(i), 0);
             organParts.put(part.getIdentifier(), part);
             addActor(part);
         }
 
-        JSONArray joints = Utils.loadJoints("liver_initial_joints.json");
+
+        JSONArray joints = Utils.loadJoints("stomach_initial_joints.json");
 
         for(int i=0; i<joints.length(); i++){
             JSONObject joint = (JSONObject) joints.get(i);
             ConnectTool tool = new ConnectTool(world, camera);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
-            LiverOrganPart organA = (LiverOrganPart) this.organParts.get(joint.getString("organA"));
-            LiverOrganPart organB = (LiverOrganPart) this.organParts.get(joint.getString("organB"));
+            StomachOrganPart organA = (StomachOrganPart) this.organParts.get(joint.getString("organA"));
+            StomachOrganPart organB = (StomachOrganPart) this.organParts.get(joint.getString("organB"));
 
             connector.organA = organA;
             connector.organB = organB;
@@ -51,7 +51,6 @@ public class Liver extends Organ {
             connector.makeConnection(false);
 
         }
-
     }
 
     @Override
@@ -64,22 +63,21 @@ public class Liver extends Organ {
             case 1:
                 return new Vector2(POSITION.x, POSITION.y );
             case 2:
-                return new Vector2(POSITION.x,POSITION.y - STEP.y);
+                return new Vector2(POSITION.x+0.5f*SCALE, POSITION.y-7*SCALE);
             case 3:
-                return new Vector2(POSITION.x+STEP.x, POSITION.y);
+                return new Vector2(POSITION.x-5*SCALE, POSITION.y-7*SCALE);
             case 4:
-                return new Vector2(POSITION.x+STEP.x, POSITION.y-STEP.y);
+                return new Vector2(POSITION.x-10.5f*SCALE, POSITION.y-11f*SCALE);
             case 5:
-                return new Vector2(POSITION.x+2*STEP.x, POSITION.y);
+                return new Vector2(POSITION.x + 6*SCALE, POSITION.y );
             case 6:
-                return new Vector2(POSITION.x+2*STEP.x, POSITION.y-STEP.y);
+                return new Vector2(POSITION.x + 7*SCALE, POSITION.y-2*SCALE );
             case 7:
-                return new Vector2(POSITION.x+3*STEP.x,POSITION.y-0.75f*STEP.y);
+                return new Vector2(POSITION.x + 7*SCALE, POSITION.y-4*SCALE );
             case 8:
-                return new Vector2(POSITION.x+4*STEP.x , POSITION.y-0.75f*STEP.y);
+                return new Vector2(POSITION.x + 7*SCALE, POSITION.y-6*SCALE );
             default:
                 return null;
         }
     }
-
 }

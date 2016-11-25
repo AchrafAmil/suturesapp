@@ -15,9 +15,9 @@ import com.neogineer.smallintestinedemo.utils.Utils;
 public class SmallIntestine extends Organ {
 
     // number of SmallIntestineOrganPart instances
-    public static final int LENGTH = 180 ;
+    public static final int LENGTH = 50 ;
 
-    public static final float SCALE = 0.2f;
+    public static final float SCALE = 1f;
 
     // how much the joint point is offset from the center (percentage from body dimensions) (0.5f means it's on the edge)
     public static final float JOINT_OFFSET_PERCENT = 0.35f;
@@ -36,8 +36,8 @@ public class SmallIntestine extends Organ {
         Body link = body ;
 
 
-        final float JOINT_OFFSET = SmallIntestineOrganPart.BASE_HEIGHT / (Utils.getPixelPerMeter().y )
-                                        * SCALE * JOINT_OFFSET_PERCENT ;
+        final float JOINT_OFFSET = firstActor
+                .getVertex(0,firstActor.origin.cpy().y + firstActor.origin.cpy().y * 2 * JOINT_OFFSET_PERCENT ).y;
 
         float slope = (endPos.y - startPos.y) / (endPos.x - startPos.x);
         double alpha = Math.atan(slope);
@@ -55,6 +55,8 @@ public class SmallIntestine extends Organ {
             ConnectTool tool = new ConnectTool(world, camera);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
+            // TODO: 18/11/16 review the offset,
+            // TODO:          get it from the organ part so that it takes in consideration the vertices scaling and stuff
             connector.organA = (OrganPart) link.getUserData();
             connector.anchorA = new Vector2(0, -JOINT_OFFSET);
             connector.organB = (OrganPart) body.getUserData();
@@ -87,5 +89,10 @@ public class SmallIntestine extends Organ {
     @Override
     public boolean highlightCutting() {
         return false;
+    }
+
+    @Override
+    public float getScale() {
+        return SCALE;
     }
 }

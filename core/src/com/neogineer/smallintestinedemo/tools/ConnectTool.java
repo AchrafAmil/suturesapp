@@ -28,7 +28,7 @@ public class ConnectTool extends Tool {
     // RevoluteJoint allows rotation around the joint point, let's limit the rotation angle.
     private static final double MAX_ANGLE = 0 ;
 
-    private static final float MAX_ACCEPTED_DISTANCE = 2.2f;
+    private static final float MAX_ACCEPTED_DISTANCE = 8f;
 
     ConnectToolHelper helper = new ConnectToolHelper();
 
@@ -82,7 +82,7 @@ public class ConnectTool extends Tool {
             float distanceY = organA.body.getWorldPoint(anchorA).y - organB.body.getWorldPoint(anchorB).y;
             float distance = (float) Math.sqrt(distanceX*distanceX + distanceY*distanceY);
             Gdx.app.log("ConnectTool", "distance: "+distance);
-            if(distance>MAX_ACCEPTED_DISTANCE)
+            if(distance>MAX_ACCEPTED_DISTANCE*organA.scale*organB.scale)
                 return false;
             return true;
         }
