@@ -82,7 +82,7 @@ public class ConnectTool extends Tool {
             float distanceY = organA.body.getWorldPoint(anchorA).y - organB.body.getWorldPoint(anchorB).y;
             float distance = (float) Math.sqrt(distanceX*distanceX + distanceY*distanceY);
             Gdx.app.log("ConnectTool", "distance: "+distance);
-            if(distance>MAX_ACCEPTED_DISTANCE*organA.scale*organB.scale)
+            if(distance>MAX_ACCEPTED_DISTANCE*Constants.GLOBAL_SCALE)
                 return false;
             return true;
         }

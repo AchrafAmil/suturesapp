@@ -65,7 +65,7 @@ public class GameStage extends Stage{
 
     private void setupCamera(){
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        camera.zoom += 3f;
+        camera.zoom = 3f;
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
@@ -131,7 +131,7 @@ public class GameStage extends Stage{
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.draw();
-        renderer.render(world, camera.combined);
+        //renderer.render(world, camera.combined);
     }
 
     private void setupGround(){

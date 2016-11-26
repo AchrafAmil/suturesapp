@@ -30,7 +30,11 @@ public class SmallIntestine extends Organ {
     public SmallIntestine(World world, OrthographicCamera camera, Vector2 startPos, Vector2 endPos){
         super(world, camera);
 
-        SmallIntestineOrganPart firstActor = new SmallIntestineOrganPart(world, camera, this, 0, SCALE, startPos );
+        float slope = (endPos.y - startPos.y) / (endPos.x - startPos.x);
+        double alpha = Math.atan(slope);
+
+        SmallIntestineOrganPart firstActor
+                = new SmallIntestineOrganPart(world, camera, this, 0, SCALE, startPos, (float) (alpha- Math.PI/2) );
         addActor(firstActor);
         Body body = firstActor.body;
 
@@ -40,8 +44,7 @@ public class SmallIntestine extends Organ {
         final float JOINT_OFFSET = firstActor
                 .getVertex(0,firstActor.origin.cpy().y + firstActor.origin.cpy().y * 2 * JOINT_OFFSET_PERCENT ).y;
 
-        float slope = (endPos.y - startPos.y) / (endPos.x - startPos.x);
-        double alpha = Math.atan(slope);
+
 
         final Vector2 step = new Vector2(JOINT_OFFSET*2*(float)Math.cos(alpha), JOINT_OFFSET*2*(float)Math.sin(alpha));
 
