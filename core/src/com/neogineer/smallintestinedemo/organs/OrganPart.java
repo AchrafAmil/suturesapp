@@ -70,8 +70,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal(path));
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.DynamicBody;
-        //if(this.position.y==20)
-        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("StomachOrganPart") && this.identifier.equals("1"))
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         bDef.position.set(this.position);
         bDef.angle = this.rotation;
         body = mWorld.createBody(bDef);
