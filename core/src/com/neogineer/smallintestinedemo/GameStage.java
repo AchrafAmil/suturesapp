@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.SmallIntestine;
+import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
@@ -54,13 +55,7 @@ public class GameStage extends Stage{
 
         setupCamera();
 
-        //organsHolder.smallIntestine = new SmallIntestine(world, camera);
-        //addActor(organsHolder.smallIntestine);
-        //organsHolder.liver = new Liver(world, camera);
-        //addActor(organsHolder.liver);
-
-        organsHolder.stomach = new Stomach(world, camera);
-        addActor(organsHolder.stomach);
+        organsHolder.start(this, world, camera);
 
         setupInputMultiplexer();
 
@@ -170,8 +165,8 @@ public class GameStage extends Stage{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         stop = false;
-        if(screenX<180 && screenY<180)
-            this.keyDown(0);
+        //if(screenX<180 && screenY<180)
+        //    this.keyDown(0);
         return super.touchDown(screenX, screenY, pointer, button);
     }
 

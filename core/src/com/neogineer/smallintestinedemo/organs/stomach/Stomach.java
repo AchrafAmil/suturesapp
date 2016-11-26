@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
+import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
 import org.json.JSONArray;
@@ -16,9 +17,9 @@ import org.json.JSONObject;
  */
 public class Stomach extends Organ {
 
-    public static final float SCALE = 1f;
+    public static final float SCALE = Constants.STOMACH_SCALE;
 
-    public static final Vector2 POSITION = new Vector2(48, 60);
+    public static final Vector2 POSITION = Constants.STOMACH_POSITION;
 
 
     public Stomach(World world, OrthographicCamera camera) {

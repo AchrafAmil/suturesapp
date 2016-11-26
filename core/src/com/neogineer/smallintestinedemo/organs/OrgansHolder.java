@@ -1,7 +1,18 @@
 package com.neogineer.smallintestinedemo.organs;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
+import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
+import com.neogineer.smallintestinedemo.tools.ConnectTool;
+import com.neogineer.smallintestinedemo.utils.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Created by neogineer on 02/11/16.
@@ -15,6 +26,51 @@ public class OrgansHolder {
     public Liver liver ;
 
     public Stomach stomach;
+
+    public Duodenum duodenum;
+
+    public void start(Stage stage, World world, OrthographicCamera camera){
+        this.liver = new Liver(world, camera);
+        stage.addActor(this.liver);
+
+        this.stomach = new Stomach(world, camera);
+        stage.addActor(this.stomach);
+
+        this.duodenum = new Duodenum(world, camera);
+        stage.addActor(this.duodenum);
+
+        this.smallIntestine = new SmallIntestine(world, camera);
+        stage.addActor(this.smallIntestine);
+
+        setupExternalJoints(world, camera);
+
+
+    }
+
+    private void setupExternalJoints(World world, OrthographicCamera camera){
+
+        JSONArray joints = Utils.loadJoints("external_joints.json");
+
+        for(int i=0; i<joints.length(); i++){
+            JSONObject joint = (JSONObject) joints.get(i);
+            ConnectTool tool = new ConnectTool(world, camera);
+            ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
+
+            Organ organA = this.organFromName(joint.getString("organA"));
+            Organ organB = this.organFromName(joint.getString("organB"));
+
+            connector.organA = organA.organParts.get(joint.getString("organPartA"));
+            connector.organB = organB.organParts.get(joint.getString("organPartB"));
+
+            connector.anchorA = connector.organA.getVertex(joint.getDouble("anchorAx"), joint.getDouble("anchorAy"));
+            connector.anchorB = connector.organB.getVertex(joint.getDouble("anchorBx"), joint.getDouble("anchorBy"));
+
+            connector.makeConnection(false);
+
+        }
+
+
+    }
 
     public void highlight(){
         // TODO: 02/11/16 iterate over all organs.
@@ -33,6 +89,21 @@ public class OrgansHolder {
             liver.unhighlightCutting();
         }catch (NullPointerException npe){
 
+        }
+    }
+
+    public Organ organFromName(String name){
+        switch (name){
+            case "Liver":
+                return this.liver;
+            case "Stomach":
+                return this.stomach;
+            case "SmallIntestine":
+                return this.smallIntestine;
+            case "Duodenum":
+                return this.duodenum;
+            default:
+                return null;
         }
     }
 }
