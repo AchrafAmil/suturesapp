@@ -131,7 +131,8 @@ public class GameStage extends Stage{
         Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.draw();
-        //renderer.render(world, camera.combined);
+        if(Constants.ENABLE_DEBUG)
+            renderer.render(world, camera.combined);
     }
 
     private void setupGround(){

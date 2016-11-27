@@ -1,9 +1,12 @@
 package com.neogineer.smallintestinedemo.organs;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.neogineer.smallintestinedemo.organs.Esophagus.Esophagus;
+import com.neogineer.smallintestinedemo.organs.Esophagus.EsophagusOrganPart;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
@@ -29,6 +32,8 @@ public class OrgansHolder {
 
     public Duodenum duodenum;
 
+    public Esophagus esophagus;
+
     public void start(Stage stage, World world, OrthographicCamera camera){
         this.liver = new Liver(world, camera);
         stage.addActor(this.liver);
@@ -41,6 +46,9 @@ public class OrgansHolder {
 
         this.smallIntestine = new SmallIntestine(world, camera);
         stage.addActor(this.smallIntestine);
+
+        this.esophagus = new Esophagus(world, camera);
+        stage.addActor(this.esophagus);
 
         setupExternalJoints(world, camera);
 
@@ -98,10 +106,12 @@ public class OrgansHolder {
                 return this.liver;
             case "Stomach":
                 return this.stomach;
-            case "SmallIntestine":
-                return this.smallIntestine;
             case "Duodenum":
                 return this.duodenum;
+            case "Esophagus":
+                return this.esophagus;
+            case "SmallIntestine":
+                return this.smallIntestine;
             default:
                 return null;
         }
