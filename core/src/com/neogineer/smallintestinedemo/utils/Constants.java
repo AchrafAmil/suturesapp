@@ -17,6 +17,8 @@ public class Constants {
 
     public static final boolean ENABLE_DEBUG = false;
 
+    public static final boolean VERBOSE_GESTURE = true;
+
 
     /**
      * ORGANS SCALES AND POSITIONS

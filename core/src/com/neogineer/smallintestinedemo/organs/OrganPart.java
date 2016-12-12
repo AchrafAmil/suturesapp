@@ -17,6 +17,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -82,14 +86,9 @@ public abstract class OrganPart extends Actor implements Connectable {
         fix.friction = 0.6f;
         fix.restitution = 0.5f;
 
-        ResolutionFileResolver fileResolver = new ResolutionFileResolver(new InternalFileHandleResolver(), new ResolutionFileResolver.Resolution(800, 480, "480"),
-                new ResolutionFileResolver.Resolution(1280, 720, "720"), new ResolutionFileResolver.Resolution(1920, 1080, "1080"));
-
-
         origin = loader.getOrigin("base"+identifier, 1).cpy();
 
-        // TODO: 20/11/16 use simple Gdx.files.internal
-        Texture baseSpriteTexture = new Texture(fileResolver.resolve( loader.getImagePath("base"+identifier) ));
+        Texture baseSpriteTexture = new Texture(Gdx.files.internal(loader.getImagePath("base"+identifier) ));
         baseSprite = new Sprite(baseSpriteTexture);
 
         loadHighlightedSprite(loader, identifier);

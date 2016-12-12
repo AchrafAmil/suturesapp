@@ -3,11 +3,14 @@ package com.neogineer.smallintestinedemo.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
+import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.utils.Constants;
 
 /**
  * Created by neogineer on 25/10/16.
@@ -46,6 +49,14 @@ public abstract class Tool extends InputAdapter {
     void extractHitBody(){
         hitBody = null;
         world.QueryAABB(callback, testPoint.x - 0.1f, testPoint.y - 0.1f, testPoint.x + 0.1f, testPoint.y + 0.1f);
+
+        if(Constants.VERBOSE_GESTURE){
+            Gdx.app.log("GESTURE", "touched: (x:"+testPoint.x+",y:"+testPoint.y+")");
+            if(hitBody!=null)
+                Gdx.app.log("GESTURE", "Hit: "+hitBody.getUserData().getClass().getSimpleName()
+                        +( (OrganPart) hitBody.getUserData() ).getIdentifier()
+                        +" at "+((OrganPart)hitBody.getUserData()).body.getLocalPoint(new Vector2(testPoint.x, testPoint.y)));
+        }
     }
 
     @Override
@@ -54,7 +65,7 @@ public abstract class Tool extends InputAdapter {
         testPoint.set(screenX, screenY, 0);
         camera.unproject(testPoint);
 
-        Gdx.app.log("touched", screenX+" "+screenY+" unproject to "+testPoint.x+" "+testPoint.y);
+
 
         // ask the world which bodies are within the given
         // bounding box around the mouse pointer

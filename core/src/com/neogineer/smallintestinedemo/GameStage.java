@@ -2,31 +2,54 @@ package com.neogineer.smallintestinedemo;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ChainShape;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FloatArray;
+import com.badlogic.gdx.utils.SnapshotArray;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.Registration;
+import com.esotericsoftware.kryo.Serializer;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.serializers.JavaSerializer;
+import com.esotericsoftware.kryo.util.IntArray;
+import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
+import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.tools.CutTool;
 import com.neogineer.smallintestinedemo.tools.DndTool;
 import com.neogineer.smallintestinedemo.tools.Tool;
 import com.neogineer.smallintestinedemo.utils.Constants;
+import net.dermetfan.gdx.physics.box2d.kryo.serializers.*;
 
 import org.iforce2d.Jb2dJson;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  * Created by neogineer on 30/08/16.
@@ -47,19 +70,190 @@ public class GameStage extends Stage{
 
     private OrgansHolder organsHolder = new OrgansHolder();
 
+    private Kryo kryo = new Kryo();
+
 
     public GameStage(){
         world = new World(new Vector2(0,0), true);
+
+        setupKryo();
 
         setupGround();
 
         setupCamera();
 
-        organsHolder.start(this, world, camera);
+        //organsHolder.start(this, world, camera);
 
         setupInputMultiplexer();
 
         renderer = new Box2DDebugRenderer();
+
+
+        try {
+            Input input = new Input(new FileInputStream("kryo_test_stomachop.bin"));
+            StomachOrganPart sop = kryo.readObject(input, StomachOrganPart.class);
+            Gdx.app.log("StomachOrganPart",""+sop);
+            input.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+        /*try {
+            Output output = new Output(new FileOutputStream("kryo_test_stomachop.bin"));
+            kryo.writeObject(output, new StomachOrganPart(world, camera, null, "1", 5, new Vector2(25,25), 0));
+            output.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }*/
+
+
+    }
+
+    private void setupKryo() {
+        kryo.register(Array.class, new Serializer<Array>() {
+            {
+                setAcceptsNull(true);
+            }
+
+            private Class genericType;
+
+            public void setGenerics (Kryo kryo, Class[] generics) {
+                if (generics != null && kryo.isFinal(generics[0])) genericType = generics[0];
+                else genericType = null;
+            }
+
+            public void write (Kryo kryo, Output output, Array array) {
+                int length = array.size;
+                output.writeInt(length, true);
+                if (length == 0) {
+                    genericType = null;
+                    return;
+                }
+                if (genericType != null) {
+                    Serializer serializer = kryo.getSerializer(genericType);
+                    genericType = null;
+                    for (Object element : array)
+                        kryo.writeObjectOrNull(output, element, serializer);
+                } else {
+                    for (Object element : array)
+                        kryo.writeClassAndObject(output, element);
+                }
+            }
+
+            public Array read (Kryo kryo, Input input, Class<Array> type) {
+                Array array = new Array();
+                kryo.reference(array);
+                int length = input.readInt(true);
+                array.ensureCapacity(length);
+                if (genericType != null) {
+                    Class elementClass = genericType;
+                    Serializer serializer = kryo.getSerializer(genericType);
+                    genericType = null;
+                    for (int i = 0; i < length; i++)
+                        array.add(kryo.readObjectOrNull(input, elementClass, serializer));
+                } else {
+                    for (int i = 0; i < length; i++)
+                        array.add(kryo.readClassAndObject(input));
+                }
+                return array;
+            }
+        });
+
+        kryo.register(IntArray.class, new Serializer<IntArray>() {
+            {
+                setAcceptsNull(true);
+            }
+
+            public void write (Kryo kryo, Output output, IntArray array) {
+                int length = array.size;
+                output.writeInt(length, true);
+                if (length == 0) return;
+                for (int i = 0, n = array.size; i < n; i++)
+                    output.writeInt(array.get(i), true);
+            }
+
+            public IntArray read (Kryo kryo, Input input, Class<IntArray> type) {
+                IntArray array = new IntArray();
+                kryo.reference(array);
+                int length = input.readInt(true);
+                array.ensureCapacity(length);
+                for (int i = 0; i < length; i++)
+                    array.add(input.readInt(true));
+                return array;
+            }
+        });
+
+        kryo.register(FloatArray.class, new Serializer<FloatArray>() {
+            {
+                setAcceptsNull(true);
+            }
+
+            public void write (Kryo kryo, Output output, FloatArray array) {
+                int length = array.size;
+                output.writeInt(length, true);
+                if (length == 0) return;
+                for (int i = 0, n = array.size; i < n; i++)
+                    output.writeFloat(array.get(i));
+            }
+
+            public FloatArray read (Kryo kryo, Input input, Class<FloatArray> type) {
+                FloatArray array = new FloatArray();
+                kryo.reference(array);
+                int length = input.readInt(true);
+                array.ensureCapacity(length);
+                for (int i = 0; i < length; i++)
+                    array.add(input.readFloat());
+                return array;
+            }
+        });
+
+        kryo.register(Color.class, new Serializer<Color>() {
+            public Color read (Kryo kryo, Input input, Class<Color> type) {
+                Color color = new Color();
+                Color.rgba8888ToColor(color, input.readInt());
+                return color;
+            }
+
+            public void write (Kryo kryo, Output output, Color color) {
+                output.writeInt(Color.rgba8888(color));
+            }
+        });
+
+        kryo.register(ChainShape.class, ChainShapeSerializer.instance);
+        kryo.register(PolygonShape.class, PolygonShapeSerializer.instance);
+        kryo.register(CircleShape.class, CircleShapeSerializer.instance);
+        kryo.register(EdgeShape.class, EdgeShapeSerializer.instance);
+
+        kryo.register(Sprite.class, new Serializer<Sprite>(){
+
+            @Override
+            public void write(Kryo kryo, Output output, Sprite sprite) {
+                output.writeString(((FileTextureData)sprite.getTexture().getTextureData()).getFileHandle().path());
+            }
+
+            @Override
+            public Sprite read(Kryo kryo, Input input, Class<Sprite> type) {
+                String path = input.readString();
+                Texture texture = new Texture(Gdx.files.internal(path));
+                return new Sprite(texture);
+            }
+        });
+
+        /*kryo.register(Body.class, new Serializer<Body>(){
+
+            @Override
+            public void write(Kryo kryo, Output output, Body body) {
+                output.writeString(body.);
+            }
+
+            @Override
+            public Body read(Kryo kryo, Input input, Class<Body> type) {
+                return null;
+            }
+        });*/
+
 
     }
 
