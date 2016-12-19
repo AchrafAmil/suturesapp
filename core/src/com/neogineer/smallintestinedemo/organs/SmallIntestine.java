@@ -1,15 +1,22 @@
 package com.neogineer.smallintestinedemo.organs;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.neogineer.smallintestinedemo.organs.Esophagus.EsophagusOrganPart;
+import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 import com.sun.corba.se.impl.orbutil.closure.Constant;
+
+import java.util.HashMap;
 
 /**
  * Created by neogineer on 27/10/16.
@@ -82,6 +89,18 @@ public class SmallIntestine extends Organ {
      */
     public SmallIntestine(World world, OrthographicCamera camera) {
         this(world, camera, Constants.SMALLINTESTINE_LEFT_POSITION, Constants.SMALLINTESTINE_RIGHT_POSITION);
+    }
+
+    @Override
+    public void loadState(Kryo kryo, Input input){
+        this.free();
+        size=0;
+
+        for(int i=0; i<=LENGTH; i++){
+            OrganPart op = kryo.readObject(input, SmallIntestineOrganPart.class);
+            Gdx.app.log("loadState","creating "+op+i);
+            addActor(op);
+        }
     }
 
     @Override

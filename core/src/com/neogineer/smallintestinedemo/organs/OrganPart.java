@@ -19,8 +19,10 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -65,6 +67,16 @@ public abstract class OrganPart extends Actor implements Connectable {
         this.rotation = rotation;
     }
 
+    public OrganPart(World world, OrthographicCamera camera, Organ callback, float scale, OrganPartDefinition opDef){
+        this(world, camera, callback, opDef.getIdentifier(), scale, opDef.position, opDef.angle);
+    }
+
+    public OrganPart(OrganPartDefinition opDef){
+        this(OrgansHolder.world, OrgansHolder.camera, OrgansHolder.organFromName(opDef.getOrganName()),
+                Utils.scaleFromName(opDef.getOrganName()), opDef );
+    }
+
+
     /**
      * Called directly after object initialization.
      * This will use the OrganPart fields' values to load and create the appropriate body shape and sprite.
@@ -74,8 +86,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal(path));
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.DynamicBody;
-        if(this.getClass().getSimpleName().equals("StomachOrganPart") && this.identifier.equals("1"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        //if(this.getClass().getSimpleName().equals("StomachOrganPart") && this.identifier.equals("1"))
+        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         bDef.position.set(this.position);
         bDef.angle = this.rotation;
         body = mWorld.createBody(bDef);
@@ -318,5 +330,26 @@ public abstract class OrganPart extends Actor implements Connectable {
      */
     @Override
     public void correctJointDef(RevoluteJointDef def) {
+    }
+
+    /**
+     * @return a small representation of this organPart state. can be used to clone or store.
+     */
+    public OrganPartDefinition getOPDef(){
+        OrganPartDefinition opDef = new OrganPartDefinition();
+        opDef.position = this.body.getPosition().cpy();
+        opDef.angle = this.body.getAngle();
+        opDef.fullIdentifier = this.getClass().getSimpleName()+this.getIdentifier();
+
+        for(OpenableSide os : openableSides){
+            opDef.openableSidesStates.add(os.getState());
+        }
+
+        return opDef;
+    }
+
+    public void destroy(){
+        mWorld.destroyBody(body);
+        baseSprite.getTexture().dispose();
     }
 }

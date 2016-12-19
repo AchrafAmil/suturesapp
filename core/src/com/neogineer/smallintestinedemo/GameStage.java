@@ -28,13 +28,20 @@ import com.esotericsoftware.kryo.Registration;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.serializers.FieldSerializer;
 import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryo.util.IntArray;
+import com.neogineer.smallintestinedemo.organs.Esophagus.EsophagusOrganPart;
+import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.SmallIntestine;
+import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
+import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
+import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
@@ -75,6 +82,7 @@ public class GameStage extends Stage{
 
     public GameStage(){
         world = new World(new Vector2(0,0), true);
+        OrgansHolder.world = world;
 
         setupKryo();
 
@@ -82,31 +90,13 @@ public class GameStage extends Stage{
 
         setupCamera();
 
-        //organsHolder.start(this, world, camera);
+        organsHolder.start(this);
 
         setupInputMultiplexer();
 
         renderer = new Box2DDebugRenderer();
 
 
-        try {
-            Input input = new Input(new FileInputStream("kryo_test_stomachop.bin"));
-            StomachOrganPart sop = kryo.readObject(input, StomachOrganPart.class);
-            Gdx.app.log("StomachOrganPart",""+sop);
-            input.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-
-        /*try {
-            Output output = new Output(new FileOutputStream("kryo_test_stomachop.bin"));
-            kryo.writeObject(output, new StomachOrganPart(world, camera, null, "1", 5, new Vector2(25,25), 0));
-            output.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
 
 
     }
@@ -241,18 +231,71 @@ public class GameStage extends Stage{
             }
         });
 
-        /*kryo.register(Body.class, new Serializer<Body>(){
-
+        kryo.register(StomachOrganPart.class, new Serializer<OrganPart>() {
             @Override
-            public void write(Kryo kryo, Output output, Body body) {
-                output.writeString(body.);
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
             }
 
             @Override
-            public Body read(Kryo kryo, Input input, Class<Body> type) {
-                return null;
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new StomachOrganPart(opDef);
             }
-        });*/
+        });
+
+        kryo.register(DuodenumOrganPart.class, new Serializer<OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new DuodenumOrganPart(opDef);
+            }
+        });
+
+        kryo.register(EsophagusOrganPart.class, new Serializer<OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new EsophagusOrganPart(opDef);
+            }
+        });
+
+        kryo.register(LiverOrganPart.class, new Serializer<OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new LiverOrganPart(opDef);
+            }
+        });
+
+        kryo.register(SmallIntestineOrganPart.class, new Serializer<OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new SmallIntestineOrganPart(opDef);
+            }
+        });
+
 
 
     }
@@ -262,6 +305,7 @@ public class GameStage extends Stage{
         camera.zoom = 3f;
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
+        OrgansHolder.camera = camera;
     }
 
     private void setupInputMultiplexer(){
@@ -363,6 +407,7 @@ public class GameStage extends Stage{
         //if(screenX<180 && screenY<180)
         //    this.keyDown(0);
         return super.touchDown(screenX, screenY, pointer, button);
+
     }
 
     @Override
@@ -375,23 +420,43 @@ public class GameStage extends Stage{
     @Override
     public boolean keyDown(int keyCode) {
         clicks++;
-        switch (clicks%4){
-            case 0:
-                setTool(new DndTool(world, camera, groundBody));
-                Gdx.app.log("keyDown","DND tool");
-                break;
-            case 1:
-                setTool(new CutTool(world, camera));
-                Gdx.app.log("keyDown", "Cut tool");
-                break;
-            case 2:
-                setTool(new CloseTool(world, camera));
-                Gdx.app.log("keyDown", "Close tool");
-                break;
-            case 3:
-                setTool(new ConnectTool(world, camera));
-                Gdx.app.log("keyDown","Connect Tool");
-                break;
+
+        // instead of switching tools, we'll now save/load game states (always for debug purpose)
+//        switch (clicks%4){
+//            case 0:
+//                setTool(new DndTool(world, camera, groundBody));
+//                Gdx.app.log("keyDown","DND tool");
+//                break;
+//            case 1:
+//                setTool(new CutTool(world, camera));
+//                Gdx.app.log("keyDown", "Cut tool");
+//                break;
+//            case 2:
+//                setTool(new CloseTool(world, camera));
+//                Gdx.app.log("keyDown", "Close tool");
+//                break;
+//            case 3:
+//                setTool(new ConnectTool(world, camera));
+//                Gdx.app.log("keyDown","Connect Tool");
+//                break;
+//        }
+
+        if(clicks%2==1){
+            try {
+                Output output = new Output(new FileOutputStream("kryo_holder.bin"));
+                organsHolder.saveState(kryo, output);
+                output.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                Input input = new Input(new FileInputStream("kryo_holder.bin"));
+                organsHolder.loadState(kryo, input);
+                input.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         return super.keyDown(keyCode);

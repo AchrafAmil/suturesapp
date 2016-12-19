@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.neogineer.smallintestinedemo.organs.Esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.Esophagus.EsophagusOrganPart;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
@@ -24,17 +27,23 @@ import org.json.JSONObject;
  */
 public class OrgansHolder {
 
-    public SmallIntestine smallIntestine;
+    public static SmallIntestine smallIntestine;
 
-    public Liver liver ;
+    public static Liver liver ;
 
-    public Stomach stomach;
+    public static Stomach stomach;
 
-    public Duodenum duodenum;
+    public static Duodenum duodenum;
 
-    public Esophagus esophagus;
+    public static Esophagus esophagus;
 
-    public void start(Stage stage, World world, OrthographicCamera camera){
+    public static World world;
+    public static OrthographicCamera camera;
+
+    public void start(Stage stage){
+        if(world==null || camera==null)
+            throw new RuntimeException("Holder can't start, World and/or Camera are null");
+
         this.liver = new Liver(world, camera);
         stage.addActor(this.liver);
 
@@ -50,9 +59,7 @@ public class OrgansHolder {
         this.esophagus = new Esophagus(world, camera);
         stage.addActor(this.esophagus);
 
-        setupExternalJoints(world, camera);
-
-
+        //setupExternalJoints(world, camera);
     }
 
     private void setupExternalJoints(World world, OrthographicCamera camera){
@@ -80,6 +87,22 @@ public class OrgansHolder {
 
     }
 
+    public void saveState(Kryo kryo, Output output){
+        smallIntestine.saveState(kryo, output);
+        liver.saveState(kryo, output);
+        stomach.saveState(kryo, output);
+        duodenum.saveState(kryo, output);
+        esophagus.saveState(kryo, output);
+    }
+
+    public void loadState(Kryo kryo, Input input){
+        smallIntestine.loadState(kryo, input);
+        liver.loadState(kryo, input);
+        stomach.loadState(kryo, input);
+        duodenum.loadState(kryo, input);
+        esophagus.loadState(kryo, input);
+    }
+
     public void highlight(){
         // TODO: 02/11/16 iterate over all organs.
         try {
@@ -100,18 +123,18 @@ public class OrgansHolder {
         }
     }
 
-    public Organ organFromName(String name){
+    public static Organ organFromName(String name){
         switch (name){
             case "Liver":
-                return this.liver;
+                return liver;
             case "Stomach":
-                return this.stomach;
+                return stomach;
             case "Duodenum":
-                return this.duodenum;
+                return duodenum;
             case "Esophagus":
-                return this.esophagus;
+                return esophagus;
             case "SmallIntestine":
-                return this.smallIntestine;
+                return smallIntestine;
             default:
                 return null;
         }

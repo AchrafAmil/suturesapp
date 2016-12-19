@@ -40,12 +40,19 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
         setupOpenableSides("SmallIntestineOrganPart.json");
     }
 
-    /**
-     * default rotation = 0
-     */
-    public SmallIntestineOrganPart(World world, OrthographicCamera camera, Organ callback,int id, float scale, Vector2 position) {
-        this(world, camera, callback, id, scale, position, 0);
+    public SmallIntestineOrganPart(OrganPartDefinition opDef) {
+        super(opDef);
+        this.id = opDef.smallIntestineId;
+        setupBody("SmallIntestineOrganPart.json");
+        setupOpenableSides("SmallIntestineOrganPart.json");
     }
+//
+//    /**
+//     * default rotation = 0
+//     */
+//    public SmallIntestineOrganPart(World world, OrthographicCamera camera, Organ callback,int id, float scale, Vector2 position) {
+//        this(world, camera, callback, id, scale, position, 0);
+//    }
 
     @Override
     protected void loadHighlightedSprite(BodyEditorLoader loader, String identifier) {

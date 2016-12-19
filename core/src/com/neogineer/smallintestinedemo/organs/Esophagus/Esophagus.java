@@ -1,10 +1,14 @@
 package com.neogineer.smallintestinedemo.organs.Esophagus;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart;
 import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.utils.Constants;
@@ -12,6 +16,8 @@ import com.neogineer.smallintestinedemo.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by neogineer on 27/11/16.
@@ -21,6 +27,8 @@ public class Esophagus extends Organ {
     public static final float SCALE = Constants.ESOPHAGUS_SCALE;
 
     public static final Vector2 POSITION = Constants.ESOPHAGUS_POSITION;
+
+    private static final int SIZE = 3;
 
     public Esophagus(World world, OrthographicCamera camera) {
         super(world, camera);
@@ -53,7 +61,17 @@ public class Esophagus extends Organ {
         }
     }
 
+    @Override
+    public void loadState(Kryo kryo, Input input){
+        this.free();
 
+        for(int i=1; i<=SIZE; i++){
+            OrganPart op = kryo.readObject(input, EsophagusOrganPart.class);
+            Gdx.app.log("loadState","creating "+op+op.getIdentifier());
+            organParts.put(op.getIdentifier(), op);
+            addActor(op);
+        }
+    }
 
 
     @Override

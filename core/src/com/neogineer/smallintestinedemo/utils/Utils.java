@@ -2,6 +2,12 @@ package com.neogineer.smallintestinedemo.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.neogineer.smallintestinedemo.organs.Esophagus.Esophagus;
+import com.neogineer.smallintestinedemo.organs.Organ;
+import com.neogineer.smallintestinedemo.organs.SmallIntestine;
+import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
+import com.neogineer.smallintestinedemo.organs.liver.Liver;
+import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -50,6 +56,23 @@ public class Utils {
         JSONObject data = new JSONObject(str);
         JSONArray joints = data.getJSONArray("joints");
         return joints;
+    }
+
+    public static float scaleFromName(String name){
+        switch (name){
+            case "Liver":
+                return Liver.SCALE;
+            case "Stomach":
+                return Stomach.SCALE;
+            case "Duodenum":
+                return Duodenum.SCALE;
+            case "Esophagus":
+                return Esophagus.SCALE;
+            case "SmallIntestine":
+                return SmallIntestine.SCALE;
+            default:
+                return 1;
+        }
     }
 
 }

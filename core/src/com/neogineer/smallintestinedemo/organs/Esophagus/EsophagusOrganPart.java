@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 
@@ -15,6 +16,11 @@ public class EsophagusOrganPart extends OrganPart {
 
     public EsophagusOrganPart(World world, OrthographicCamera camera, Organ callback, String identifier, float scale, Vector2 position, float rotation) {
         super(world, camera, callback, identifier, scale, position, rotation);
+        setupBody("EsophagusOrganPart.json");
+    }
+
+    public EsophagusOrganPart(OrganPartDefinition opDef) {
+        super(opDef);
         setupBody("EsophagusOrganPart.json");
     }
 
