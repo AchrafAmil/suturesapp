@@ -340,6 +340,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         opDef.position = this.body.getPosition().cpy();
         opDef.angle = this.body.getAngle();
         opDef.fullIdentifier = this.getClass().getSimpleName()+this.getIdentifier();
+        if(this instanceof SmallIntestineOrganPart)
+            opDef.smallIntestineId = ((SmallIntestineOrganPart)this).id;
 
         for(OpenableSide os : openableSides){
             opDef.openableSidesStates.add(os.getState());
@@ -351,5 +353,9 @@ public abstract class OrganPart extends Actor implements Connectable {
     public void destroy(){
         mWorld.destroyBody(body);
         baseSprite.getTexture().dispose();
+    }
+
+    public String getFullIdentifier(){
+        return this.getClass().getSimpleName()+identifier;
     }
 }

@@ -63,7 +63,7 @@ import java.io.FileOutputStream;
  */
 public class GameStage extends Stage{
 
-    private final float TIME_STEP = 1 / 300f;
+    private float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
 
     World world ;
@@ -335,6 +335,7 @@ public class GameStage extends Stage{
         // Fixed time step
         accumulator += delta;
 
+
         while (accumulator >= delta) {
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
@@ -443,19 +444,23 @@ public class GameStage extends Stage{
 
         if(clicks%2==1){
             try {
-                Output output = new Output(new FileOutputStream("kryo_holder.bin"));
+                Output output = new Output(new FileOutputStream("kryo_save.bin"));
                 organsHolder.saveState(kryo, output);
                 output.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }finally {
+                accumulator=0;
             }
         }else{
             try {
-                Input input = new Input(new FileInputStream("kryo_holder.bin"));
+                Input input = new Input(new FileInputStream("kryo_save.bin"));
                 organsHolder.loadState(kryo, input);
                 input.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }finally {
+                accumulator=0;
             }
         }
 

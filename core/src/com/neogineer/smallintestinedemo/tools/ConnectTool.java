@@ -13,10 +13,13 @@ import com.neogineer.smallintestinedemo.organs.Openable;
 import com.neogineer.smallintestinedemo.organs.OpenableSide;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
+import com.neogineer.smallintestinedemo.organs.SuturePointDef;
 import com.neogineer.smallintestinedemo.utils.Constants;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 import java.util.List;
 
@@ -150,6 +153,36 @@ public class ConnectTool extends Tool {
         }
 
         /**
+         * This is used to re-created joints after re-load.
+         *
+         * @param spDef stored SuturePointDef
+         * @return created joint (returned from this.makeConnection()
+         */
+        public RevoluteJoint proceed(SuturePointDef spDef){
+
+            this.organA = OrgansHolder.organPartFromSpDef(spDef, true);
+            this.organB = OrgansHolder.organPartFromSpDef(spDef, false);
+
+            if(spDef.organA.contains("SmallIntestine"))
+                new Integer(42);
+
+            this.anchorA = spDef.anchorA;
+            this.anchorB = spDef.anchorB;
+
+            def = new RevoluteJointDef();
+            def.bodyA = organA.body;
+            def.bodyB = organB.body;
+            def.collideConnected=true;
+            def.localAnchorA.set(anchorA);
+            def.localAnchorB.set(anchorB);
+            def.enableLimit=false;
+            def.lowerAngle= - (float) (MAX_ANGLE);
+            def.upperAngle= (float) (MAX_ANGLE);
+
+            return makeConnection(spDef.Avisible || spDef.Bvisible);
+        }
+
+        /**
          * usually called from proceed(), if we're connecting due to user's gesture.
          * but this can be directly called from organs' constructors.
          * @return the created joint. Never null.
@@ -190,6 +223,8 @@ public class ConnectTool extends Tool {
                     .setRotation(invisibleOrg.getRotation());
             invisibleOrg.addSuturePoint(invisibleSp);
 
+            // always put organA's suturepoint
+            joint.setUserData( (aWillGetVisible())? visibleSp:invisibleSp);
 
             return joint;
         }
