@@ -66,7 +66,7 @@ public class OrgansHolder {
         this.esophagus = new Esophagus(world, camera);
         stage.addActor(this.esophagus);
 
-        //setupExternalJoints(world, camera);
+        setupExternalJoints(world, camera);
     }
 
     private void setupExternalJoints(World world, OrthographicCamera camera){

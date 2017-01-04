@@ -22,27 +22,18 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.Registration;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.esotericsoftware.kryo.serializers.FieldSerializer;
-import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryo.util.IntArray;
 import com.neogineer.smallintestinedemo.organs.Esophagus.EsophagusOrganPart;
-import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
-import com.neogineer.smallintestinedemo.organs.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
-import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
-import com.neogineer.smallintestinedemo.organs.liver.Liver;
 import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart;
-import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
@@ -51,8 +42,6 @@ import com.neogineer.smallintestinedemo.tools.DndTool;
 import com.neogineer.smallintestinedemo.tools.Tool;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import net.dermetfan.gdx.physics.box2d.kryo.serializers.*;
-
-import org.iforce2d.Jb2dJson;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -417,32 +406,53 @@ public class GameStage extends Stage{
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
-    int clicks = 0 ;
+    int clicksA = 0 ;
+    int clicksB = 0 ;
     @Override
     public boolean keyDown(int keyCode) {
-        clicks++;
 
-        // instead of switching tools, we'll now save/load game states (always for debug purpose)
-//        switch (clicks%4){
-//            case 0:
-//                setTool(new DndTool(world, camera, groundBody));
-//                Gdx.app.log("keyDown","DND tool");
-//                break;
-//            case 1:
-//                setTool(new CutTool(world, camera));
-//                Gdx.app.log("keyDown", "Cut tool");
-//                break;
-//            case 2:
-//                setTool(new CloseTool(world, camera));
-//                Gdx.app.log("keyDown", "Close tool");
-//                break;
-//            case 3:
-//                setTool(new ConnectTool(world, camera));
-//                Gdx.app.log("keyDown","Connect Tool");
-//                break;
-//        }
+        switch (keyCode){
+            case 29:
+                // switch tools
+                this.clickedA();
+                break;
+            case 30:
+                // instead of switching tools, we'll now save/load game states (always for debug purpose)
+                this.clickedB();
+                break;
+            default:
+                break;
+        }
 
-        if(clicks%2==1){
+        return super.keyDown(keyCode);
+    }
+
+    private void clickedA(){
+        clicksA++;
+
+        switch (clicksA%4){
+            case 0:
+                setTool(new DndTool(world, camera, groundBody));
+                Gdx.app.log("keyDown","DND tool");
+                break;
+            case 1:
+                setTool(new CutTool(world, camera));
+                Gdx.app.log("keyDown", "Cut tool");
+                break;
+            case 2:
+                setTool(new CloseTool(world, camera));
+                Gdx.app.log("keyDown", "Close tool");
+                break;
+            case 3:
+                setTool(new ConnectTool(world, camera));
+                Gdx.app.log("keyDown","Connect Tool");
+                break;
+        }
+    }
+
+    private void clickedB(){
+        clicksB++;
+        if(clicksB %2==1){
             try {
                 Output output = new Output(new FileOutputStream("kryo_save.bin"));
                 organsHolder.saveState(kryo, output);
@@ -463,7 +473,5 @@ public class GameStage extends Stage{
                 accumulator=0;
             }
         }
-
-        return super.keyDown(keyCode);
     }
 }
