@@ -99,10 +99,12 @@ public class SmallIntestine extends Organ {
         for(int i=0; i<=LENGTH; i++){
             OrganPart op = kryo.readObject(input, SmallIntestineOrganPart.class);
             Gdx.app.log("loadState","creating "+op+i);
-            addActor(op);
+            super.addActor(op);
+            this.organParts.put(""+ ((SmallIntestineOrganPart)op).id, op );
         }
     }
 
+    // TODO: 04/01/17 size++ was a bad idea, change it asap to avoid errors
     @Override
     public void addActor(Actor actor) {
         super.addActor(actor);

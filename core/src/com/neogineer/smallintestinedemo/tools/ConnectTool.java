@@ -175,7 +175,7 @@ public class ConnectTool extends Tool {
             def.collideConnected=true;
             def.localAnchorA.set(anchorA);
             def.localAnchorB.set(anchorB);
-            def.enableLimit=false;
+            def.enableLimit=true;
             def.lowerAngle= - (float) (MAX_ANGLE);
             def.upperAngle= (float) (MAX_ANGLE);
 
