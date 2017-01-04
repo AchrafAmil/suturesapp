@@ -78,7 +78,7 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
                 }
 
                 Polygon polygon = new Polygon(vertices);
-                polygon.scale(1.5f);
+                polygon.scale(getVerticesScale()*scale);
                 Vector2 origin = loader.getOrigin("open"+ind, 1).cpy();
                 polygon.setOrigin(origin.x, origin.y);
 

@@ -21,6 +21,8 @@ public class CloseTool extends Tool {
         if(hitBody!=null){
             if(hitBody.getUserData() instanceof Openable){
                 OpenableSide side = ((Openable) hitBody.getUserData()).getOpenableSide(testPoint.x, testPoint.y);
+                if(side==null)
+                    return false;
                 if(side.getState() == OpenableSide.State.OPEN){
                     side.close();
                     return true;
