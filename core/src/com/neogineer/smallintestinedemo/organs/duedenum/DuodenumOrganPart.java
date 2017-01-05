@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.organs.Openable;
 import com.neogineer.smallintestinedemo.organs.OpenableSide;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
+import com.neogineer.smallintestinedemo.organs.SuturePoint;
 
 import java.util.List;
 
@@ -133,5 +135,27 @@ public class DuodenumOrganPart extends OrganPart implements Openable {
     @Override
     public List<OpenableSide> getOpenableSides() {
         return this.openableSides;
+    }
+
+    @Override
+    public boolean connectionIntent(Vector2 point) {
+        return true;
+    }
+
+    @Override
+    public void correctJointDef(RevoluteJointDef def) {
+        Vector2 vec = (this.body==def.bodyA)? def.localAnchorA:def.localAnchorB;
+
+        vec.set(pushToEdge(vec));
+    }
+
+    @Override
+    public boolean addSuturePoint(SuturePoint sp) {
+        super.addSuturePoint(sp);
+        try {
+            this.getOpenableSide(sp.getLocalCoord().x, sp.getLocalCoord().y).normal();
+        }catch (NullPointerException npe){
+        }
+        return true;
     }
 }

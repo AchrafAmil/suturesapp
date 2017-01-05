@@ -18,6 +18,7 @@ import com.neogineer.smallintestinedemo.organs.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
+import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -98,6 +99,9 @@ public class ConnectTool extends Tool {
                         < Constants.SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE)
                     return false;
             }
+
+            if(organA instanceof DuodenumOrganPart && organB instanceof DuodenumOrganPart)
+                return false;
 
             return true;
         }

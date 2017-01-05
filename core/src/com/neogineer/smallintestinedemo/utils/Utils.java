@@ -2,6 +2,7 @@ package com.neogineer.smallintestinedemo.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.Esophagus.Esophagus;
@@ -132,5 +133,23 @@ public class Utils {
         sortedJoints.addAll(joints);
 
         return sortedJoints;
+    }
+    /**
+     * true if - At least one of the fixtures contains the specified point.
+     */
+    private static Vector2 tmpVec = new Vector2();
+    public static boolean fixturesContains(Array<Fixture> fixtures, float x, float y){
+        return fixturesContains(fixtures, tmpVec.set(x,y));
+    }
+
+    /**
+     * true if - At least one of the fixtures contains the specified point.
+     */
+    public static boolean fixturesContains(Array<Fixture> fixtures, Vector2 vec){
+        for(Fixture fix : fixtures){
+            if(fix.testPoint(vec))
+                return true;
+        }
+        return false;
     }
 }
