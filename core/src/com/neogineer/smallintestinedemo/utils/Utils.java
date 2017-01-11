@@ -152,4 +152,18 @@ public class Utils {
         }
         return false;
     }
+
+    public static int getRegion(Vector2 localVec){
+        if(localVec.x>0){
+            return (localVec.y>0)? 1:2;
+        }else{
+            return (localVec.y>0)? 3:4;
+        }
+    }
+
+    public static boolean regionsMatch(int regionA, int regionB){
+        return !(   //doesn't match (refuse suturing) when :
+                    regionA==regionB || regionA+regionB==5
+                );
+    }
 }
