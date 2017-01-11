@@ -371,13 +371,13 @@ public class GameStage extends Stage{
         // it will be 100 meters wide and 2 meters high, centered
         // around the origin
         PolygonShape groundPoly = new PolygonShape();
-        groundPoly.setAsBox(2, 10);
+        groundPoly.setAsBox(200, 10);
 
         // next we create the body for the ground platform. It's
         // simply a static body.
         BodyDef groundBodyDef = new BodyDef();
         groundBodyDef.type = BodyDef.BodyType.StaticBody;
-        groundBodyDef.position.set(200,15);
+        groundBodyDef.position.set(2000,0);
         groundBody = world.createBody(groundBodyDef);
 
         // finally we add a fixture to the body using the polygon
@@ -407,7 +407,7 @@ public class GameStage extends Stage{
     }
 
     int clicksA = 0 ;
-    int clicksB = 0 ;
+    int clicksB = 1 ;
     @Override
     public boolean keyDown(int keyCode) {
 

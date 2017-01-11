@@ -31,8 +31,11 @@ public class ConnectTool extends Tool {
 
     // RevoluteJoint allows rotation around the joint point, let's limit the rotation angle.
     private static final double MAX_ANGLE = 0 ;
+    private static final double SMALLINTESTINE_MAX_ANGLE = Math.PI/8 ;
 
-    private static final float MAX_ACCEPTED_DISTANCE = 1f;
+    private static final float MAX_ACCEPTED_DISTANCE = 2f;
+
+    private static final boolean COLLIDE_CONNECTED= false;
 
     ConnectToolHelper helper = new ConnectToolHelper();
 
@@ -121,12 +124,12 @@ public class ConnectTool extends Tool {
             def = new RevoluteJointDef();
             def.bodyA = organA.body;
             def.bodyB = organB.body;
-            def.collideConnected=true;
+            def.collideConnected=COLLIDE_CONNECTED;
             def.localAnchorA.set(anchorA);
             def.localAnchorB.set(anchorB);
             def.enableLimit=false;
-            def.lowerAngle= - (float) (MAX_ANGLE);
-            def.upperAngle= (float) (MAX_ANGLE);
+            def.lowerAngle= - (float) (getMaxAngle(organA, organB));
+            def.upperAngle= (float) (getMaxAngle(organA, organB));
 
             organA.correctJointDef(def);
             organB.correctJointDef(def);
@@ -176,12 +179,12 @@ public class ConnectTool extends Tool {
             def = new RevoluteJointDef();
             def.bodyA = organA.body;
             def.bodyB = organB.body;
-            def.collideConnected=true;
+            def.collideConnected=COLLIDE_CONNECTED;
             def.localAnchorA.set(anchorA);
             def.localAnchorB.set(anchorB);
             def.enableLimit=true;
-            def.lowerAngle= - (float) (MAX_ANGLE);
-            def.upperAngle= (float) (MAX_ANGLE);
+            def.lowerAngle= - (float) (getMaxAngle(organA, organB));
+            def.upperAngle= (float) (getMaxAngle(organA, organB));
 
             return makeConnection(spDef.Avisible || spDef.Bvisible);
         }
@@ -197,12 +200,12 @@ public class ConnectTool extends Tool {
                 def = new RevoluteJointDef();
                 def.bodyA = organA.body;
                 def.bodyB = organB.body;
-                def.collideConnected=true;
+                def.collideConnected=COLLIDE_CONNECTED;
                 def.localAnchorA.set(anchorA);
                 def.localAnchorB.set(anchorB);
                 def.enableLimit=true;
-                def.lowerAngle= - (float) (MAX_ANGLE);
-                def.upperAngle= (float) (MAX_ANGLE);
+                def.lowerAngle= - (float) (getMaxAngle(organA, organB));
+                def.upperAngle= (float) (getMaxAngle(organA, organB));
             }
 
             RevoluteJoint joint = (RevoluteJoint) world.createJoint(def);
@@ -235,4 +238,12 @@ public class ConnectTool extends Tool {
 
     }
 
+
+    public static double getMaxAngle(OrganPart organA, OrganPart organB){
+        if(organA instanceof SmallIntestineOrganPart
+                && organB instanceof SmallIntestineOrganPart)
+            return SMALLINTESTINE_MAX_ANGLE;
+        else
+            return MAX_ANGLE;
+    }
 }

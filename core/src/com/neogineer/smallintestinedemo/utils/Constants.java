@@ -15,7 +15,7 @@ public class Constants {
 
     public static final float VERTICES_SCALE_FACTOR = 40;
 
-    public static final boolean ENABLE_DEBUG = true;
+    public static final boolean ENABLE_DEBUG = false;
 
     public static final boolean VERBOSE_GESTURE = true;
 
@@ -31,7 +31,7 @@ public class Constants {
     public static final float ESOPHAGUS_SCALE = 1f *GLOBAL_SCALE;;
     public static final float SMALLINTESTINE_SCALE = 0.15f *GLOBAL_SCALE;
 
-    public static final Vector2 LIVER_POSITION = new Vector2(10,80);
+    public static final Vector2 LIVER_POSITION = new Vector2(-80,80);
     public static final Vector2 STOMACH_POSITION = new Vector2(48, 60);
     public static final Vector2 DUODENUM_POSITION = new Vector2(40,40);
     public static final Vector2 ESOPHAGUS_POSITION = new Vector2(48, 68);

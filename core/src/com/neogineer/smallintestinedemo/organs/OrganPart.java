@@ -88,7 +88,10 @@ public abstract class OrganPart extends Actor implements Connectable {
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal(path));
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.DynamicBody;
-        if(this.getClass().getSimpleName().equals("StomachOrganPart") && this.identifier.equals("1"))
+        //if(this instanceof SmallIntestineOrganPart)
+        //    if(((SmallIntestineOrganPart)this).id==145)
+        //        bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("DuodenumOrganPart") && this.identifier.equals("1"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         bDef.position.set(this.position);
         bDef.angle = this.rotation;
@@ -96,8 +99,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         body.setUserData(this);
 
         FixtureDef fix = new FixtureDef();
-        fix.density = 0.5f;
-        fix.friction = 0.6f;
+        fix.density = 0.1f;
+        fix.friction = 0f;
         fix.restitution = 0.5f;
 
         origin = loader.getOrigin("base"+identifier, 1).cpy();
