@@ -280,7 +280,8 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         if(this instanceof Openable){
             try {
-                ((Openable)this).getOpenableSide(sp.getLocalCoord().x, sp.getLocalCoord().y).normal();
+                Vector2 vec = body.getWorldPoint(new Vector2(sp.getLocalCoord().x, sp.getLocalCoord().y));
+                ( (Openable) this).normal(vec.x, vec.y);
             }catch (NullPointerException npe){
             }
         }

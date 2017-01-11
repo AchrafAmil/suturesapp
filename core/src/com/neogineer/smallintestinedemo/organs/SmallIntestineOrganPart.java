@@ -160,30 +160,19 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
         Vector2 vec = (this.body==def.bodyA)? def.localAnchorA:def.localAnchorB;
         Vector2 dims = this.getDimensions();
 
-        for(int i=0; i<openableSides.size(); i++){
-            OpenableSide side = openableSides.get(i);
-            if(side.state== OpenableSide.State.OPEN ){
-                vec.y = (dims.y/2) * ((i==0)? 1:(-1)) ;
-                float xStep = this
-                        .getVertex(this.origin.x + this.origin.x * 2 * HORIZONTAL_SUTUREPOINT_POSITION, 0).x;
-                float oldX = vec.x ;
-                vec.x = (oldX>0)? xStep:-xStep;
-                return;
-            }
-        }
-        vec.x = dims.x/2 * ((vec.x>0)? 1:(-1)) ;
-        vec.y=0;
+        if(isVeryEdge()){
+            boolean up = upSuturing();
+            vec.y = (dims.y / 2) * ((up) ? 1 : (-1));
+            float xStep = this
+                    .getVertex(this.origin.x + this.origin.x * 2 * HORIZONTAL_SUTUREPOINT_POSITION, 0).x;
+            float oldX = vec.x;
+            vec.x = (oldX > 0) ? xStep : -xStep;
 
-//        float xDiff = Math.max( Math.abs(dims.x/2-vec.x) , Math.abs(-dims.x/2-vec.x) );
-//        float yDiff = Math.max( Math.abs(dims.y/2-vec.y) , Math.abs(-dims.y/2-vec.y) );
-//
-//        if(xDiff<yDiff){
-//            vec.x = dims.x/2 * ((vec.x>0)? 1:(-1)) ;
-//            vec.y=0;
-//        }else{
-//            vec.y = dims.y/2 * ((vec.y>0)? 1:(-1)) ;
-//            vec.x=0;
-//        }
+        }else{
+            // side suturing (x sign is enough to decide because we have ConnectTool.MAX_ACCEPTED_DISTANCE
+            vec.x = dims.x/2 * ((vec.x>0)? 1:(-1)) ;
+            vec.y=0;
+        }
 
     }
 
@@ -191,34 +180,18 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
     public SuturePoint correctAnchorAndRotation(SuturePoint suturePoint) {
         // first, let's decide if it's up/down or left/right (end or side).
 
-        for(int i=0; i<openableSides.size(); i++){
-            OpenableSide side = openableSides.get(i);
-            if(side.state== OpenableSide.State.CLOSED || side.state== OpenableSide.State.OPEN ){
-                // TODO: 31/10/16 : sometimes side.contains() is returning unexpected "false"
-                if(true || side.contains(suturePoint.localCoord.x, suturePoint.localCoord.y)){
-                    // we're suturing upon this side
-
-                    // the distance between the center and the next suture point x position
-                    float xStep = this
-                            .getVertex(this.origin.x + this.origin.x * 2 * HORIZONTAL_SUTUREPOINT_POSITION, 0).x;
-
-                    float oldX = suturePoint.getLocalCoord().x ;
-                    suturePoint.getLocalCoord().x = (oldX>0)? xStep:-xStep;
-
-                    if(i==0){
-                        // up openable side
-                        suturePoint.getLocalCoord().y = this
-                                .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.JOINT_OFFSET_PERCENT ).y;
-                    }else{
-                        // down openable side
-                        suturePoint.getLocalCoord().y = - this
-                                .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.JOINT_OFFSET_PERCENT ).y;
-                    }
-
-                    suturePoint.setRotation((float) (Math.PI/2));
-                }
+        if(isVeryEdge()){
+            //end suturing
+            if(upSuturing()){
+                suturePoint.getLocalCoord().y = this
+                        .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.JOINT_OFFSET_PERCENT ).y;
+            }else{
+                suturePoint.getLocalCoord().y = - this
+                        .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.JOINT_OFFSET_PERCENT ).y;
             }
+            suturePoint.setRotation((float) (Math.PI/2));
         }
+        //side suturing (nothing to do)
 
         return suturePoint;
     }
@@ -264,25 +237,6 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
                 count++;
         }
         return count==2;
-
-        // check if neighbors are also SmallIntestine.
-//        for(int i=0; i<suturePoints.size(); i++ ){
-//            SuturePoint sp = suturePoints.get(i);
-//            if(!(sp.getTheOtherOrganPart() instanceof SmallIntestineOrganPart))
-//                return false;
-//            else{
-//                SmallIntestineOrganPart theOtherOp = (SmallIntestineOrganPart) sp.getTheOtherOrganPart();
-//                SuturePoint sp2 = theOtherOp.getSuturePoints().get(i);
-//                if(theOtherOp.hasEndSuturePoints()
-//                        && sp2.getTheOtherOrganPart()!=this)
-//                    return false;
-//                if(!( sp2.getTheOtherOrganPart() instanceof SmallIntestineOrganPart))
-//                    return false;
-//            }
-//
-//
-//        }
-//        return true;
     }
 
     public boolean hasAnOpenSide(){
@@ -302,6 +256,43 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
                 count++;
         }
         return count;
+    }
+
+    public OpenableSide getTheOpenOs(){
+        for(OpenableSide os: openableSides){
+            if(os.state== OpenableSide.State.OPEN)
+                return os;
+        }
+        return null;
+    }
+
+    /**
+     *@return Either 0 or 1 (or -1 if there is no open OS)
+     */
+    public int getTheOpenOsIndex(){
+        try{
+            return openableSides.indexOf(getTheOpenOs());
+        }catch (NullPointerException npe){
+            return -1;
+        }
+    }
+
+    public SuturePoint getTheNoXYSp(){
+        for(SuturePoint sp: suturePoints){
+            // neither on X nor Y axes
+            if(sp.getLocalCoord().x!=0 && sp.getLocalCoord().y!=0)
+                return sp;
+        }
+        return null;
+    }
+
+    private boolean upSuturing() {
+        if(hasAnOpenSide())
+            return getTheOpenOsIndex()==0;
+        if(endSuturePointsCount()>=1)
+            return getTheNoXYSp().getLocalCoord().y>0;
+        // not supposed to get here, to-do: throw SuturesException
+        return true;
     }
 
 }
