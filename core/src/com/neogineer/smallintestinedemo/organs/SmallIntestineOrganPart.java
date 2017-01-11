@@ -68,7 +68,7 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
             int ind=0;
             // TODO: 20/11/16 Review & refactor this
             while (true){
-                BodyEditorLoader.PolygonModel pm = loader.getInternalModel().rigidBodies.get("open"+ind).polygons.get(0);
+                BodyEditorLoader.PolygonModel pm = loader.getInternalModel().rigidBodies.get("closed"+ind).polygons.get(0);
                 float[] vertices = new float[pm.vertices.size()*2];
 
                 int i = 0;
@@ -97,7 +97,9 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
     @Override
     public boolean connectionIntent(Vector2 point) {
-        return (this.suturePoints.size()<MAX_SUTURE_POINTS);
+        return this.suturePoints.size() < MAX_SUTURE_POINTS && (isVeryMiddle() || isVeryEdge());
+
+
     }
 
     @Override
@@ -160,7 +162,7 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
         for(int i=0; i<openableSides.size(); i++){
             OpenableSide side = openableSides.get(i);
-            if(side.state== OpenableSide.State.CLOSED || side.state== OpenableSide.State.OPEN ){
+            if(side.state== OpenableSide.State.OPEN ){
                 vec.y = (dims.y/2) * ((i==0)? 1:(-1)) ;
                 float xStep = this
                         .getVertex(this.origin.x + this.origin.x * 2 * HORIZONTAL_SUTUREPOINT_POSITION, 0).x;
@@ -241,6 +243,65 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
     @Override
     public float getHeight() {
         return BASE_HEIGHT;
+    }
+
+    public boolean isVeryMiddle(){
+        for(SuturePoint sp: suturePoints){
+            if(!(((SmallIntestineOrganPart)sp.getTheOtherOrganPart()).isMiddle()))
+                return false;
+        }
+        return true;
+    }
+
+    public boolean isVeryEdge(){
+        return (hasAnOpenSide() || endSuturePointsCount()>=1);
+    }
+
+    public boolean isMiddle(){
+        int count=0;
+        for(SuturePoint sp: suturePoints){
+            if(sp.getLocalCoord().x==0)
+                count++;
+        }
+        return count==2;
+
+        // check if neighbors are also SmallIntestine.
+//        for(int i=0; i<suturePoints.size(); i++ ){
+//            SuturePoint sp = suturePoints.get(i);
+//            if(!(sp.getTheOtherOrganPart() instanceof SmallIntestineOrganPart))
+//                return false;
+//            else{
+//                SmallIntestineOrganPart theOtherOp = (SmallIntestineOrganPart) sp.getTheOtherOrganPart();
+//                SuturePoint sp2 = theOtherOp.getSuturePoints().get(i);
+//                if(theOtherOp.hasEndSuturePoints()
+//                        && sp2.getTheOtherOrganPart()!=this)
+//                    return false;
+//                if(!( sp2.getTheOtherOrganPart() instanceof SmallIntestineOrganPart))
+//                    return false;
+//            }
+//
+//
+//        }
+//        return true;
+    }
+
+    public boolean hasAnOpenSide(){
+        try {
+            return openableSides.get(0).state== OpenableSide.State.OPEN
+                    || openableSides.get(1).state== OpenableSide.State.OPEN ;
+        }catch (NullPointerException npe){
+            return false;
+        }
+    }
+
+    public int endSuturePointsCount(){
+        int count = 0 ;
+        for(SuturePoint sp: suturePoints){
+            // neither on X nor Y axes
+            if(sp.getLocalCoord().x!=0 && sp.getLocalCoord().y!=0)
+                count++;
+        }
+        return count;
     }
 
 }

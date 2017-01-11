@@ -149,13 +149,4 @@ public class DuodenumOrganPart extends OrganPart implements Openable {
         vec.set(pushToEdge(vec));
     }
 
-    @Override
-    public boolean addSuturePoint(SuturePoint sp) {
-        super.addSuturePoint(sp);
-        try {
-            this.getOpenableSide(sp.getLocalCoord().x, sp.getLocalCoord().y).normal();
-        }catch (NullPointerException npe){
-        }
-        return true;
-    }
 }

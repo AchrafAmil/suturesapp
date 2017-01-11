@@ -291,7 +291,7 @@ public class GameStage extends Stage{
 
     private void setupCamera(){
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        camera.zoom = 3f;
+        camera.zoom = 2f;
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
         OrgansHolder.camera = camera;
@@ -407,7 +407,7 @@ public class GameStage extends Stage{
     }
 
     int clicksA = 0 ;
-    int clicksB = 1 ;
+    int clicksB = 0 ;
     @Override
     public boolean keyDown(int keyCode) {
 
@@ -419,6 +419,12 @@ public class GameStage extends Stage{
             case 30:
                 // instead of switching tools, we'll now save/load game states (always for debug purpose)
                 this.clickedB();
+                break;
+            case 40:
+                load();
+                break;
+            case 47:
+                save();
                 break;
             default:
                 break;
@@ -453,25 +459,33 @@ public class GameStage extends Stage{
     private void clickedB(){
         clicksB++;
         if(clicksB %2==1){
-            try {
-                Output output = new Output(new FileOutputStream("kryo_save.bin"));
-                organsHolder.saveState(kryo, output);
-                output.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }finally {
-                accumulator=0;
-            }
+            save();
         }else{
-            try {
-                Input input = new Input(new FileInputStream("kryo_save.bin"));
-                organsHolder.loadState(kryo, input);
-                input.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }finally {
-                accumulator=0;
-            }
+            load();
+        }
+    }
+
+    private void save(){
+        try {
+            Output output = new Output(new FileOutputStream("kryo_save.bin"));
+            organsHolder.saveState(kryo, output);
+            output.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            accumulator=0;
+        }
+    }
+
+    private void load(){
+        try {
+            Input input = new Input(new FileInputStream("kryo_save.bin"));
+            organsHolder.loadState(kryo, input);
+            input.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            accumulator=0;
         }
     }
 }

@@ -277,6 +277,14 @@ public abstract class OrganPart extends Actor implements Connectable {
         this.correctAnchorAndRotation(sp);
         sp.setRelatedOrganPart(this);
         this.suturePoints.add(sp);
+
+        if(this instanceof Openable){
+            try {
+                ((Openable)this).getOpenableSide(sp.getLocalCoord().x, sp.getLocalCoord().y).normal();
+            }catch (NullPointerException npe){
+            }
+        }
+
         return true;
     }
 

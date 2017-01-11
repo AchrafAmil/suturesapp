@@ -35,4 +35,10 @@ public class StomachOrganPart extends OrganPart {
         return false;
     }
 
+    @Override
+    public boolean connectionIntent(Vector2 point) {
+        return true;
+    }
+
+
 }

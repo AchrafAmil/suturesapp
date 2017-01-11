@@ -31,9 +31,9 @@ public class ConnectTool extends Tool {
 
     // RevoluteJoint allows rotation around the joint point, let's limit the rotation angle.
     private static final double MAX_ANGLE = 0 ;
-    private static final double SMALLINTESTINE_MAX_ANGLE = Math.PI/8 ;
+    private static final double SMALLINTESTINE_MAX_ANGLE = Math.PI/10 ;
 
-    private static final float MAX_ACCEPTED_DISTANCE = 2f;
+    private static final float MAX_ACCEPTED_DISTANCE = 1.2f;
 
     private static final boolean COLLIDE_CONNECTED= false;
 
