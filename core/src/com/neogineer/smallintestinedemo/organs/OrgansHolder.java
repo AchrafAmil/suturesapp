@@ -125,6 +125,15 @@ public class OrgansHolder {
         duodenum.loadState(kryo, input);
         esophagus.loadState(kryo, input);
         loadJoints(kryo, input);
+        updateOpenableSides();
+    }
+
+    private void updateOpenableSides() {
+        smallIntestine.loadBufferedOpenableSides();
+        liver.loadBufferedOpenableSides();
+        stomach.loadBufferedOpenableSides();
+        duodenum.loadBufferedOpenableSides();
+        esophagus.loadBufferedOpenableSides();
     }
 
     private void loadJoints(Kryo kryo, Input input){

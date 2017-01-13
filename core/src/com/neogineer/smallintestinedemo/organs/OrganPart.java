@@ -29,6 +29,7 @@ import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 
@@ -53,9 +54,11 @@ public abstract class OrganPart extends Actor implements Connectable {
     protected float rotation = 0;
 
 
-    protected ArrayList<SuturePoint> suturePoints = new ArrayList<SuturePoint>();
+    protected ArrayList<SuturePoint> suturePoints = new ArrayList<>();
 
-    protected ArrayList<OpenableSide> openableSides = new ArrayList<OpenableSide>();
+    protected ArrayList<OpenableSide> openableSides = new ArrayList<>();
+
+    protected List<OpenableSide.State> openableSidesStatesBuffer;
 
 
     public OrganPart(World world, OrthographicCamera camera, Organ callback, String identifier, float scale, Vector2 position, float rotation ){
@@ -71,11 +74,23 @@ public abstract class OrganPart extends Actor implements Connectable {
 
     public OrganPart(World world, OrthographicCamera camera, Organ callback, float scale, OrganPartDefinition opDef){
         this(world, camera, callback, opDef.getIdentifier(), scale, opDef.position, opDef.angle);
+        this.openableSidesStatesBuffer = opDef.openableSidesStates;
     }
 
     public OrganPart(OrganPartDefinition opDef){
         this(OrgansHolder.world, OrgansHolder.camera, OrgansHolder.organFromName(opDef.getOrganName()),
                 Utils.scaleFromName(opDef.getOrganName()), opDef );
+    }
+
+    public boolean loadBufferedOpenableSides(){
+        if(this.openableSidesStatesBuffer==null || openableSides.size()==0)
+            return false;
+
+        for(OpenableSide.State state: openableSidesStatesBuffer){
+            OpenableSide side = openableSides.get(openableSidesStatesBuffer.indexOf(state));
+            side.setState(state);
+        }
+        return true;
     }
 
 

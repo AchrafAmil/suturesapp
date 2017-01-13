@@ -71,4 +71,11 @@ public abstract class Organ extends Group {
     }
 
     public abstract float getScale();
+
+    public boolean loadBufferedOpenableSides(){
+        for(OrganPart part : organParts.values()){
+            part.loadBufferedOpenableSides();
+        }
+        return true;
+    }
 }
