@@ -143,11 +143,14 @@ public class ConnectTool extends Tool {
             // check SmallIntestine end-to-end suturing regions
             if((organA instanceof SmallIntestineOrganPart)
                     &&(organB instanceof SmallIntestineOrganPart)){
-                int regionA = Utils.getRegion(def.localAnchorA);
-                int regionB = Utils.getRegion(def.localAnchorB);
+                //otherwise it's side-to-... : regions doesn't make sens.
+                if(anchorA.y !=0 || anchorB.y!=0){
+                    int regionA = Utils.getRegion(def.localAnchorA);
+                    int regionB = Utils.getRegion(def.localAnchorB);
 
-                if(!Utils.regionsMatch(regionA, regionB))
-                    return null;
+                    if(!Utils.regionsMatch(regionA, regionB))
+                        return null;
+                }
             }
 
             RevoluteJoint joint = makeConnection(visible);

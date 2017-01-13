@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
 /**
@@ -55,6 +56,8 @@ public abstract class Tool extends InputAdapter {
             if(hitBody!=null)
                 Gdx.app.log("GESTURE", "Hit: "+hitBody.getUserData().getClass().getSimpleName()
                         +( (OrganPart) hitBody.getUserData() ).getIdentifier()
+                        + ((hitBody.getUserData() instanceof SmallIntestineOrganPart)?
+                        ( (SmallIntestineOrganPart) hitBody.getUserData() ).id:"")
                         +" at "+((OrganPart)hitBody.getUserData()).body.getLocalPoint(new Vector2(testPoint.x, testPoint.y)));
         }
     }
