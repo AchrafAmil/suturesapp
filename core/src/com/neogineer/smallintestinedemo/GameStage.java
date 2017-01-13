@@ -291,7 +291,7 @@ public class GameStage extends Stage{
 
     private void setupCamera(){
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        camera.zoom = 2f;
+        camera.zoom = 3f;
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
         OrgansHolder.camera = camera;

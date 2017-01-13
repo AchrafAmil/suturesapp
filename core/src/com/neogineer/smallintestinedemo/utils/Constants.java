@@ -35,7 +35,7 @@ public class Constants {
     public static final Vector2 STOMACH_POSITION = new Vector2(48, 60);
     public static final Vector2 DUODENUM_POSITION = new Vector2(40,40);
     public static final Vector2 ESOPHAGUS_POSITION = new Vector2(48, 68);
-    public static final Vector2 SMALLINTESTINE_LEFT_POSITION = new Vector2(55,25);
+    public static final Vector2 SMALLINTESTINE_LEFT_POSITION = new Vector2(51,29.5f);
     public static final Vector2 SMALLINTESTINE_RIGHT_POSITION = new Vector2(100,0);
 
 }

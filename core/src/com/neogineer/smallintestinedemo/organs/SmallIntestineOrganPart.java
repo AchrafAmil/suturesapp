@@ -220,7 +220,7 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
     public boolean isVeryMiddle(){
         for(SuturePoint sp: suturePoints){
-            if(!(((SmallIntestineOrganPart)sp.getTheOtherOrganPart()).isMiddle()))
+            if(!sp.isNoXY() && !(((SmallIntestineOrganPart)sp.getTheOtherOrganPart()).isMiddle()))
                 return false;
         }
         return true;

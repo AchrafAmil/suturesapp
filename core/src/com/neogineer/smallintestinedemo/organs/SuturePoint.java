@@ -101,6 +101,10 @@ public class SuturePoint {
         return this;
     }
 
+    public boolean isNoXY(){
+        return localCoord.x!=0 && localCoord.y!=0;
+    }
+
     public Sprite getBackgroundedSprite() {
         return backgroundedSprite;
     }

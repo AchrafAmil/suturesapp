@@ -18,6 +18,7 @@ import com.neogineer.smallintestinedemo.organs.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
+import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
