@@ -42,6 +42,13 @@ public class CutTool extends Tool {
     private SuturePoint getConcernedSuturePoint(){
 
         OrganPart organPart = (OrganPart) hitBody.getUserData();
+
+        //do not cut Small Intestine unless it's in the very middle (to avoid Small Intestine OP singleton).
+        if(organPart instanceof SmallIntestineOrganPart)
+            if(!((SmallIntestineOrganPart) organPart).isVeryMiddle())
+                return null;
+
+
         List<SuturePoint> suturePoints = organPart.getSuturePoints();
 
         for (SuturePoint sp : suturePoints){
