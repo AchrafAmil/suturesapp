@@ -144,7 +144,7 @@ public class ConnectTool extends Tool {
             if((organA instanceof SmallIntestineOrganPart)
                     &&(organB instanceof SmallIntestineOrganPart)){
                 //otherwise it's side-to-... : regions doesn't make sens.
-                if(anchorA.y !=0 || anchorB.y!=0){
+                if(anchorA.y !=0 && anchorB.y!=0){
                     int regionA = Utils.getRegion(def.localAnchorA);
                     int regionB = Utils.getRegion(def.localAnchorB);
 
@@ -183,11 +183,11 @@ public class ConnectTool extends Tool {
             this.organA = OrgansHolder.organPartFromSpDef(spDef, true);
             this.organB = OrgansHolder.organPartFromSpDef(spDef, false);
 
-            if(spDef.organA.contains("SmallIntestine"))
+            if(spDef.getOrganA().contains("SmallIntestine"))
                 new Integer(42);
 
-            this.anchorA = spDef.anchorA;
-            this.anchorB = spDef.anchorB;
+            this.anchorA = spDef.getAnchorA();
+            this.anchorB = spDef.getAnchorB();
 
             def = new RevoluteJointDef();
             def.bodyA = organA.body;
@@ -199,7 +199,7 @@ public class ConnectTool extends Tool {
             def.lowerAngle= - (float) (getMaxAngle(organA, organB));
             def.upperAngle= (float) (getMaxAngle(organA, organB));
 
-            return makeConnection(spDef.Avisible || spDef.Bvisible);
+            return makeConnection(spDef.isAvisible() || spDef.isBvisible());
         }
 
         /**

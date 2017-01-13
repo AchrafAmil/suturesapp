@@ -5,18 +5,19 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoSerializable;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 /**
  * Created by neogineer on 31/12/16.
  */
 public class SuturePointDef implements KryoSerializable, Comparable<SuturePointDef>{
 
-    public String organA ;
-    public String organB ;
-    public Vector2 anchorA ;
-    public Vector2 anchorB ;
-    public boolean Avisible;
-    public boolean Bvisible;
+    private String organA ;
+    private String organB ;
+    private Vector2 anchorA ;
+    private Vector2 anchorB ;
+    private boolean Avisible;
+    private boolean Bvisible;
 
     /** Optional (uses e.g: small intestine ids) */
     public int idA;
@@ -25,6 +26,8 @@ public class SuturePointDef implements KryoSerializable, Comparable<SuturePointD
     public SuturePointDef(){
         idA=0;
         idB=0;
+        anchorA = new Vector2();
+        anchorB = new Vector2();
     }
 
     @Override
@@ -43,8 +46,8 @@ public class SuturePointDef implements KryoSerializable, Comparable<SuturePointD
     public void read(Kryo kryo, Input input) {
         organA = input.readString();
         organB = input.readString();
-        anchorA = kryo.readObject(input, Vector2.class);
-        anchorB = kryo.readObject(input, Vector2.class);
+        anchorA.set(kryo.readObject(input, Vector2.class));
+        anchorB.set(kryo.readObject(input, Vector2.class));
         Avisible = input.readBoolean();
         Bvisible = input.readBoolean();
         idA = input.readInt();
@@ -73,5 +76,71 @@ public class SuturePointDef implements KryoSerializable, Comparable<SuturePointD
                 && Bvisible== other.Bvisible
                 && idA==other.idA
                 && idB==other.idB ;
+    }
+
+    public String getOrganA() {
+        return organA;
+    }
+
+    public void setOrganA(String organA) {
+        this.organA = organA;
+    }
+
+    public String getOrganB() {
+        return organB;
+    }
+
+    public void setOrganB(String organB) {
+        this.organB = organB;
+    }
+
+    public Vector2 getAnchorA() {
+        Utils.vectorZeroPrecision(anchorA);
+        return anchorA;
+    }
+
+    public void setAnchorA(Vector2 anchorA) {
+        this.anchorA = anchorA;
+    }
+
+    public Vector2 getAnchorB() {
+        Utils.vectorZeroPrecision(anchorB);
+        return anchorB;
+    }
+
+    public void setAnchorB(Vector2 anchorB) {
+        this.anchorB = anchorB;
+    }
+
+    public boolean isAvisible() {
+        return Avisible;
+    }
+
+    public void setAvisible(boolean avisible) {
+        Avisible = avisible;
+    }
+
+    public boolean isBvisible() {
+        return Bvisible;
+    }
+
+    public void setBvisible(boolean bvisible) {
+        Bvisible = bvisible;
+    }
+
+    public int getIdA() {
+        return idA;
+    }
+
+    public void setIdA(int idA) {
+        this.idA = idA;
+    }
+
+    public int getIdB() {
+        return idB;
+    }
+
+    public void setIdB(int idB) {
+        this.idB = idB;
     }
 }

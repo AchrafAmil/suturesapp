@@ -148,7 +148,7 @@ public class OrgansHolder {
         for(SuturePointDef spDef : spDefs){
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
             connector.proceed(spDef);
-            Gdx.app.log("Suturing", "sutured :"+spDef.organA+"("+spDef.idA+") with "+spDef.organB+"("+spDef.idB+")");
+            Gdx.app.log("Suturing", "sutured :"+spDef.getOrganA()+"("+spDef.getIdA()+") with "+spDef.getOrganB()+"("+spDef.getIdB()+")");
         }
     }
 
@@ -196,15 +196,15 @@ public class OrgansHolder {
      */
     public static OrganPart organPartFromSpDef(SuturePointDef spDef, boolean a){
         if(a){
-            if(spDef.organA.contains("SmallIntestine"))
-                return organPartFromFullIdentifier(spDef.organA, spDef.idA);
+            if(spDef.getOrganA().contains("SmallIntestine"))
+                return organPartFromFullIdentifier(spDef.getOrganA(), spDef.getIdA());
             else
-                return organPartFromFullIdentifier(spDef.organA);
+                return organPartFromFullIdentifier(spDef.getOrganA());
         }else {
-            if(spDef.organB.contains("SmallIntestine"))
-                return organPartFromFullIdentifier(spDef.organB, spDef.idB);
+            if(spDef.getOrganB().contains("SmallIntestine"))
+                return organPartFromFullIdentifier(spDef.getOrganB(), spDef.getIdB());
             else
-                return organPartFromFullIdentifier(spDef.organB);
+                return organPartFromFullIdentifier(spDef.getOrganB());
         }
     }
 

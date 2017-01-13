@@ -87,17 +87,17 @@ public class Utils {
         OrganPart orgA = ((OrganPart)j.getBodyA().getUserData());
         OrganPart orgB = ((OrganPart)j.getBodyB().getUserData());
 
-        spDef.organA = orgA.getFullIdentifier();
-        spDef.organB = orgB.getFullIdentifier();
+        spDef.setOrganA(orgA.getFullIdentifier());
+        spDef.setOrganB(orgB.getFullIdentifier());
 
 
 
-        spDef.anchorA = new Vector2(orgA.body.getLocalPoint(j.getAnchorA()).x,orgA.body.getLocalPoint(j.getAnchorA()).y) ;
-        spDef.anchorB = new Vector2(orgB.body.getLocalPoint(j.getAnchorB()).x,orgB.body.getLocalPoint(j.getAnchorB()).y) ;
+        spDef.setAnchorA(new Vector2(orgA.body.getLocalPoint(j.getAnchorA()).x,orgA.body.getLocalPoint(j.getAnchorA()).y)) ;
+        spDef.setAnchorB(new Vector2(orgB.body.getLocalPoint(j.getAnchorB()).x,orgB.body.getLocalPoint(j.getAnchorB()).y));
 
-        spDef.Avisible = ((SuturePoint)j.getUserData()).isVisible();
+        spDef.setAvisible(((SuturePoint)j.getUserData()).isVisible());
         // TODO: 31/12/16 find a way to get the real value
-        spDef.Bvisible = false;
+        spDef.setBvisible(false);
 
         if(orgA instanceof SmallIntestineOrganPart)
             spDef.idA = ((SmallIntestineOrganPart)orgA).id;
@@ -165,5 +165,12 @@ public class Utils {
         return !(   //doesn't match (refuse suturing) when :
                     regionA==regionB || regionA+regionB==5
                 );
+    }
+
+    public static void vectorZeroPrecision(Vector2 vec){
+        if(Math.abs(vec.x)<0.0001f)
+            vec.x = 0;
+        if(Math.abs(vec.y)<0.0001f)
+            vec.y = 0;
     }
 }
