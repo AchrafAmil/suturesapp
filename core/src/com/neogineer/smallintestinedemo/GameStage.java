@@ -291,8 +291,8 @@ public class GameStage extends Stage{
 
     private void setupCamera(){
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        camera.zoom = 3f;
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
+        camera.zoom = Constants.INITIAL_ZOOM;
+        //camera.position.set(camera.zoom * camera.viewportWidth/ 2.0f, camera.zoom * camera.viewportHeight/ 2.0f, 0);
         camera.update();
         OrgansHolder.camera = camera;
     }
@@ -426,7 +426,32 @@ public class GameStage extends Stage{
             case 47:
                 save();
                 break;
+            case 81:
+                camera.zoom-=0.1f;
+                camera.update();
+                break;
+            case 69:
+                camera.zoom+=0.1f;
+                camera.update();
+                break;
+            case 19:
+                camera.translate(0,0.5f);
+                camera.update();
+                break;
+            case 20:
+                camera.translate(0,-0.5f);
+                camera.update();
+                break;
+            case 21:
+                camera.translate(+-0.5f,0);
+                camera.update();
+                break;
+            case 22:
+                camera.translate(0.5f,0);
+                camera.update();
+                break;
             default:
+                Gdx.app.log("Keydown", "not handled, code: "+keyCode);
                 break;
         }
 

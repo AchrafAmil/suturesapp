@@ -158,8 +158,10 @@ public abstract class OrganPart extends Actor implements Connectable {
         float w = scale * (baseSprite.getTexture().getWidth())/2 *someScale;
         float h = scale * (baseSprite.getTexture().getHeight())/2 *someScale;
 
-        Vector3 bodyPixelPos = camera.project(new Vector3(body.getPosition().x, body.getPosition().y, 0))
-                .scl(someScale*camera.viewportHeight/(Gdx.graphics.getHeight()/10f/camera.zoom)).sub(w/2, h/2, 0);
+        Vector3 bodyPixelPos = camera.project(new Vector3(
+                body.getPosition().x, body.getPosition().y, 0).add(Utils.cameraPosition(camera)))
+                .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom))
+                .sub(w/2, h/2, 0);
 
         baseSprite.setSize(w,h);
         baseSprite.setOrigin(w/2, h/2);
@@ -184,8 +186,10 @@ public abstract class OrganPart extends Actor implements Connectable {
             float h = scale * (baseSprite.getTexture().getHeight())/2 *someScale;
 
 
-            Vector3 bodyPixelPos = camera.project(new Vector3(body.getPosition().x, body.getPosition().y, 0))
-                    .scl(someScale*camera.viewportHeight/(Gdx.graphics.getHeight()/10f/camera.zoom)).sub(w/2, h/2, 0);
+            Vector3 bodyPixelPos = camera.project(new Vector3(
+                    body.getPosition().x, body.getPosition().y, 0).add(Utils.cameraPosition(camera)))
+                    .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom))
+                    .sub(w/2, h/2, 0);
 
             sprite.setSize(w,h);
             sprite.setOrigin(w/2, h/2);
@@ -212,8 +216,9 @@ public abstract class OrganPart extends Actor implements Connectable {
             float w = scale * (sprite.getTexture().getWidth())/2f *someScale;
             float h = scale * (sprite.getTexture().getHeight())/2f *someScale;
 
-            Vector3 spPixelPos = camera.project(new Vector3(spWorldCoord.x, spWorldCoord.y, 0))
-                    .scl(someScale*camera.viewportHeight/(Gdx.graphics.getHeight()/10f/camera.zoom)).sub(w/2, h/2, 0);
+            Vector3 spPixelPos = camera.project(new Vector3(spWorldCoord.x, spWorldCoord.y, 0)
+                    .add(Utils.cameraPosition(camera)))
+                    .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom)).sub(w/2, h/2, 0);
 
 
             sprite.setSize(w,h);

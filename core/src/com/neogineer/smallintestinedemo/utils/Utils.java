@@ -1,7 +1,9 @@
 package com.neogineer.smallintestinedemo.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
@@ -28,6 +30,10 @@ import java.io.InputStream;
  * Created by neogineer on 27/10/16.
  */
 public class Utils {
+
+    public static Vector3 cameraPosition(OrthographicCamera camera){
+        return new Vector3(camera.position.x-Constants.VIEWPORT_HEIGHT *Gdx.graphics.getWidth()/(float)Gdx.graphics.getHeight()*camera.zoom/2, camera.position.y-Constants.VIEWPORT_HEIGHT*camera.zoom/2,0);
+    }
 
     /**
      * Multiply it by camera.zoom then use it to scale between meters and pixels.
