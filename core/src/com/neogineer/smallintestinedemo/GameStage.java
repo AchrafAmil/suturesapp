@@ -435,20 +435,23 @@ public class GameStage extends Stage{
                 camera.update();
                 break;
             case 19:
-                camera.translate(0,0.5f);
+                camera.translate(0,2f);
                 camera.update();
                 break;
             case 20:
-                camera.translate(0,-0.5f);
+                camera.translate(0,-2f);
                 camera.update();
                 break;
             case 21:
-                camera.translate(+-0.5f,0);
+                camera.translate(-2f,0);
                 camera.update();
                 break;
             case 22:
-                camera.translate(0.5f,0);
+                camera.translate(2f,0);
                 camera.update();
+                break;
+            case 129:
+                Constants.ENABLE_DEBUG = !Constants.ENABLE_DEBUG;
                 break;
             default:
                 Gdx.app.log("Keydown", "not handled, code: "+keyCode);
