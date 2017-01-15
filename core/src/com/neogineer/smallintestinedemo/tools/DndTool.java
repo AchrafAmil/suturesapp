@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
@@ -38,6 +39,8 @@ public class DndTool extends Tool {
         // if we hit something we create a new mouse joint
         // and attach it to the hit body.
         if (hitBody != null) {
+            if(!hitBody.getType().equals(BodyDef.BodyType.DynamicBody))
+                return false;
             MouseJointDef def = new MouseJointDef();
             def.bodyA = groundBody;
             def.bodyB = hitBody;

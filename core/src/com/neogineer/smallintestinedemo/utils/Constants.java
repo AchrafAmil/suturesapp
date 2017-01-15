@@ -34,7 +34,7 @@ public class Constants {
 
     // TODO: 14/01/17 make positions relative so that changing the global scale doesn't affect the external joints.
     public static final Vector2 LIVER_POSITION = new Vector2(10,80);
-    public static final Vector2 STOMACH_POSITION = new Vector2(48, 60);
+    public static final Vector2 STOMACH_POSITION = new Vector2(47, 59.2f);
     public static final Vector2 DUODENUM_POSITION = new Vector2(40,40);
     public static final Vector2 ESOPHAGUS_POSITION = new Vector2(48, 68);
     public static final Vector2 SMALLINTESTINE_LEFT_POSITION = new Vector2(51,29.5f);

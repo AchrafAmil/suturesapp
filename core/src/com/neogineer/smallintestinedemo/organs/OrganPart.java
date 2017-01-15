@@ -106,6 +106,10 @@ public abstract class OrganPart extends Actor implements Connectable {
         //if(this instanceof SmallIntestineOrganPart)
         //    if(((SmallIntestineOrganPart)this).id==145)
         //        bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("LiverOrganPart") && this.identifier.equals("1"))
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("StomachOrganPart") && this.identifier.equals("1"))
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("DuodenumOrganPart") && this.identifier.equals("1"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         bDef.position.set(this.position);
@@ -115,6 +119,8 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         FixtureDef fix = new FixtureDef();
         fix.density = 0.1f;
+        if(this instanceof SmallIntestineOrganPart)
+            fix.density = 1f;
         fix.friction = 0f;
         fix.restitution = 0.5f;
 
