@@ -407,26 +407,46 @@ public abstract class OrganPart extends Actor implements Connectable {
         Vector2 vec2 = this.body.getWorldPoint(vec).cpy();
         Vector2 vec3 = this.body.getWorldPoint(vec).cpy();
         Vector2 vec4 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec5 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec6 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec7 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec8 = this.body.getWorldPoint(vec).cpy();
 
         Array<Fixture> fixtures = this.body.getFixtureList();
 
         float step = 0.01f;
         for(float i=0; i<200; i+=step){
             if(!Utils.fixturesContains(fixtures,vec1.x+=step, vec1.y)){
-                vec1.x-=step;
+                //vec1.x-=step;
                 return this.body.getLocalPoint(vec1).cpy();
             }
             if(!Utils.fixturesContains(fixtures,vec2.x-=step, vec2.y)){
-                vec2.x+=step;
+                //vec2.x+=step;
                 return this.body.getLocalPoint(vec2).cpy();
             }
             if(!Utils.fixturesContains(fixtures,vec3.x, vec3.y+=step)){
-                vec3.y-=step;
+                //vec3.y-=step;
                 return this.body.getLocalPoint(vec3).cpy();
             }
             if(!Utils.fixturesContains(fixtures,vec4.x, vec4.y-=step)){
-                vec4.y+=step;
+                //vec4.y+=step;
                 return this.body.getLocalPoint(vec4).cpy();
+            }
+            if(!Utils.fixturesContains(fixtures,vec5.x+=step, vec5.y+=step)){
+
+                return this.body.getLocalPoint(vec5).cpy();
+            }
+            if(!Utils.fixturesContains(fixtures,vec6.x-=step, vec6.y-=step)){
+
+                return this.body.getLocalPoint(vec6).cpy();
+            }
+            if(!Utils.fixturesContains(fixtures,vec7.x-=step, vec7.y+=step)){
+
+                return this.body.getLocalPoint(vec7).cpy();
+            }
+            if(!Utils.fixturesContains(fixtures,vec8.x+=step, vec8.y-=step)){
+
+                return this.body.getLocalPoint(vec8).cpy();
             }
         }
         return null;
