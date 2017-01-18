@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
-import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
 /**

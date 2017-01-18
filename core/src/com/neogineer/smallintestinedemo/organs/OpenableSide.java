@@ -16,7 +16,7 @@ public class OpenableSide {
     Polygon polygon;
     Sprite staplesSprite;
     Sprite openingSprite;
-    State state;
+    public State state;
 
 
     public OpenableSide( Sprite opening, Sprite staples, Polygon polygon){

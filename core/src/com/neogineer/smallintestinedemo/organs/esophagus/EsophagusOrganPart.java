@@ -1,4 +1,4 @@
-package com.neogineer.smallintestinedemo.organs.Esophagus;
+package com.neogineer.smallintestinedemo.organs.esophagus;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;

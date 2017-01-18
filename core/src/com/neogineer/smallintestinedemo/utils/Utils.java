@@ -7,13 +7,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
-import com.neogineer.smallintestinedemo.organs.Esophagus.Esophagus;
-import com.neogineer.smallintestinedemo.organs.Organ;
+import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
-import com.neogineer.smallintestinedemo.organs.SmallIntestine;
-import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
+import com.neogineer.smallintestinedemo.organs.appendix.Appendix;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
@@ -21,8 +21,6 @@ import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -83,6 +81,8 @@ public class Utils {
                 return Esophagus.SCALE;
             case "SmallIntestine":
                 return SmallIntestine.SCALE;
+            case "Appendix":
+                return Appendix.SCALE;
             default:
                 return 1;
         }

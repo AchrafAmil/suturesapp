@@ -27,11 +27,12 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.util.IntArray;
-import com.neogineer.smallintestinedemo.organs.Esophagus.EsophagusOrganPart;
+import com.neogineer.smallintestinedemo.organs.esophagus.EsophagusOrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
-import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.appendix.AppendixOrganPart;
 import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
 import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart;
 import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
@@ -282,6 +283,19 @@ public class GameStage extends Stage{
             public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
                 OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
                 return new SmallIntestineOrganPart(opDef);
+            }
+        });
+
+        kryo.register(AppendixOrganPart.class, new Serializer<OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new AppendixOrganPart(opDef);
             }
         });
 

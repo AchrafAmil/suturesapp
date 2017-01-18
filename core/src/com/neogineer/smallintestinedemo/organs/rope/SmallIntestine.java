@@ -1,22 +1,16 @@
-package com.neogineer.smallintestinedemo.organs;
+package com.neogineer.smallintestinedemo.organs.rope;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
-import com.neogineer.smallintestinedemo.organs.Esophagus.EsophagusOrganPart;
-import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
+import com.neogineer.smallintestinedemo.organs.*;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.utils.Constants;
-import com.neogineer.smallintestinedemo.utils.Utils;
-import com.sun.corba.se.impl.orbutil.closure.Constant;
-
-import java.util.HashMap;
 
 /**
  * Created by neogineer on 27/10/16.
@@ -24,7 +18,7 @@ import java.util.HashMap;
 public class SmallIntestine extends Organ {
 
     // number of SmallIntestineOrganPart instances
-    public static final int LENGTH = 145 ;
+    public static final int LENGTH = Constants.SMALLINTESTINE_LENGTH ;
 
     public static final float SCALE = Constants.SMALLINTESTINE_SCALE;
 

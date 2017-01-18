@@ -2,28 +2,18 @@ package com.neogineer.smallintestinedemo.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
-import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import com.neogineer.smallintestinedemo.organs.Openable;
-import com.neogineer.smallintestinedemo.organs.OpenableSide;
-import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
-import com.neogineer.smallintestinedemo.organs.SmallIntestine;
-import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
-import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
-
-import java.util.List;
 
 /**
  * Created by neogineer on 25/10/16.

@@ -29,7 +29,7 @@ public class Duodenum extends Organ {
     public Duodenum(World world, OrthographicCamera camera) {
         super(world, camera);
 
-        for(int i=1; i<=2; i++){
+        for(int i=1; i<=SIZE; i++){
             OrganPart part = new DuodenumOrganPart(world, camera, this, ""+i, SCALE, getOrganPartPosition(i), 0);
             organParts.put(part.getIdentifier(), part);
             addActor(part);

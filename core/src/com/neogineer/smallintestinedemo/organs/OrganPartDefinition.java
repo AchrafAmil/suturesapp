@@ -23,7 +23,7 @@ public class OrganPartDefinition implements KryoSerializable{
 
     public OrganPartDefinition(){
         this.openableSidesStates = new ArrayList<>();
-        this.smallIntestineId = 0;
+        this.ropeId = 0;
     }
 
 
@@ -35,7 +35,7 @@ public class OrganPartDefinition implements KryoSerializable{
 
     public List<OpenableSide.State> openableSidesStates ;
 
-    public int smallIntestineId ;
+    public int ropeId;
 
     public String getIdentifier(){
         if(!fullIdentifier.contains("Intest"))
@@ -58,7 +58,7 @@ public class OrganPartDefinition implements KryoSerializable{
         output.writeFloat(angle);
         output.writeString(fullIdentifier);
         kryo.writeObject(output, openableSidesStates);
-        output.writeInt(smallIntestineId);
+        output.writeInt(ropeId);
     }
 
     @Override
@@ -67,6 +67,6 @@ public class OrganPartDefinition implements KryoSerializable{
         this.angle = input.readFloat();
         this.fullIdentifier = input.readString();
         this.openableSidesStates = kryo.readObject(input, ArrayList.class);
-        this.smallIntestineId = input.readInt();
+        this.ropeId = input.readInt();
     }
 }

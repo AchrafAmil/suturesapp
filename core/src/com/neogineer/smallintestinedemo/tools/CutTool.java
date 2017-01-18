@@ -2,11 +2,9 @@ package com.neogineer.smallintestinedemo.tools;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
-import com.neogineer.smallintestinedemo.organs.Openable;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
-import com.neogineer.smallintestinedemo.organs.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -17,7 +15,7 @@ import java.util.List;
  */
 public class CutTool extends Tool {
 
-    private static final float DISTANCE_LIMIT = 2.0f;
+    private static final float DISTANCE_LIMIT = 0.5f;
     private boolean cutDone = false;
 
     public CutTool(World world, OrthographicCamera camera) {

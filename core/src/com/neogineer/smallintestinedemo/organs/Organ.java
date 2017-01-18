@@ -18,7 +18,7 @@ public abstract class Organ extends Group {
     OrthographicCamera camera;
     World mWorld;
     public HashMap<String, OrganPart> organParts = new HashMap<String, OrganPart>();
-    int size=0;
+    public int size=0;
 
     public Organ(World world, OrthographicCamera camera) {
         this.mWorld = world;

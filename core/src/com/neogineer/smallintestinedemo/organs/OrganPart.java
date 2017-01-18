@@ -1,8 +1,6 @@
 package com.neogineer.smallintestinedemo.organs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,12 +17,6 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.KryoSerializable;
-import com.esotericsoftware.kryo.Serializer;
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
-import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -112,6 +104,8 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("DuodenumOrganPart") && this.identifier.equals("1"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         bDef.position.set(this.position);
         bDef.angle = this.rotation;
         body = mWorld.createBody(bDef);
@@ -119,7 +113,7 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         FixtureDef fix = new FixtureDef();
         fix.density = 0.1f;
-        if(this instanceof SmallIntestineOrganPart)
+        if(this instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)
             fix.density = 1f;
         fix.friction = 0f;
         fix.restitution = 0.5f;
@@ -380,8 +374,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         opDef.position = this.body.getPosition().cpy();
         opDef.angle = this.body.getAngle();
         opDef.fullIdentifier = this.getClass().getSimpleName()+this.getIdentifier();
-        if(this instanceof SmallIntestineOrganPart)
-            opDef.smallIntestineId = ((SmallIntestineOrganPart)this).id;
+        if(this instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)
+            opDef.ropeId = ((com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)this).id;
 
         for(OpenableSide os : openableSides){
             opDef.openableSidesStates.add(os.getState());

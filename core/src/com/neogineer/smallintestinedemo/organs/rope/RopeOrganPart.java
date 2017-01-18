@@ -1,4 +1,4 @@
-package com.neogineer.smallintestinedemo.organs;
+package com.neogineer.smallintestinedemo.organs.rope;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,7 +9,12 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import com.neogineer.smallintestinedemo.utils.Utils;
+import com.neogineer.smallintestinedemo.organs.Openable;
+import com.neogineer.smallintestinedemo.organs.OpenableSide;
+import com.neogineer.smallintestinedemo.organs.Organ;
+import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
+import com.neogineer.smallintestinedemo.organs.SuturePoint;
 
 import java.util.List;
 
@@ -18,13 +23,8 @@ import aurelienribon.bodyeditor.BodyEditorLoader;
 /**
  * Created by neogineer on 24/10/16.
  */
-public class SmallIntestineOrganPart extends OrganPart implements Openable{
+public abstract class RopeOrganPart extends OrganPart implements Openable {
 
-    public static final float BASE_WIDTH = 273;
-
-    public static final float BASE_HEIGHT = 139;
-
-    private static final int MAX_SUTURE_POINTS = 3 ;
 
     private static final float HORIZONTAL_SUTUREPOINT_POSITION = 0.18f;
 
@@ -33,19 +33,17 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
 
 
-    public SmallIntestineOrganPart(World world, OrthographicCamera camera, Organ callback,int id, float scale, Vector2 position, float rotation) {
+    public RopeOrganPart(World world, OrthographicCamera camera, Organ callback, int id, float scale, Vector2 position, float rotation) {
         super(world, camera, callback, "", scale, position, rotation);
         this.id = id;
-        setupBody("SmallIntestineOrganPart.json");
-        setupOpenableSides("SmallIntestineOrganPart.json");
     }
 
-    public SmallIntestineOrganPart(OrganPartDefinition opDef) {
+    public RopeOrganPart(OrganPartDefinition opDef) {
         super(opDef);
-        this.id = opDef.smallIntestineId;
-        setupBody("SmallIntestineOrganPart.json");
-        setupOpenableSides("SmallIntestineOrganPart.json");
+        this.id = opDef.ropeId;
     }
+
+    public abstract int getMaxSuturePoints();
 //
 //    /**
 //     * default rotation = 0
@@ -97,7 +95,7 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
 
     @Override
     public boolean connectionIntent(Vector2 point) {
-        return this.suturePoints.size() < MAX_SUTURE_POINTS && (isVeryMiddle() || isVeryEdge());
+        return this.suturePoints.size() < getMaxSuturePoints() && (isVeryMiddle() || isVeryEdge());
 
 
     }
@@ -208,38 +206,12 @@ public class SmallIntestineOrganPart extends OrganPart implements Openable{
         return this.isHighlighted();
     }
 
-    @Override
-    public float getWidth() {
-        return BASE_WIDTH;
-    }
 
-    @Override
-    public float getHeight() {
-        return BASE_HEIGHT;
-    }
+    public abstract boolean isVeryMiddle();
 
-    public boolean isVeryMiddle(){
-        if(hasAnOpenSide())
-            return false;
-        for(SuturePoint sp: suturePoints){
-            if(!sp.isNoXY() && !(((SmallIntestineOrganPart)sp.getTheOtherOrganPart()).isMiddle()))
-                return false;
-        }
-        return true;
-    }
+    public abstract boolean isVeryEdge();
 
-    public boolean isVeryEdge(){
-        return (hasAnOpenSide() || endSuturePointsCount()>=1);
-    }
-
-    public boolean isMiddle(){
-        int count=0;
-        for(SuturePoint sp: suturePoints){
-            if(sp.getLocalCoord().x==0)
-                count++;
-        }
-        return count==2;
-    }
+    public abstract boolean isMiddle();
 
     public boolean hasAnOpenSide(){
         try {

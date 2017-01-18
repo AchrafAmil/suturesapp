@@ -1,4 +1,4 @@
-package com.neogineer.smallintestinedemo.organs.Esophagus;
+package com.neogineer.smallintestinedemo.organs.esophagus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,16 +8,12 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
-import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart;
-import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 /**
  * Created by neogineer on 27/11/16.
@@ -33,7 +29,7 @@ public class Esophagus extends Organ {
     public Esophagus(World world, OrthographicCamera camera) {
         super(world, camera);
 
-        for(int i=1; i<=3; i++){
+        for(int i=1; i<=SIZE; i++){
             OrganPart part = new EsophagusOrganPart(world, camera, this, ""+i, SCALE, getOrganPartPosition(i), 0);
             organParts.put(part.getIdentifier(), part);
             addActor(part);
