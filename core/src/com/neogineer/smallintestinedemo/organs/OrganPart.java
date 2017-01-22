@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -106,6 +107,20 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==220)
+        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==8)
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==135)
+        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==104)
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==67)
+        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==244)
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==41)
+        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         bDef.position.set(this.position);
         bDef.angle = this.rotation;
         body = mWorld.createBody(bDef);
@@ -113,10 +128,12 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         FixtureDef fix = new FixtureDef();
         fix.density = 0.1f;
-        if(this instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)
-            fix.density = 1f;
+        if(this instanceof RopeOrganPart)
+            fix.density = 0.5f;
         fix.friction = 0f;
         fix.restitution = 0.5f;
+        fix.filter.categoryBits = this.getCategory();
+        fix.filter.maskBits = this.getMask();
 
         origin = loader.getOrigin("base"+identifier, 1).cpy();
 
@@ -277,15 +294,21 @@ public abstract class OrganPart extends Actor implements Connectable {
     /**
      * @return width in pixels
      */
+    private float spriteWidth=-1;
     public float getWidth(){
-        return this.baseSprite.getWidth();
+        if(spriteWidth==-1)
+            spriteWidth = this.baseSprite.getWidth();
+        return spriteWidth;
     };
 
     /**
      * @return height in pixels
      */
+    private float spriteHeight=-1;
     public float getHeight(){
-        return this.baseSprite.getHeight();
+        if(spriteHeight==-1)
+            spriteHeight = this.baseSprite.getHeight();
+        return spriteHeight;
     };
 
     public String getIdentifier(){
@@ -374,8 +397,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         opDef.position = this.body.getPosition().cpy();
         opDef.angle = this.body.getAngle();
         opDef.fullIdentifier = this.getClass().getSimpleName()+this.getIdentifier();
-        if(this instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)
-            opDef.ropeId = ((com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)this).id;
+        if(this instanceof RopeOrganPart)
+            opDef.ropeId = ((RopeOrganPart)this).id;
 
         for(OpenableSide os : openableSides){
             opDef.openableSidesStates.add(os.getState());
@@ -445,4 +468,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         }
         return null;
     }
+
+    public abstract short getCategory();
+
+    public abstract short getMask();
 }

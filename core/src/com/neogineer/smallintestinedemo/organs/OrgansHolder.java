@@ -13,6 +13,8 @@ import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.appendix.Appendix;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
+import com.neogineer.smallintestinedemo.organs.rope.Colon;
+import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.utils.Utils;
@@ -37,6 +39,8 @@ public class OrgansHolder {
 
     public static Stomach stomach;
 
+    public static Colon colon;
+
     public static Appendix appendix;
 
     public static com.neogineer.smallintestinedemo.organs.rope.SmallIntestine smallIntestine;
@@ -60,6 +64,9 @@ public class OrgansHolder {
 
         this.stomach = new Stomach(world, camera);
         stage.addActor(this.stomach);
+
+        this.colon = new Colon(world, camera);
+        stage.addActor(this.colon);
 
         this.appendix = new Appendix(world, camera);
         stage.addActor(this.appendix);
@@ -103,6 +110,7 @@ public class OrgansHolder {
         esophagus.saveState(kryo, output);
         duodenum.saveState(kryo, output);
         stomach.saveState(kryo, output);
+        colon.saveState(kryo, output);
         appendix.saveState(kryo, output);
         smallIntestine.saveState(kryo, output);
         liver.saveState(kryo, output);
@@ -127,6 +135,7 @@ public class OrgansHolder {
         esophagus.loadState(kryo, input);
         duodenum.loadState(kryo, input);
         stomach.loadState(kryo, input);
+        colon.loadState(kryo, input);
         appendix.loadState(kryo, input);
         smallIntestine.loadState(kryo, input);
         liver.loadState(kryo, input);
@@ -138,6 +147,7 @@ public class OrgansHolder {
         esophagus.loadBufferedOpenableSides();
         duodenum.loadBufferedOpenableSides();
         stomach.loadBufferedOpenableSides();
+        colon.loadBufferedOpenableSides();
         appendix.loadBufferedOpenableSides();
         smallIntestine.loadBufferedOpenableSides();
         liver.loadBufferedOpenableSides();
@@ -181,18 +191,20 @@ public class OrgansHolder {
 
     public static Organ organFromName(String name){
         switch (name){
-            case "Liver":
-                return liver;
-            case "SmallIntestine":
-                return smallIntestine;
-            case "Appendix":
-                return appendix;
-            case "Stomach":
-                return stomach;
-            case "Duodenum":
-                return duodenum;
             case "Esophagus":
                 return esophagus;
+            case "Duodenum":
+                return duodenum;
+            case "Stomach":
+                return stomach;
+            case "Colon":
+                return colon;
+            case "Appendix":
+                return appendix;
+            case "SmallIntestine":
+                return smallIntestine;
+            case "Liver":
+                return liver;
             default:
                 return null;
         }
@@ -205,12 +217,12 @@ public class OrgansHolder {
      */
     public static OrganPart organPartFromSpDef(SuturePointDef spDef, boolean a){
         if(a){
-            if(spDef.getOrganA().contains("SmallIntestine"))
+            if(spDef.getOrganA().contains("SmallIntestine") || spDef.getOrganA().contains("Colon"))
                 return organPartFromFullIdentifier(spDef.getOrganA(), spDef.getIdA());
             else
                 return organPartFromFullIdentifier(spDef.getOrganA());
         }else {
-            if(spDef.getOrganB().contains("SmallIntestine"))
+            if(spDef.getOrganB().contains("SmallIntestine") || spDef.getOrganB().contains("Colon"))
                 return organPartFromFullIdentifier(spDef.getOrganB(), spDef.getIdB());
             else
                 return organPartFromFullIdentifier(spDef.getOrganB());

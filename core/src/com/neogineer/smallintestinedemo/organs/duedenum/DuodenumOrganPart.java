@@ -13,7 +13,7 @@ import com.neogineer.smallintestinedemo.organs.OpenableSide;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
-import com.neogineer.smallintestinedemo.organs.SuturePoint;
+import com.neogineer.smallintestinedemo.utils.Constants;
 
 import java.util.List;
 
@@ -147,6 +147,17 @@ public class DuodenumOrganPart extends OrganPart implements Openable {
         Vector2 vec = (this.body==def.bodyA)? def.localAnchorA:def.localAnchorB;
 
         vec.set(pushToEdge(vec));
+    }
+
+
+    @Override
+    public short getCategory() {
+        return Constants.CATEGORY_DUODENUM;
+    }
+
+    @Override
+    public short getMask() {
+        return Constants.MASK_DUODENUM;
     }
 
 }

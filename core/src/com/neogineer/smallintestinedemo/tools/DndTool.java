@@ -41,7 +41,7 @@ public class DndTool extends Tool {
             def.bodyB = hitBody;
             def.collideConnected = true;
             def.target.set(testPoint.x, testPoint.y);
-            def.maxForce = 1000.0f * SmallIntestine.LENGTH * hitBody.getMass();
+            def.maxForce = 1000.0f * SmallIntestine.getLENGTH() * hitBody.getMass();
             mouseJoint = (MouseJoint)world.createJoint(def);
 
             return true;

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.neogineer.smallintestinedemo.organs.*;
@@ -18,12 +17,12 @@ import com.neogineer.smallintestinedemo.utils.Constants;
 public class SmallIntestine extends Organ {
 
     // number of SmallIntestineOrganPart instances
-    public static final int LENGTH = Constants.SMALLINTESTINE_LENGTH ;
+    private static final int LENGTH = Constants.SMALLINTESTINE_LENGTH ;
 
-    public static final float SCALE = Constants.SMALLINTESTINE_SCALE;
+    private static final float SCALE = Constants.SMALLINTESTINE_SCALE;
 
     // how much the joint point is offset from the center (percentage from body dimensions) (0.5f means it's on the edge)
-    public static final float JOINT_OFFSET_PERCENT = 0.35f;
+    private static final float JOINT_OFFSET_PERCENT = 0.35f;
 
     /**
      * Please make sure startPos is on <b> LEFT </b> of the endPos.
@@ -35,26 +34,28 @@ public class SmallIntestine extends Organ {
         double alpha = Math.atan(slope);
 
         SmallIntestineOrganPart firstActor
-                = new SmallIntestineOrganPart(world, camera, this, 0, SCALE, startPos, (float) (alpha- Math.PI/2) );
+                = new SmallIntestineOrganPart(world, camera, this, 0, getSCALE(), startPos, (float) (alpha- Math.PI/2) );
         addActor(firstActor);
+        this.organParts.put(""+ size++, firstActor );
         Body body = firstActor.body;
 
         Body link = body ;
 
 
         final float JOINT_OFFSET = firstActor
-                .getVertex(0,firstActor.origin.cpy().y + firstActor.origin.cpy().y * 2 * JOINT_OFFSET_PERCENT ).y;
+                .getVertex(0,firstActor.origin.cpy().y + firstActor.origin.cpy().y * 2 * getJointOffsetPercent()).y;
 
 
 
         final Vector2 step = new Vector2(JOINT_OFFSET*2*(float)Math.cos(alpha), JOINT_OFFSET*2*(float)Math.sin(alpha));
 
-        for(int i=0; i<LENGTH; i++){
+        for(int i = 0; i< getLENGTH(); i++){
 
             SmallIntestineOrganPart actor;
-            actor = new SmallIntestineOrganPart(world, camera, this, i+1, SCALE,
+            actor = new SmallIntestineOrganPart(world, camera, this, i+1, getSCALE(),
                         new Vector2( startPos.x+step.x*i, startPos.y +step.y*i ), (float) (alpha- Math.PI/2));
             addActor(actor);
+            this.organParts.put(""+ size++, actor );
             body = actor.body;
 
             ConnectTool tool = new ConnectTool(world, camera);
@@ -85,24 +86,29 @@ public class SmallIntestine extends Organ {
         this(world, camera, Constants.SMALLINTESTINE_LEFT_POSITION, Constants.SMALLINTESTINE_RIGHT_POSITION);
     }
 
+    public static int getLENGTH() {
+        return LENGTH;
+    }
+
+    public static float getSCALE() {
+        return SCALE;
+    }
+
+    public static float getJointOffsetPercent() {
+        return JOINT_OFFSET_PERCENT;
+    }
+
     @Override
     public void loadState(Kryo kryo, Input input){
         this.free();
         size=0;
 
-        for(int i=0; i<=LENGTH; i++){
+        for(int i = 0; i<= getLENGTH(); i++){
             OrganPart op = kryo.readObject(input, SmallIntestineOrganPart.class);
             Gdx.app.log("loadState","creating "+op+i);
             super.addActor(op);
             this.organParts.put(""+ ((SmallIntestineOrganPart)op).id, op );
         }
-    }
-
-    // TODO: 04/01/17 size++ was a bad idea, change it asap to avoid errors
-    @Override
-    public void addActor(Actor actor) {
-        super.addActor(actor);
-        this.organParts.put(""+ size++, (SmallIntestineOrganPart) actor );
     }
 
     @Override
@@ -112,6 +118,6 @@ public class SmallIntestine extends Organ {
 
     @Override
     public float getScale() {
-        return SCALE;
+        return getSCALE();
     }
 }

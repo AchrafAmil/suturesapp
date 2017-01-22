@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
+import com.neogineer.smallintestinedemo.utils.Constants;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 
@@ -33,6 +34,17 @@ public class EsophagusOrganPart extends OrganPart {
     public boolean setHighlighted(boolean highlighted) {
         // TODO: 27/11/16 implement highlighting
         return false;
+    }
+
+
+    @Override
+    public short getCategory() {
+        return Constants.CATEGORY_ESOPHAGUS;
+    }
+
+    @Override
+    public short getMask() {
+        return Constants.MASK_ESOPHAGUS;
     }
 
 }

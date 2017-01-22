@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.utils.Utils;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class CutTool extends Tool {
 
-    private static final float DISTANCE_LIMIT = 0.5f;
+    private static final float DISTANCE_LIMIT = 0.8f;
     private boolean cutDone = false;
 
     public CutTool(World world, OrthographicCamera camera) {
@@ -42,8 +43,8 @@ public class CutTool extends Tool {
         OrganPart organPart = (OrganPart) hitBody.getUserData();
 
         //do not cut Small Intestine unless it's in the very middle (to avoid Small Intestine OP singleton).
-        if(organPart instanceof SmallIntestineOrganPart)
-            if(!((SmallIntestineOrganPart) organPart).isVeryMiddle())
+        if(organPart instanceof RopeOrganPart)
+            if(!((RopeOrganPart) organPart).isVeryMiddle())
                 return null;
 
 

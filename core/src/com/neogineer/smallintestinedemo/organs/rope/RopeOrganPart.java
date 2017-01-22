@@ -28,9 +28,7 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
 
     private static final float HORIZONTAL_SUTUREPOINT_POSITION = 0.18f;
 
-
     public int id;
-
 
 
     public RopeOrganPart(World world, OrthographicCamera camera, Organ callback, int id, float scale, Vector2 position, float rotation) {
@@ -66,7 +64,7 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
             int ind=0;
             // TODO: 20/11/16 Review & refactor this
             while (true){
-                BodyEditorLoader.PolygonModel pm = loader.getInternalModel().rigidBodies.get("closed"+ind).polygons.get(0);
+                BodyEditorLoader.PolygonModel pm = loader.getInternalModel().rigidBodies.get("open"+ind).polygons.get(0);
                 float[] vertices = new float[pm.vertices.size()*2];
 
                 int i = 0;
@@ -102,6 +100,7 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
 
     @Override
     public boolean close(float x, float y) {
+        // get the open one, no matter the x,y
         try {
             this.getOpenableSide(x,y).close();
             return true;
@@ -182,10 +181,10 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
             //end suturing
             if(upSuturing()){
                 suturePoint.getLocalCoord().y = this
-                        .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.JOINT_OFFSET_PERCENT ).y;
+                        .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.getJointOffsetPercent()).y;
             }else{
                 suturePoint.getLocalCoord().y = - this
-                        .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.JOINT_OFFSET_PERCENT ).y;
+                        .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.getJointOffsetPercent()).y;
             }
             suturePoint.setRotation((float) (Math.PI/2));
         }
@@ -211,7 +210,14 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
 
     public abstract boolean isVeryEdge();
 
-    public abstract boolean isMiddle();
+    public boolean isMiddle(){
+        int count=0;
+        for(SuturePoint sp: suturePoints){
+            if(sp.getLocalCoord().x==0)
+                count++;
+        }
+        return count==2;
+    }
 
     public boolean hasAnOpenSide(){
         try {

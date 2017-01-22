@@ -31,6 +31,7 @@ import com.neogineer.smallintestinedemo.organs.esophagus.EsophagusOrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
+import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.appendix.AppendixOrganPart;
 import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
@@ -296,6 +297,19 @@ public class GameStage extends Stage{
             public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
                 OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
                 return new AppendixOrganPart(opDef);
+            }
+        });
+
+        kryo.register(ColonOrganPart.class, new Serializer<OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new ColonOrganPart(opDef);
             }
         });
 

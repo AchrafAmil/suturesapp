@@ -9,6 +9,8 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.Colon;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
@@ -80,9 +82,11 @@ public class Utils {
             case "Esophagus":
                 return Esophagus.SCALE;
             case "SmallIntestine":
-                return SmallIntestine.SCALE;
+                return SmallIntestine.getSCALE();
             case "Appendix":
                 return Appendix.SCALE;
+            case "Colon":
+                return Colon.getSCALE();
             default:
                 return 1;
         }
@@ -105,10 +109,10 @@ public class Utils {
         // TODO: 31/12/16 find a way to get the real value
         spDef.setBvisible(false);
 
-        if(orgA instanceof SmallIntestineOrganPart)
-            spDef.idA = ((SmallIntestineOrganPart)orgA).id;
-        if(orgB instanceof SmallIntestineOrganPart)
-            spDef.idB = ((SmallIntestineOrganPart)orgB).id;
+        if(orgA instanceof RopeOrganPart)
+            spDef.idA = ((RopeOrganPart)orgA).id;
+        if(orgB instanceof RopeOrganPart)
+            spDef.idB = ((RopeOrganPart)orgB).id;
 
 
         return spDef;
@@ -120,7 +124,7 @@ public class Utils {
     public static Array<Joint> sortJoints(final Array<Joint> joints){
         // TODO: 31/12/16 make this even better (smarter sorting)
         Array<Joint> sortedJoints = new Array<>();
-        Joint[] intesJoints = new Joint[SmallIntestine.LENGTH+1];
+        Joint[] intesJoints = new Joint[SmallIntestine.getLENGTH() +1];
         int count=0;
         for(Joint j : joints){
             if((j.getBodyB().getUserData()) instanceof SmallIntestineOrganPart){
@@ -130,7 +134,7 @@ public class Utils {
             }
         }
 
-        for(int i=0; i<SmallIntestine.LENGTH; i++){
+        for(int i = 0; i< SmallIntestine.getLENGTH(); i++){
             if(intesJoints[i]==null)
                 continue;
             sortedJoints.add(intesJoints[i]);

@@ -3,7 +3,9 @@
 	{"organA":"Duodenum", "organPartA":"2", "anchorAx":0.96696937084198, "anchorAy":0.3153035640716553, "organB":"SmallIntestine", "organPartB":"0", "anchorBx":0, "anchorBy":0.08},
 	{"organA":"Duodenum", "organPartA":"2", "anchorAx":0.8046385645866394, "anchorAy":0.03854912519454956, "organB":"SmallIntestine", "organPartB":"0", "anchorBx":1, "anchorBy":0.08},
 	{"organA":"Esophagus", "organPartA":"3", "anchorAx":0.9474999904632568, "anchorAy":0.42500001192092896, "organB":"Stomach", "organPartB":"1", "anchorBx":0.7361555099487305, "anchorBy":2.0119314193725586},
-	{"organA":"Appendix", "organPartA":"3", "anchorAx":0.9281433820724487, "anchorAy":0.2221577763557434, "organB":"SmallIntestine", "organPartB":"280", "anchorBx":0, "anchorBy":0.46875},
-	{"organA":"Appendix", "organPartA":"3", "anchorAx":0.9281433820724487, "anchorAy":0.7034078240394592, "organB":"SmallIntestine", "organPartB":"280", "anchorBx":1, "anchorBy":0.46875}
+	{"organA":"Appendix", "organPartA":"3", "anchorAx":0.9281433820724487, "anchorAy":0.2221577763557434, "organB":"SmallIntestine", "organPartB":"160", "anchorBx":0, "anchorBy":0.46875},
+	{"organA":"Appendix", "organPartA":"3", "anchorAx":0.9281433820724487, "anchorAy":0.7034078240394592, "organB":"SmallIntestine", "organPartB":"160", "anchorBx":1, "anchorBy":0.46875},
+	{"organA":"Appendix", "organPartA":"3", "anchorAx":0.016589701175689697, "anchorAy":0.7981030941009521, "organB":"Colon", "organPartB":"270", "anchorBx":0.9887497425079346, "anchorBy":0.1158333271741867},
+	{"organA":"Appendix", "organPartA":"3", "anchorAx":0.9782564640045166, "anchorAy":0.7281030941009521, "organB":"Colon", "organPartB":"270", "anchorBx":0.006249964237213135, "anchorBy":0.1158333420753479}
  ]
 }

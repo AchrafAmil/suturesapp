@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
+import com.neogineer.smallintestinedemo.utils.Constants;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
 
@@ -46,5 +47,16 @@ public class StomachOrganPart extends OrganPart {
         Vector2 vec = (this.body==def.bodyA)? def.localAnchorA:def.localAnchorB;
 
         vec.set(pushToEdge(vec));
+    }
+
+
+    @Override
+    public short getCategory() {
+        return Constants.CATEGORY_STOMACH;
+    }
+
+    @Override
+    public short getMask() {
+        return Constants.MASK_STOMACH;
     }
 }
