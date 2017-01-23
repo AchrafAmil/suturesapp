@@ -53,7 +53,7 @@ public class Constants {
     public static final int SMALLINTESTINE_LENGTH = 160;
 
     // if you ever change it, think about the appendix-smallintestine external joint json file.
-    public static final int COLON_LENGTH = 270;
+    public static final int COLON_LENGTH = 145;
 
 
 

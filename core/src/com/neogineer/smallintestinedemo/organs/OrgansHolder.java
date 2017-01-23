@@ -77,7 +77,7 @@ public class OrgansHolder {
         this.liver = new Liver(world, camera);
         stage.addActor(this.liver);
 
-        setupExternalJoints(world, camera);
+        //setupExternalJoints(world, camera);
     }
 
     private void setupExternalJoints(World world, OrthographicCamera camera){
@@ -132,6 +132,7 @@ public class OrgansHolder {
 
 
     public void loadState(Kryo kryo, Input input){
+        OrganPart.INSTANCES = 0 ;
         esophagus.loadState(kryo, input);
         duodenum.loadState(kryo, input);
         stomach.loadState(kryo, input);

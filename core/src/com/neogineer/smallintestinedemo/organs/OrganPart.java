@@ -31,6 +31,8 @@ import aurelienribon.bodyeditor.BodyEditorLoader;
  */
 public abstract class OrganPart extends Actor implements Connectable {
 
+    public static int INSTANCES = 0;
+
     public String identifier = "";
 
     public Body body;
@@ -45,6 +47,7 @@ public abstract class OrganPart extends Actor implements Connectable {
     public float scale = 1f ;
     protected Vector2 position = new Vector2(8, 19);
     protected float rotation = 0;
+    private int globalOrder ;
 
 
     protected ArrayList<SuturePoint> suturePoints = new ArrayList<>();
@@ -63,6 +66,7 @@ public abstract class OrganPart extends Actor implements Connectable {
         if(position!=null)
             this.position = position;
         this.rotation = rotation;
+        this.setGlobalOrder(INSTANCES++);
     }
 
     public OrganPart(World world, OrthographicCamera camera, Organ callback, float scale, OrganPartDefinition opDef){
@@ -107,7 +111,7 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==220)
+        /*//if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==220)
         //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==8)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
@@ -120,7 +124,7 @@ public abstract class OrganPart extends Actor implements Connectable {
         if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==244)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==41)
-        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing*/
         bDef.position.set(this.position);
         bDef.angle = this.rotation;
         body = mWorld.createBody(bDef);
@@ -472,4 +476,12 @@ public abstract class OrganPart extends Actor implements Connectable {
     public abstract short getCategory();
 
     public abstract short getMask();
+
+    public int getGlobalOrder() {
+        return globalOrder;
+    }
+
+    public void setGlobalOrder(int globalOrder) {
+        this.globalOrder = globalOrder;
+    }
 }
