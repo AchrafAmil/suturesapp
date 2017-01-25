@@ -69,6 +69,10 @@ public class Utils {
 
         JSONObject data = new JSONObject(str);
         JSONArray joints = data.getJSONArray("joints");
+        for(int i=0; i<joints.length(); i++){
+            if(joints.isNull(i))
+                joints.remove(i);
+        }
         return joints;
     }
 

@@ -13,6 +13,7 @@ import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -39,21 +40,20 @@ public class Esophagus extends Organ {
         JSONArray joints = Utils.loadJoints("esophagus_initial_joints.json");
 
         for(int i=0; i<joints.length(); i++){
-            JSONObject joint = (JSONObject) joints.get(i);
-            ConnectTool tool = new ConnectTool(world, camera);
-            ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
+                JSONObject joint = (JSONObject) joints.get(i);
+                ConnectTool tool = new ConnectTool(world, camera);
+                ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
-            EsophagusOrganPart organA = (EsophagusOrganPart) this.organParts.get(joint.getString("organA"));
-            EsophagusOrganPart organB = (EsophagusOrganPart) this.organParts.get(joint.getString("organB"));
+                EsophagusOrganPart organA = (EsophagusOrganPart) this.organParts.get(joint.getString("organA"));
+                EsophagusOrganPart organB = (EsophagusOrganPart) this.organParts.get(joint.getString("organB"));
 
-            connector.organA = organA;
-            connector.organB = organB;
+                connector.organA = organA;
+                connector.organB = organB;
 
-            connector.anchorA = organA.getVertex(joint.getDouble("anchorAx"), joint.getDouble("anchorAy"));
-            connector.anchorB = organB.getVertex(joint.getDouble("anchorBx"), joint.getDouble("anchorBy"));
+                connector.anchorA = organA.getVertex(joint.getDouble("anchorAx"), joint.getDouble("anchorAy"));
+                connector.anchorB = organB.getVertex(joint.getDouble("anchorBx"), joint.getDouble("anchorBy"));
 
-            connector.makeConnection(false);
-
+                connector.makeConnection(false);
         }
     }
 

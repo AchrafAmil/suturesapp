@@ -50,7 +50,10 @@ project(":android") {
     configurations { natives }
 
     dependencies {
-        compile project(":core")
+        compile (project(":core")){
+            exclude module: 'kryo'
+        }
+        compile group: 'com.esotericsoftware', name: 'kryo', version: '4.0.0'
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"

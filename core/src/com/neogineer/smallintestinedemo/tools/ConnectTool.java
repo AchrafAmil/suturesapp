@@ -25,7 +25,8 @@ public class ConnectTool extends Tool {
 
     // RevoluteJoint allows rotation around the joint point, let's limit the rotation angle.
     private static final double MAX_ANGLE = 0 ;
-    private static final double SMALLINTESTINE_MAX_ANGLE = Math.PI/20 ;
+    private static final double SMALLINTESTINE_MAX_ANGLE = Math.PI/24 ;
+    private static final double COLON_MAX_ANGLE = Math.PI/30 ;
 
     private static final float MAX_ACCEPTED_DISTANCE = 0.45f;
 
@@ -254,7 +255,7 @@ public class ConnectTool extends Tool {
             return SMALLINTESTINE_MAX_ANGLE;
         if(organA instanceof ColonOrganPart
                 && organB instanceof ColonOrganPart)
-            return SMALLINTESTINE_MAX_ANGLE;
+            return COLON_MAX_ANGLE;
         if((organA instanceof ColonOrganPart && organB instanceof SmallIntestineOrganPart)
             || (organA instanceof SmallIntestineOrganPart && organB instanceof ColonOrganPart) )
             return SMALLINTESTINE_MAX_ANGLE;

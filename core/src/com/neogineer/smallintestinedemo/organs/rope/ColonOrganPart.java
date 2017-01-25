@@ -69,4 +69,11 @@ public class ColonOrganPart extends RopeOrganPart{
         return Constants.MASK_COLON;
     }
 
+    @Override
+    public Vector2 getDimensions() {
+        Vector2 vec = super.getDimensions();
+        vec.y*=0.85f;
+        return vec;
+
+    }
 }
