@@ -125,6 +125,7 @@ public class ConnectTool extends Tool {
             def.lowerAngle= - (float) (getMaxAngle(organA, organB));
             def.upperAngle= (float) (getMaxAngle(organA, organB));
             def.referenceAngle = def.bodyB.getAngle() - def.bodyA.getAngle();
+            Gdx.app.log("ConnectTool", "referenceAngle = "+Math.toDegrees(def.referenceAngle));
 
             organA.correctJointDef(def);
             organB.correctJointDef(def);

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
+import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
@@ -164,10 +165,19 @@ public class Utils {
     }
 
     public static int getRegion(Vector2 localVec){
-        if(localVec.x>0){
-            return (localVec.y>0)? 1:2;
+        float regionWidth = OrgansHolder.smallIntestine.organParts.get("0").getDimensions().x/2;
+        if(localVec.x<regionWidth && localVec.x>-regionWidth){
+            if(localVec.x>0){
+                return (localVec.y>0)? 1:2;
+            }else{
+                return (localVec.y>0)? 3:4;
+            }
         }else{
-            return (localVec.y>0)? 3:4;
+            if(localVec.x>regionWidth){
+                return (localVec.y>0)? 5:6;
+            }else{
+                return (localVec.y<0)? 7:8;
+            }
         }
     }
 

@@ -26,7 +26,6 @@ import aurelienribon.bodyeditor.BodyEditorLoader;
 public abstract class RopeOrganPart extends OrganPart implements Openable {
 
 
-    private static final float HORIZONTAL_SUTUREPOINT_POSITION = 0.18f;
 
     public int id;
 
@@ -100,7 +99,12 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
 
     @Override
     public boolean close(float x, float y) {
-        // get the open one, no matter the x,y
+        OpenableSide side = getTheOpenOs();
+        if(side != null) {
+            side.close();
+            return true;
+        }
+
         try {
             this.getOpenableSide(x,y).close();
             return true;
@@ -161,7 +165,9 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
             boolean up = upSuturing();
             vec.y = (dims.y / 2) * ((up) ? 1 : (-1));
             float xStep = this
-                    .getVertex(this.origin.x + this.origin.x * 2 * HORIZONTAL_SUTUREPOINT_POSITION, 0).x;
+                    .getVertex(this.origin.x
+                            + this.origin.x * 2 * getHorizontalSuturePointPosition(vec),
+                            0).x;
             float oldX = vec.x;
             vec.x = (oldX > 0) ? xStep : -xStep;
 
@@ -172,6 +178,8 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
         }
 
     }
+
+    protected abstract float getHorizontalSuturePointPosition(Vector2 vec);
 
     @Override
     public SuturePoint correctAnchorAndRotation(SuturePoint suturePoint) {

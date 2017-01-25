@@ -16,6 +16,8 @@ public class SmallIntestineOrganPart extends RopeOrganPart {
 
     private static final int MAX_SUTURE_POINTS = 3 ;
 
+    private static final float HORIZONTAL_SUTUREPOINT_POSITION = 0.18f;
+
     public SmallIntestineOrganPart(World world, OrthographicCamera camera, Organ callback, int id, float scale, Vector2 position, float rotation) {
         super(world, camera, callback, id, scale, position, rotation);
         setupBody("SmallIntestineOrganPart.json");
@@ -30,6 +32,11 @@ public class SmallIntestineOrganPart extends RopeOrganPart {
 
     public int getMaxSuturePoints() {
         return MAX_SUTURE_POINTS;
+    }
+
+    @Override
+    protected float getHorizontalSuturePointPosition(Vector2 vec) {
+        return HORIZONTAL_SUTUREPOINT_POSITION;
     }
 
     @Override

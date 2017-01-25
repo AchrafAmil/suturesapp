@@ -77,7 +77,7 @@ public class OrgansHolder {
         this.liver = new Liver(world, camera);
         stage.addActor(this.liver);
 
-        //setupExternalJoints(world, camera);
+        setupExternalJoints(world, camera);
     }
 
     private void setupExternalJoints(World world, OrthographicCamera camera){
@@ -173,7 +173,7 @@ public class OrgansHolder {
     public void highlight(){
         // TODO: 02/11/16 iterate over all organs.
         try {
-            //smallIntestine.highlightCutting();
+            stomach.highlightCutting();
             liver.highlightCutting();
         }catch (NullPointerException npe){
 
@@ -183,7 +183,7 @@ public class OrgansHolder {
     public void unhighlight(){
         // TODO: 02/11/16 iterate over all organs.
         try {
-            //smallIntestine.unhighlightCutting();
+            stomach.unhighlightCutting();
             liver.unhighlightCutting();
         }catch (NullPointerException npe){
 

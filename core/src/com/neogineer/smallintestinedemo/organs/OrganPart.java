@@ -234,8 +234,8 @@ public abstract class OrganPart extends Actor implements Connectable {
             batch.setProjectionMatrix(camera.combined);
             float someScale = 0.1f;
 
-            float w = scale * (sprite.getTexture().getWidth())/2f *someScale;
-            float h = scale * (sprite.getTexture().getHeight())/2f *someScale;
+            float w = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getWidth())/2f *someScale;
+            float h = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getHeight())/2f *someScale;
 
             Vector3 spPixelPos = camera.project(new Vector3(spWorldCoord.x, spWorldCoord.y, 0)
                     .add(Utils.cameraPosition(camera)))

@@ -8,6 +8,7 @@ import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.utils.Constants;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 /**
  * Created by neogineer on 18/01/17.
@@ -15,6 +16,7 @@ import com.neogineer.smallintestinedemo.utils.Constants;
 public class ColonOrganPart extends RopeOrganPart{
 
     private static final int MAX_SUTURE_POINTS = 5 ;
+    private static final float HORIZONTAL_SUTUREPOINT_POSITION = 0.105f;
 
     public ColonOrganPart(World world, OrthographicCamera camera, Organ callback, int id, float scale, Vector2 position, float rotation) {
         super(world, camera, callback, id, scale, position, rotation);
@@ -30,6 +32,11 @@ public class ColonOrganPart extends RopeOrganPart{
 
     public int getMaxSuturePoints() {
         return MAX_SUTURE_POINTS;
+    }
+
+    @Override
+    protected float getHorizontalSuturePointPosition(Vector2 vec) {
+        return HORIZONTAL_SUTUREPOINT_POSITION * ((Utils.getRegion(vec)>4)? 2.8f:1);
     }
 
     @Override
