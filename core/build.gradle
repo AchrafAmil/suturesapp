@@ -10,3 +10,7 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 eclipse.project {
     name = appName + "-core"
 }
+dependencies {
+    compile 'net.java.jinput:jinput:2.0.5'
+}
+

@@ -3,17 +3,26 @@ package com.neogineer.smallintestinedemo;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.World;
+import com.neogineer.smallintestinedemo.tools.CloseTool;
+import com.neogineer.smallintestinedemo.tools.ConnectTool;
+import com.neogineer.smallintestinedemo.tools.CutTool;
+import com.neogineer.smallintestinedemo.tools.DndTool;
+import com.neogineer.smallintestinedemo.tools.Tool;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
 /**
  * Created by neogineer on 30/08/16.
  */
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, SettingTool {
     private final GameStage stage;
+    private final HudStage hudStage;
 
 
     public GameScreen(){
         stage = new GameStage();
+        hudStage = new HudStage(this);
     }
 
     @Override
@@ -27,6 +36,8 @@ public class GameScreen implements Screen {
 
         stage.draw();
         stage.act(delta);
+        hudStage.draw();
+
     }
 
     @Override
@@ -52,5 +63,26 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+    }
+
+    @Override
+    public void setTool(Tool.Tools tool) {
+        OrthographicCamera camera = stage.camera;
+        World world = stage.world;
+
+        switch (tool){
+            case Cut:
+                stage.setTool(new CutTool(world,camera));
+                break;
+            case Close:
+                stage.setTool(new CloseTool(world, camera));
+                break;
+            case Connect:
+                stage.setTool(new ConnectTool(world, camera));
+                break;
+            case Move:
+                stage.setTool(new DndTool(world, camera, stage.groundBody));
+                break;
+        }
     }
 }

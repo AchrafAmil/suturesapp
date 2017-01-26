@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class CutTool extends Tool {
 
-    private static final float DISTANCE_LIMIT = 0.8f;
+    private static final float DISTANCE_LIMIT = 1.2f;
     private boolean cutDone = false;
 
     public CutTool(World world, OrthographicCamera camera) {

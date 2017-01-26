@@ -15,7 +15,7 @@ public class Constants {
 
     public static final float VERTICES_SCALE_FACTOR = 40;
 
-    public static boolean ENABLE_DEBUG = true;
+    public static boolean ENABLE_DEBUG = false;
 
     public static final boolean VERBOSE_GESTURE = true;
 

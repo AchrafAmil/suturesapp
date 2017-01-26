@@ -2,12 +2,14 @@ package com.neogineer.smallintestinedemo;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -48,13 +50,14 @@ import net.dermetfan.gdx.physics.box2d.kryo.serializers.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by neogineer on 30/08/16.
  */
 public class GameStage extends Stage{
 
-    private float TIME_STEP = 1 / 300f;
+    private float TIME_STEP = 1 / 100f;
     private float accumulator = 0f;
 
     World world ;
@@ -329,7 +332,7 @@ public class GameStage extends Stage{
         this.inputMultiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(inputMultiplexer);
         inputMultiplexer.addProcessor(this);
-        setTool(new DndTool(world, camera, groundBody));
+        setTool(new DndTool(world, camera,groundBody));
     }
 
     @Override
@@ -370,21 +373,33 @@ public class GameStage extends Stage{
 
 
     public void setTool(Tool tool){
-        if(inputMultiplexer.size()>=2)
-            this.inputMultiplexer.removeProcessor(inputMultiplexer.size()-1);
+        ArrayList<InputProcessor> processorsToRemove = new ArrayList<>();
+        int size = inputMultiplexer.getProcessors().size;
+        for(int i = 0; i<size; i++){
+            InputProcessor ip = inputMultiplexer.getProcessors().get(i);
+            if(ip instanceof Tool || ip instanceof GestureDetector)
+                processorsToRemove.add(ip);
+        }
+        for(InputProcessor ip : processorsToRemove){
+            inputMultiplexer.removeProcessor(ip);
+        }
+
         this.inputMultiplexer.addProcessor(tool);
 
         if(tool instanceof CutTool)
             organsHolder.highlight();
         else
             organsHolder.unhighlight();
+
+        if(tool instanceof DndTool)
+            this.inputMultiplexer.addProcessor(new GestureDetector((DndTool)tool));
     }
 
 
 
     @Override
     public void draw() {
-        Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
+        Gdx.gl.glClearColor(233/255f, 232/255f, 231/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.draw();
         if(Constants.ENABLE_DEBUG)

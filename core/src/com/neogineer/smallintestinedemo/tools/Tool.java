@@ -78,4 +78,8 @@ public abstract class Tool extends InputAdapter {
         //then let the specific child tool do what it got to do...
         return false;
     }
+
+    public enum Tools{
+        Cut, Close, Connect, Move
+    }
 }
