@@ -29,10 +29,12 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.util.IntArray;
+import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
 import com.neogineer.smallintestinedemo.organs.esophagus.EsophagusOrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
+import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.appendix.AppendixOrganPart;
@@ -238,6 +240,19 @@ public class GameStage extends Stage{
             }
         });
 
+        kryo.register(RectumOrganPart.class, new Serializer<OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new RectumOrganPart(opDef);
+            }
+        });
+
         kryo.register(DuodenumOrganPart.class, new Serializer<OrganPart>() {
             @Override
             public void write(Kryo kryo, Output output, OrganPart op) {
@@ -313,6 +328,19 @@ public class GameStage extends Stage{
             public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
                 OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
                 return new ColonOrganPart(opDef);
+            }
+        });
+
+        kryo.register(AbdominalWallOrganPart.class, new Serializer<OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new AbdominalWallOrganPart(opDef);
             }
         });
 
@@ -470,27 +498,27 @@ public class GameStage extends Stage{
                 save();
                 break;
             case 81:
-                camera.zoom-=0.1f;
+                camera.zoom-=0.25f;
                 camera.update();
                 break;
             case 69:
-                camera.zoom+=0.1f;
+                camera.zoom+=0.25f;
                 camera.update();
                 break;
             case 19:
-                camera.translate(0,2f);
+                camera.translate(0,5f);
                 camera.update();
                 break;
             case 20:
-                camera.translate(0,-2f);
+                camera.translate(0,-5f);
                 camera.update();
                 break;
             case 21:
-                camera.translate(-2f,0);
+                camera.translate(-5f,0);
                 camera.update();
                 break;
             case 22:
-                camera.translate(2f,0);
+                camera.translate(5f,0);
                 camera.update();
                 break;
             case 129:

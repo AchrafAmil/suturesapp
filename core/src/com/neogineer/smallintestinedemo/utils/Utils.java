@@ -8,8 +8,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
+import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWall;
 import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
@@ -78,10 +80,14 @@ public class Utils {
 
     public static float scaleFromName(String name){
         switch (name){
+            case "AbdominalWall":
+                return AbdominalWall.SCALE;
             case "Liver":
                 return Liver.SCALE;
             case "Stomach":
                 return Stomach.SCALE;
+            case "Rectum":
+                return Rectum.SCALE;
             case "Duodenum":
                 return Duodenum.SCALE;
             case "Esophagus":

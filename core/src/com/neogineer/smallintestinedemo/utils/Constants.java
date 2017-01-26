@@ -26,8 +26,10 @@ public class Constants {
      */
 
     public static final float GLOBAL_SCALE = 1f;
+    public static final float ABDOMINALWALL_SCALE = 1.52f *GLOBAL_SCALE;
     public static final float ESOPHAGUS_SCALE = 1f *GLOBAL_SCALE;
     public static final float DUODENUM_SCALE = 1f *GLOBAL_SCALE;
+    public static final float RECTUM_SCALE = 0.23f *GLOBAL_SCALE;
     public static final float STOMACH_SCALE = 1f *GLOBAL_SCALE;
     public static final float COLON_SCALE = 0.23f *GLOBAL_SCALE;
     public static final float APPENDIX_SCALE = 0.23f *GLOBAL_SCALE;
@@ -38,14 +40,16 @@ public class Constants {
     public static final Vector2 SMALLINTESTINE_RIGHT_POSITION = new Vector2(165,10-(165-150f)/4.95f);
     public static final Vector2 SMALLINTESTINE_LEFT_POSITION = new Vector2(51,29.5f);
     public static final Vector2 COLON_RIGHT_POSITION = SMALLINTESTINE_RIGHT_POSITION.cpy().add(2,0);
-    public static final Vector2 COLON_LEFT_POSITION = new Vector2(140,-92);
+    public static final Vector2 COLON_LEFT_POSITION = new Vector2(83,-51);
 
     // TODO: 14/01/17 make positions relative so that changing the global scale doesn't affect the external joints.
-    public static final Vector2 ESOPHAGUS_POSITION = new Vector2(48, 68);
+    public static final Vector2 ABDOMINALWALL_POSITION = new Vector2(40,31);
+    public static final Vector2 ESOPHAGUS_POSITION = new Vector2(46, 68);
     public static final Vector2 DUODENUM_POSITION = new Vector2(40,40);
+    public static final Vector2 RECTUM_POSITION = COLON_LEFT_POSITION.cpy().add(-9,-6);
     public static final Vector2 STOMACH_POSITION = new Vector2(47, 59.2f);
     public static final Vector2 APPENDIX_POSITION = SMALLINTESTINE_RIGHT_POSITION.cpy().add(5,3);
-    public static final Vector2 LIVER_POSITION = new Vector2(14,59);
+    public static final Vector2 LIVER_POSITION = new Vector2(17,64);
 
 
 
@@ -62,22 +66,26 @@ public class Constants {
      */
 
     //categories : one different category per organ :
-    public static final int CATEGORY_ESOPHAGUS = 1;
-    public static final int CATEGORY_DUODENUM = 2;
-    public static final int CATEGORY_STOMACH = 4;
-    public static final int CATEGORY_COLON = 8;
-    public static final int CATEGORY_APPENDIX = 16;
-    public static final int CATEGORY_SMALLINTESTINE = 32;
-    public static final int CATEGORY_LIVER = 64;
+    public static final int CATEGORY_ABDOMINALWALL = 1;
+    public static final int CATEGORY_ESOPHAGUS = 2;
+    public static final int CATEGORY_DUODENUM = 4;
+    public static final int CATEGORY_RECTUM = 8;
+    public static final int CATEGORY_STOMACH = 16;
+    public static final int CATEGORY_COLON = 32;
+    public static final int CATEGORY_APPENDIX = 64;
+    public static final int CATEGORY_SMALLINTESTINE = 128;
+    public static final int CATEGORY_LIVER = 256;
 
     //filtering mask (collides with...)
+    public static final int MASK_ABDOMINALWALL = CATEGORY_ABDOMINALWALL;
     public static final int MASK_ESOPHAGUS = CATEGORY_ESOPHAGUS | CATEGORY_LIVER;
     public static final int MASK_DUODENUM = CATEGORY_DUODENUM | CATEGORY_LIVER;
+    public static final int MASK_RECTUM = CATEGORY_RECTUM | CATEGORY_COLON | CATEGORY_SMALLINTESTINE | CATEGORY_LIVER;
     public static final int MASK_STOMACH = CATEGORY_STOMACH | CATEGORY_LIVER;
-    public static final int MASK_COLON = CATEGORY_COLON | CATEGORY_APPENDIX | CATEGORY_LIVER;
+    public static final int MASK_COLON = CATEGORY_COLON | CATEGORY_APPENDIX | CATEGORY_RECTUM | CATEGORY_LIVER;
     public static final int MASK_APPENDIX = CATEGORY_COLON | CATEGORY_APPENDIX | CATEGORY_SMALLINTESTINE | CATEGORY_LIVER;
-    public static final int MASK_SMALLINTESTINE = CATEGORY_APPENDIX | CATEGORY_SMALLINTESTINE | CATEGORY_LIVER;
-    public static final int MASK_LIVER = CATEGORY_ESOPHAGUS | CATEGORY_DUODENUM | CATEGORY_STOMACH | CATEGORY_COLON
+    public static final int MASK_SMALLINTESTINE = CATEGORY_APPENDIX | CATEGORY_SMALLINTESTINE | CATEGORY_RECTUM | CATEGORY_LIVER;
+    public static final int MASK_LIVER = CATEGORY_ESOPHAGUS | CATEGORY_DUODENUM | CATEGORY_RECTUM | CATEGORY_STOMACH | CATEGORY_COLON
                                         | CATEGORY_APPENDIX | CATEGORY_SMALLINTESTINE | CATEGORY_LIVER;
 
 }

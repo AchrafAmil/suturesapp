@@ -46,6 +46,8 @@ public class GameScreen implements Screen, SettingTool {
         stage.camera.setToOrtho(false, Constants.VIEWPORT_HEIGHT *width/(float)height, Constants.VIEWPORT_HEIGHT);
         //stage.getBatch().getProjectionMatrix()
         //        .setToOrtho2D(0, 0, Constants.VIEWPORT_HEIGHT *width/(float)height, Constants.VIEWPORT_HEIGHT);
+
+        hudStage.getViewport().update(width, height, true);
         Gdx.app.log("camera zoom",stage.camera.zoom+"");
     }
 

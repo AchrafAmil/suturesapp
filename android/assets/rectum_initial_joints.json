@@ -1,0 +1,9 @@
+{"joints": [
+	{"organA":"1", "organB":"2","anchorAx":0.0016664195358753204, "anchorAy":0.012520563900470734, "anchorBx":0.12141665816307068, "anchorBy":0.3072290325164795},
+	{"organA":"1", "organB":"2","anchorAx":0.39391642808914185, "anchorAy":0.012770562544465065, "anchorBx":0.8414167022705078, "anchorBy":0.3072290325164795},
+	{"organA":"2", "organB":"3","anchorAx":0.5, "anchorAy":0.01, "anchorBx":0.5, "anchorBy":0.48},
+	{"organA":"3", "organB":"4","anchorAx":0.5, "anchorAy":0.01, "anchorBx":0.5, "anchorBy":0.5},
+	{"organA":"4", "organB":"5","anchorAx":0.5, "anchorAy":0.01, "anchorBx":0.5, "anchorBy":0.94},
+	{"organA":"5", "organB":"6","anchorAx":0.5, "anchorAy":0.01, "anchorBx":0.5, "anchorBy":0.22}
+ ]
+}

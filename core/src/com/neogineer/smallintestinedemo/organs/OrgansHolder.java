@@ -9,12 +9,15 @@ import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWall;
 import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.appendix.Appendix;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
+import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
 import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.utils.Utils;
@@ -33,9 +36,13 @@ import java.util.List;
  */
 public class OrgansHolder {
 
+    public static AbdominalWall abdominalWall;
+
     public static Esophagus esophagus;
 
     public static Duodenum duodenum;
+
+    public static Rectum rectum;
 
     public static Stomach stomach;
 
@@ -43,7 +50,7 @@ public class OrgansHolder {
 
     public static Appendix appendix;
 
-    public static com.neogineer.smallintestinedemo.organs.rope.SmallIntestine smallIntestine;
+    public static SmallIntestine smallIntestine;
 
     public static Liver liver ;
 
@@ -55,12 +62,17 @@ public class OrgansHolder {
         if(world==null || camera==null)
             throw new RuntimeException("Holder can't start, World and/or Camera are null");
 
+        this.abdominalWall = new AbdominalWall(world, camera);
+        stage.addActor(this.abdominalWall);
 
         this.esophagus = new Esophagus(world, camera);
         stage.addActor(this.esophagus);
 
         this.duodenum = new Duodenum(world, camera);
         stage.addActor(this.duodenum);
+
+        this.rectum = new Rectum(world, camera);
+        stage.addActor(this.rectum);
 
         this.stomach = new Stomach(world, camera);
         stage.addActor(this.stomach);
@@ -107,8 +119,10 @@ public class OrgansHolder {
 
     // TODO: 31/12/16 multi-thread this, it may disturb UI Thread
     public void saveState(Kryo kryo, Output output){
+        abdominalWall.saveState(kryo, output);
         esophagus.saveState(kryo, output);
         duodenum.saveState(kryo, output);
+        rectum.saveState(kryo, output);
         stomach.saveState(kryo, output);
         colon.saveState(kryo, output);
         appendix.saveState(kryo, output);
@@ -133,8 +147,10 @@ public class OrgansHolder {
 
     public void loadState(Kryo kryo, Input input){
         OrganPart.INSTANCES = 0 ;
+        abdominalWall.loadState(kryo, input);
         esophagus.loadState(kryo, input);
         duodenum.loadState(kryo, input);
+        rectum.loadState(kryo, input);
         stomach.loadState(kryo, input);
         colon.loadState(kryo, input);
         appendix.loadState(kryo, input);
@@ -145,8 +161,10 @@ public class OrgansHolder {
     }
 
     private void updateOpenableSides() {
+        abdominalWall.loadBufferedOpenableSides();
         esophagus.loadBufferedOpenableSides();
         duodenum.loadBufferedOpenableSides();
+        rectum.loadBufferedOpenableSides();
         stomach.loadBufferedOpenableSides();
         colon.loadBufferedOpenableSides();
         appendix.loadBufferedOpenableSides();
@@ -192,10 +210,14 @@ public class OrgansHolder {
 
     public static Organ organFromName(String name){
         switch (name){
+            case "AbdominalWall":
+                return abdominalWall;
             case "Esophagus":
                 return esophagus;
             case "Duodenum":
                 return duodenum;
+            case "Rectum":
+                return rectum;
             case "Stomach":
                 return stomach;
             case "Colon":
