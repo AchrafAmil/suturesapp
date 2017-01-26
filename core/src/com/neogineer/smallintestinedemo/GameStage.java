@@ -564,7 +564,7 @@ public class GameStage extends Stage{
         }
     }
 
-    private void save(){
+    public void save(){
         try {
             Output output = new Output(new FileOutputStream("kryo_save.bin"));
             organsHolder.saveState(kryo, output);
@@ -576,7 +576,7 @@ public class GameStage extends Stage{
         }
     }
 
-    private void load(){
+    public void load(){
         try {
             Input input = new Input(new FileInputStream("kryo_save.bin"));
             organsHolder.loadState(kryo, input);
