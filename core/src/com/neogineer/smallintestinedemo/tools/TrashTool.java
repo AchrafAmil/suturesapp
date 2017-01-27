@@ -19,6 +19,9 @@ import java.util.Set;
  */
 public class TrashTool extends Tool {
 
+    public static int TRASH_POSITION_X = 150 ;
+    public static int TRASH_POSITION_Y = 150 ;
+
 
     public TrashTool(World world, OrthographicCamera camera) {
         super(world, camera);
@@ -48,7 +51,9 @@ public class TrashTool extends Tool {
                 return false;
 
             for(OrganPart op : bloc){
-                op.body.setTransform(150,150,0);
+                //op.body.setTransform(TRASH_POSITION_X+=5,TRASH_POSITION_Y+=5,0);
+                op.organCallback.removeActor(op);
+                op.destroy();
             }
 
         }

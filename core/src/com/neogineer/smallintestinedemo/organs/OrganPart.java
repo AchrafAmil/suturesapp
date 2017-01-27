@@ -43,7 +43,7 @@ public abstract class OrganPart extends Actor implements Connectable {
     protected Sprite highlightedBaseSprite;
     protected boolean highlighted;
     public Vector2 origin ;
-    Organ organCallback ;
+    public Organ organCallback ;
     public float scale = 1f ;
     protected Vector2 position = new Vector2(8, 19);
     protected float rotation = 0;
