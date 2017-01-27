@@ -13,6 +13,14 @@ public class Constants {
 
     public static final int SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE = 5 ;
 
+    public static final float MAX_ZOOM = 6.5f;
+    public static final float MIN_ZOOM = 1f;
+    public static final int CAMERA_X_LIMIT_RIGHT = 65;
+    public static final int CAMERA_X_LIMIT_LEFT = 0;
+    public static final int CAMERA_Y_LIMIT_TOP = 70;
+    public static final int CAMERA_Y_LIMIT_BUTTOM = 0;
+    public static final Vector2 CAMERA_INITIAL_TRANSLATION = new Vector2(0, -50);
+
     public static final float VERTICES_SCALE_FACTOR = 40;
 
     public static boolean ENABLE_DEBUG = false;

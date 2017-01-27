@@ -116,6 +116,8 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("6"))
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==118)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==57)

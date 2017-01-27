@@ -21,6 +21,7 @@ import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
+import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
 import org.json.JSONArray;
@@ -93,6 +94,26 @@ public class OrgansHolder {
         //setupExternalJoints(world, camera);
 
         stage.load();
+
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(600);
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            camera.translate(Constants.CAMERA_INITIAL_TRANSLATION);
+                            camera.update();
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+
 
 
         /*Thread thread = new Thread() {

@@ -5,6 +5,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
+import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
+import com.neogineer.smallintestinedemo.organs.esophagus.EsophagusOrganPart;
+import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
+import com.neogineer.smallintestinedemo.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,7 +30,23 @@ public class TrashTool extends Tool {
 
 
         if(hitBody!=null){
+            if(hitBody.getUserData() instanceof AbdominalWallOrganPart)
+                return false;
             ArrayList<OrganPart> bloc = getOrganPartBloc((OrganPart) hitBody.getUserData());
+            if(bloc==null)
+                return false;
+
+            boolean eso = false, rectu = false;
+            for(OrganPart op : bloc){
+                if(op instanceof EsophagusOrganPart)
+                    eso = true;
+                if(op instanceof RectumOrganPart)
+                    rectu = true;
+            }
+
+            if(eso && rectu)
+                return false;
+
             for(OrganPart op : bloc){
                 op.body.setTransform(150,150,0);
             }

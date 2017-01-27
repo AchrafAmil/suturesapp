@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
+import com.neogineer.smallintestinedemo.utils.Constants;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 /**
  * Created by neogineer on 25/10/16.
@@ -114,7 +116,11 @@ public class DndTool extends Tool implements GestureDetector.GestureListener {
         if(hitBody!=null || mouseJoint != null)
             return false;
         Gdx.app.log("pan", "x "+x+" y"+y+" deltaX "+deltaX+" deltaY "+y);
+
         camera.translate(-deltaX * currentZoom *0.025f,deltaY * currentZoom*0.025f);
+        if(camera.position.x> Constants.CAMERA_X_LIMIT_RIGHT || camera.position.x<Constants.CAMERA_X_LIMIT_LEFT
+                || camera.position.y>Constants.CAMERA_Y_LIMIT_TOP || camera.position.y<Constants.CAMERA_Y_LIMIT_BUTTOM)
+            camera.translate(+deltaX * currentZoom *0.025f,-deltaY * currentZoom*0.025f);
         camera.update();
         return true;
     }
@@ -129,7 +135,7 @@ public class DndTool extends Tool implements GestureDetector.GestureListener {
     @Override
     public boolean zoom(float initialDistance, float distance) {
         Gdx.app.log("zoom", "from "+initialDistance+" to "+distance);
-        camera.zoom = (initialDistance / distance) * currentZoom;
+        camera.zoom = Utils.zoomToFitInterval((initialDistance / distance) * currentZoom);
         camera.update();
         return true;
     }

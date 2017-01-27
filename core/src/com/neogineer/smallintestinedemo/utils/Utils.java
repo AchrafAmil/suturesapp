@@ -203,4 +203,32 @@ public class Utils {
         if(Math.abs(vec.y)<0.0001f)
             vec.y = 0;
     }
+
+    public static float zoomToFitInterval(float zoom){
+        if(zoom>Constants.MAX_ZOOM)
+            return Constants.MAX_ZOOM;
+        if(zoom< Constants.MIN_ZOOM)
+            return Constants.MIN_ZOOM;
+        return zoom;
+    }
+
+    public static double fitClosestWellKnowAngle(float angle){
+        float degree = (float) Math.toDegrees(angle);
+        if(degree>-195 && degree<-165)
+            return Math.toRadians(-180);
+        if(degree>-105 && degree<-75)
+            return Math.toRadians(-90);
+        if(degree>-15 && degree<15)
+            return Math.toRadians(0);
+        if(degree>75 && degree<105)
+            return Math.toRadians(90);
+        if(degree>165 && degree<195)
+            return Math.toRadians(180);
+        if(degree>265 && degree<285)
+            return Math.toRadians(270);
+        if(degree>345 && degree<375)
+            return Math.toRadians(360);
+
+        return angle;
+    }
 }

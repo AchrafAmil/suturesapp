@@ -10,6 +10,7 @@ import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
 import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
@@ -28,7 +29,7 @@ public class ConnectTool extends Tool {
     private static final double SMALLINTESTINE_MAX_ANGLE = Math.PI/24 ;
     private static final double COLON_MAX_ANGLE = Math.PI/30 ;
 
-    private static final float MAX_ACCEPTED_DISTANCE = 0.75f;
+    private static final float MAX_ACCEPTED_DISTANCE = 1.15f;
 
     private static final boolean COLLIDE_CONNECTED= false;
 
@@ -98,6 +99,12 @@ public class ConnectTool extends Tool {
                     return false;
             }
 
+            if((organA instanceof ColonOrganPart) && (organB instanceof ColonOrganPart)){
+                if(Math.abs(((ColonOrganPart) organA).id - ((ColonOrganPart) organB).id)
+                        < Constants.SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE)
+                    return false;
+            }
+
             if(organA instanceof DuodenumOrganPart && organB instanceof DuodenumOrganPart)
                 return false;
 
@@ -126,6 +133,10 @@ public class ConnectTool extends Tool {
             def.lowerAngle= - (float) (getMaxAngle(organA, organB));
             def.upperAngle= (float) (getMaxAngle(organA, organB));
             def.referenceAngle = def.bodyB.getAngle() - def.bodyA.getAngle();
+
+            if(organA instanceof RopeOrganPart && organB instanceof RopeOrganPart)
+                def.referenceAngle = (float) Utils.fitClosestWellKnowAngle(def.referenceAngle);
+
             Gdx.app.log("ConnectTool", "referenceAngle = "+Math.toDegrees(def.referenceAngle));
 
             organA.correctJointDef(def);
