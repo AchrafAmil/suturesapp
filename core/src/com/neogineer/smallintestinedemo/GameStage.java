@@ -73,7 +73,7 @@ public class GameStage extends Stage{
 
     private OrgansHolder organsHolder = new OrgansHolder();
 
-    private Kryo kryo = new Kryo();
+    public Kryo kryo = new Kryo();
 
 
     public GameStage(){
@@ -578,10 +578,10 @@ public class GameStage extends Stage{
 
     public void load(){
         try {
-            Input input = new Input(new FileInputStream("kryo_save.bin"));
+            Input input = new Input(Gdx.files.internal("kryo_save.bin").read());
             organsHolder.loadState(kryo, input);
             input.close();
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }finally {
             accumulator=0;

@@ -74,6 +74,17 @@ public class HudStage extends Stage {
             }
         });
 
+        ImageButton trashButton = createButton("trashButton.png");
+        trashButton.setPosition(400,5);
+        addActor(trashButton);
+        trashButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
+                super.clicked(event, x, y);
+                callback.setTool(Tool.Tools.Trash);
+            }
+        });
 
 
 

@@ -59,7 +59,7 @@ public class OrgansHolder {
     public static World world;
     public static OrthographicCamera camera;
 
-    public void start(GameStage stage){
+    public void start(final GameStage stage){
         if(world==null || camera==null)
             throw new RuntimeException("Holder can't start, World and/or Camera are null");
 
@@ -84,15 +84,32 @@ public class OrgansHolder {
         this.appendix = new Appendix(world, camera);
         stage.addActor(this.appendix);
 
-        this.smallIntestine = new com.neogineer.smallintestinedemo.organs.rope.SmallIntestine(world, camera);
+        this.smallIntestine = new SmallIntestine(world, camera);
         stage.addActor(this.smallIntestine);
 
         this.liver = new Liver(world, camera);
         stage.addActor(this.liver);
 
-        setupExternalJoints(world, camera);
+        //setupExternalJoints(world, camera);
 
         stage.load();
+
+
+        /*Thread thread = new Thread() {
+            public void run() {
+
+                try {
+                    Input input = new Input(Gdx.files.internal("kryo_save.bin").read());
+                    loadStateThreadSafe(stage.kryo, input);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        };
+        thread.start();*/
+
     }
 
     private void setupExternalJoints(World world, OrthographicCamera camera){
@@ -162,6 +179,75 @@ public class OrgansHolder {
         loadJoints(kryo, input);
         updateOpenableSides();
     }
+
+    /*
+    Should be called from a different thread (not the render one)
+     */
+    public void loadStateThreadSafe(final Kryo kryo, final Input input) throws InterruptedException {
+
+        Thread.sleep(5000);
+
+
+        OrganPart.INSTANCES = 0 ;
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                abdominalWall.loadState(kryo, input);
+                esophagus.loadState(kryo, input);
+                duodenum.loadState(kryo, input);
+                rectum.loadState(kryo, input);
+                stomach.loadState(kryo, input);
+            }
+        });
+        Thread.sleep(5000);
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                colon.loadState(kryo, input);
+                appendix.loadState(kryo, input);
+                smallIntestine.free();
+            }
+        });
+        Thread.sleep(5000);
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                smallIntestine.loadState(kryo, input, 1);
+                new Thread(){
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(12000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                smallIntestine.loadState(kryo, input, 2);
+                                liver.loadState(kryo, input);
+                                loadJoints(kryo, input);
+                                updateOpenableSides();
+                                input.close();
+                            }
+                        });
+                    }
+                }.start();
+            }
+        });
+
+//        Thread.sleep(100);
+//        Gdx.app.postRunnable(new Runnable() {
+//            @Override
+//            public void run() {
+//                liver.loadState(kryo, input);
+//                loadJoints(kryo, input);
+//                updateOpenableSides();
+//                input.close();
+//            }
+//        });
+    }
+
 
     private void updateOpenableSides() {
         abdominalWall.loadBufferedOpenableSides();

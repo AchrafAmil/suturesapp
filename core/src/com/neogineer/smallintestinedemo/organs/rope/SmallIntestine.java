@@ -111,6 +111,29 @@ public class SmallIntestine extends Organ {
         }
     }
 
+
+    public static final int SEGMENTATION = 90;
+    public void loadState(Kryo kryo, Input input, int segment){
+        if(segment==1){
+            this.free();
+            size=0;
+
+            for(int i = 0; i<= SEGMENTATION; i++){
+                OrganPart op = kryo.readObject(input, SmallIntestineOrganPart.class);
+                Gdx.app.log("loadState","creating "+op+i);
+                super.addActor(op);
+                this.organParts.put(""+ ((SmallIntestineOrganPart)op).id, op );
+            }
+        }else{
+            for(int i = SEGMENTATION+1; i<= getLENGTH(); i++){
+                OrganPart op = kryo.readObject(input, SmallIntestineOrganPart.class);
+                Gdx.app.log("loadState","creating "+op+i);
+                super.addActor(op);
+                this.organParts.put(""+ ((SmallIntestineOrganPart)op).id, op );
+            }
+        }
+    }
+
     @Override
     public boolean highlightCutting() {
         return false;
