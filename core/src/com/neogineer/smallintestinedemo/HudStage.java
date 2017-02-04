@@ -27,7 +27,7 @@ public class HudStage extends Stage {
 
 
         ImageButton cutButton = createButton("cutButton.png");
-        cutButton.setPosition(10,5);
+        cutButton.setPosition(15,5);
         addActor(cutButton);
         cutButton.addListener(new ClickListener(){
             @Override
@@ -39,7 +39,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton closeButton = createButton("closeButton.png");
-        closeButton.setPosition(100,5);
+        closeButton.setPosition(150,5);
         addActor(closeButton);
         closeButton.addListener(new ClickListener(){
             @Override
@@ -51,7 +51,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton connectButton = createButton("connectButton.png");
-        connectButton.setPosition(200,5);
+        connectButton.setPosition(295,5);
         addActor(connectButton);
         connectButton.addListener(new ClickListener(){
             @Override
@@ -63,7 +63,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton moveButton = createButton("moveButton.png");
-        moveButton.setPosition(300,5);
+        moveButton.setPosition(440,5);
         addActor(moveButton);
         moveButton.addListener(new ClickListener(){
             @Override
@@ -75,7 +75,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton trashButton = createButton("trashButton.png");
-        trashButton.setPosition(400,5);
+        trashButton.setPosition(585,5);
         addActor(trashButton);
         trashButton.addListener(new ClickListener(){
             @Override
@@ -97,7 +97,7 @@ public class HudStage extends Stage {
         TextureRegion myTextureRegion = new TextureRegion(myTexture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
         ImageButton button = new ImageButton(myTexRegionDrawable);
-        button.setSize(80,80);
+        button.setSize(120,120);
         return button;
     }
 

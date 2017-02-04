@@ -29,7 +29,7 @@ public class ConnectTool extends Tool {
     private static final double SMALLINTESTINE_MAX_ANGLE = Math.PI/24 ;
     private static final double COLON_MAX_ANGLE = Math.PI/30 ;
 
-    private static final float MAX_ACCEPTED_DISTANCE = 1.15f;
+    private static final float MAX_ACCEPTED_DISTANCE = 1.35f;
 
     private static final boolean COLLIDE_CONNECTED= false;
 
