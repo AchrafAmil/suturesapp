@@ -91,4 +91,9 @@ public class GameScreen implements Screen, SettingTool {
                 break;
         }
     }
+
+    @Override
+    public void load() {
+        stage.load();
+    }
 }

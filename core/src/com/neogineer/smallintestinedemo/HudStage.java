@@ -86,6 +86,17 @@ public class HudStage extends Stage {
             }
         });
 
+        ImageButton reloadButton = createButton("trashButton.png");
+        reloadButton.setPosition(585,1000);
+        addActor(reloadButton);
+        reloadButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
+                super.clicked(event, x, y);
+                callback.load();
+            }
+        });
 
 
         InputMultiplexer ip = (InputMultiplexer) Gdx.input.getInputProcessor();

@@ -3,6 +3,7 @@ package com.neogineer.smallintestinedemo;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -75,6 +76,7 @@ public class GameStage extends Stage{
 
     public Kryo kryo = new Kryo();
 
+    public AssetManager manager;
 
     public GameStage(){
         world = new World(new Vector2(0,0), true);
@@ -86,7 +88,10 @@ public class GameStage extends Stage{
 
         setupCamera();
 
-        organsHolder.start(this);
+        manager = new AssetManager();
+        Texture.setAssetManager(manager);
+
+        organsHolder.start(this, manager);
 
         setupInputMultiplexer();
 
@@ -212,20 +217,7 @@ public class GameStage extends Stage{
         kryo.register(CircleShape.class, CircleShapeSerializer.instance);
         kryo.register(EdgeShape.class, EdgeShapeSerializer.instance);
 
-        kryo.register(Sprite.class, new Serializer<Sprite>(){
 
-            @Override
-            public void write(Kryo kryo, Output output, Sprite sprite) {
-                output.writeString(((FileTextureData)sprite.getTexture().getTextureData()).getFileHandle().path());
-            }
-
-            @Override
-            public Sprite read(Kryo kryo, Input input, Class<Sprite> type) {
-                String path = input.readString();
-                Texture texture = new Texture(Gdx.files.internal(path));
-                return new Sprite(texture);
-            }
-        });
 
         kryo.register(StomachOrganPart.class, new Serializer<OrganPart>() {
             @Override

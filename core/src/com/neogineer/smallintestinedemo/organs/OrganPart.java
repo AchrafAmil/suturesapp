@@ -1,6 +1,7 @@
 package com.neogineer.smallintestinedemo.organs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -140,7 +141,12 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         origin = loader.getOrigin("base"+identifier, 1).cpy();
 
-        Texture baseSpriteTexture = new Texture(Gdx.files.internal(loader.getImagePath("base"+identifier) ));
+        AssetManager manager = new AssetManager();
+        String imgPath = loader.getImagePath("base"+identifier);
+        manager.load(imgPath,Texture.class);
+        manager.finishLoading();
+        Texture baseSpriteTexture = manager.get(imgPath,Texture.class);
+
         baseSprite = new Sprite(baseSpriteTexture);
 
         loadHighlightedSprite(loader, identifier);

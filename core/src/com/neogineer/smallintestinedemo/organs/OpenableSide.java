@@ -79,17 +79,6 @@ public class OpenableSide {
         }
     }
 
-    private void debugPolygon(Batch batch){
-        Texture tx = new Texture(Gdx.files.internal("redpixel.png"));
-        //Sprite sp = new Sprite(tx);
-        for(float i = -2; i<2; i+=0.01){
-            for(float j = -2; j<2; j+=0.01){
-                if(this.contains(i,j)){
-                    batch.draw(tx,(2+i)*16, (2+j)*13f );
-                }
-            }
-        }
-    }
 
     public enum State{
         OPEN, CLOSED, NORMAL

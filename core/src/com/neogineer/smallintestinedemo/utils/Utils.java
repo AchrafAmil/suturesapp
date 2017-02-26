@@ -175,7 +175,7 @@ public class Utils {
     }
 
     public static int getRegion(Vector2 localVec){
-        float regionWidth = OrgansHolder.smallIntestine.organParts.get("0").getDimensions().x/2;
+        float regionWidth = OrgansHolder.organFromName("SmallIntestine").organParts.get("0").getDimensions().x/2;
         if(localVec.x<regionWidth && localVec.x>-regionWidth){
             if(localVec.x>0){
                 return (localVec.y>0)? 1:2;

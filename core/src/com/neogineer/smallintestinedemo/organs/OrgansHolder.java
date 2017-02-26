@@ -1,6 +1,7 @@
 package com.neogineer.smallintestinedemo.organs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,23 +40,25 @@ import java.util.List;
  */
 public class OrgansHolder {
 
-    public static AbdominalWall abdominalWall;
+    public static HashMap<String, Organ> allOrgans = new HashMap<>();
 
-    public static Esophagus esophagus;
+    public AbdominalWall abdominalWall;
 
-    public static Duodenum duodenum;
+    public Esophagus esophagus;
 
-    public static Rectum rectum;
+    public Duodenum duodenum;
 
-    public static Stomach stomach;
+    public Rectum rectum;
 
-    public static Colon colon;
+    public Stomach stomach;
 
-    public static Appendix appendix;
+    public Colon colon;
 
-    public static SmallIntestine smallIntestine;
+    public Appendix appendix;
 
-    public static Liver liver ;
+    public SmallIntestine smallIntestine;
+
+    public Liver liver ;
 
 
     public static World world;
@@ -66,30 +70,39 @@ public class OrgansHolder {
 
         this.abdominalWall = new AbdominalWall(world, camera);
         stage.addActor(this.abdominalWall);
+        allOrgans.put("AbdominalWall", abdominalWall);
 
         this.esophagus = new Esophagus(world, camera);
         stage.addActor(this.esophagus);
+        allOrgans.put("Esophagus", esophagus);
 
         this.duodenum = new Duodenum(world, camera);
         stage.addActor(this.duodenum);
+        allOrgans.put("Duodenum", duodenum);
 
         this.rectum = new Rectum(world, camera);
         stage.addActor(this.rectum);
+        allOrgans.put("Rectum", rectum);
 
         this.stomach = new Stomach(world, camera);
         stage.addActor(this.stomach);
+        allOrgans.put("Stomach", stomach);
 
         this.colon = new Colon(world, camera);
         stage.addActor(this.colon);
+        allOrgans.put("Colon", colon);
 
         this.appendix = new Appendix(world, camera);
         stage.addActor(this.appendix);
+        allOrgans.put("Appendix", appendix);
 
         this.smallIntestine = new SmallIntestine(world, camera);
         stage.addActor(this.smallIntestine);
+        allOrgans.put("SmallInstestine", smallIntestine);
 
         this.liver = new Liver(world, camera);
         stage.addActor(this.liver);
+        allOrgans.put("Liver", liver);
 
         //setupExternalJoints(world, camera);
 
@@ -303,6 +316,7 @@ public class OrgansHolder {
         try {
             stomach.highlightCutting();
             liver.highlightCutting();
+            abdominalWall.highlightCutting();
         }catch (NullPointerException npe){
 
         }
@@ -319,28 +333,29 @@ public class OrgansHolder {
     }
 
     public static Organ organFromName(String name){
-        switch (name){
-            case "AbdominalWall":
-                return abdominalWall;
-            case "Esophagus":
-                return esophagus;
-            case "Duodenum":
-                return duodenum;
-            case "Rectum":
-                return rectum;
-            case "Stomach":
-                return stomach;
-            case "Colon":
-                return colon;
-            case "Appendix":
-                return appendix;
-            case "SmallIntestine":
-                return smallIntestine;
-            case "Liver":
-                return liver;
-            default:
-                return null;
-        }
+        return allOrgans.get(name);
+//        switch (name){
+//            case "AbdominalWall":
+//                return abdominalWall;
+//            case "Esophagus":
+//                return esophagus;
+//            case "Duodenum":
+//                return duodenum;
+//            case "Rectum":
+//                return rectum;
+//            case "Stomach":
+//                return stomach;
+//            case "Colon":
+//                return colon;
+//            case "Appendix":
+//                return appendix;
+//            case "SmallIntestine":
+//                return smallIntestine;
+//            case "Liver":
+//                return liver;
+//            default:
+//                return null;
+//        }
     }
 
     /**

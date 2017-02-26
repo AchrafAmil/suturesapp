@@ -8,4 +8,6 @@ import com.neogineer.smallintestinedemo.tools.Tool;
 public interface SettingTool {
 
     void setTool(Tool.Tools tool);
+
+    void load();
 }
