@@ -98,7 +98,7 @@ public class OrgansHolder {
 
         this.smallIntestine = new SmallIntestine(world, camera);
         stage.addActor(this.smallIntestine);
-        allOrgans.put("SmallInstestine", smallIntestine);
+        allOrgans.put("SmallIntestine", smallIntestine);
 
         this.liver = new Liver(world, camera);
         stage.addActor(this.liver);

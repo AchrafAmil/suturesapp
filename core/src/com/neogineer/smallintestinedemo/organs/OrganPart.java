@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.neogineer.smallintestinedemo.SmallIntestineDemoGame;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
@@ -141,13 +143,15 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         origin = loader.getOrigin("base"+identifier, 1).cpy();
 
-        AssetManager manager = new AssetManager();
         String imgPath = loader.getImagePath("base"+identifier);
+
+        /*AssetManager manager = SmallIntestineDemoGame.getAssets();
         manager.load(imgPath,Texture.class);
         manager.finishLoading();
         Texture baseSpriteTexture = manager.get(imgPath,Texture.class);
+        baseSprite = new Sprite(baseSpriteTexture);*/
+        baseSprite = new Sprite(new Texture(imgPath));
 
-        baseSprite = new Sprite(baseSpriteTexture);
 
         loadHighlightedSprite(loader, identifier);
         
@@ -176,6 +180,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         }
     }
 
+    Vector3 bodyPixelPos;
+    Vector3 tmpVec = new Vector3();
     private void drawBaseSprite(Batch batch){
         Sprite baseSprite = this.getBaseSprite();
         batch.setProjectionMatrix(camera.combined);
@@ -184,7 +190,7 @@ public abstract class OrganPart extends Actor implements Connectable {
         float w = scale * (baseSprite.getTexture().getWidth())/2 *someScale;
         float h = scale * (baseSprite.getTexture().getHeight())/2 *someScale;
 
-        Vector3 bodyPixelPos = camera.project(new Vector3(
+        bodyPixelPos = camera.project(tmpVec.set(
                 body.getPosition().x, body.getPosition().y, 0).add(Utils.cameraPosition(camera)))
                 .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom))
                 .sub(w/2, h/2, 0);
@@ -212,7 +218,7 @@ public abstract class OrganPart extends Actor implements Connectable {
             float h = scale * (baseSprite.getTexture().getHeight())/2 *someScale;
 
 
-            Vector3 bodyPixelPos = camera.project(new Vector3(
+            bodyPixelPos = camera.project(tmpVec.set(
                     body.getPosition().x, body.getPosition().y, 0).add(Utils.cameraPosition(camera)))
                     .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom))
                     .sub(w/2, h/2, 0);
@@ -226,6 +232,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         }
     }
 
+    Vector3 spPixelPos;
+    Vector2 spWorldCoord;
     private void drawSuturePoints(Batch batch){
         for(SuturePoint sp : suturePoints){
 
@@ -233,7 +241,7 @@ public abstract class OrganPart extends Actor implements Connectable {
             if(sprite==null)
                 continue;
 
-            Vector2 spWorldCoord = body.getWorldPoint(sp.getLocalCoord());
+            spWorldCoord = body.getWorldPoint(sp.getLocalCoord());
 
 
             batch.setProjectionMatrix(camera.combined);
@@ -242,7 +250,7 @@ public abstract class OrganPart extends Actor implements Connectable {
             float w = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getWidth())/2f *someScale;
             float h = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getHeight())/2f *someScale;
 
-            Vector3 spPixelPos = camera.project(new Vector3(spWorldCoord.x, spWorldCoord.y, 0)
+            spPixelPos = camera.project(tmpVec.set(spWorldCoord.x, spWorldCoord.y, 0)
                     .add(Utils.cameraPosition(camera)))
                     .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom)).sub(w/2, h/2, 0);
 
@@ -419,6 +427,12 @@ public abstract class OrganPart extends Actor implements Connectable {
     public void destroy(){
         mWorld.destroyBody(body);
         baseSprite.getTexture().dispose();
+        if(highlightedBaseSprite!=null)
+            highlightedBaseSprite.getTexture().dispose();
+        for(OpenableSide os : openableSides)
+            os.free();
+        for(SuturePoint sp : suturePoints)
+            sp.free();
     }
 
     public String getFullIdentifier(){

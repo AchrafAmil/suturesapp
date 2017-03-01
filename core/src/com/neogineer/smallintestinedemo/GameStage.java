@@ -76,8 +76,6 @@ public class GameStage extends Stage{
 
     public Kryo kryo = new Kryo();
 
-    public AssetManager manager;
-
     public GameStage(){
         world = new World(new Vector2(0,0), true);
         OrgansHolder.world = world;
@@ -88,10 +86,7 @@ public class GameStage extends Stage{
 
         setupCamera();
 
-        manager = new AssetManager();
-        Texture.setAssetManager(manager);
-
-        organsHolder.start(this, manager);
+        organsHolder.start(this);
 
         setupInputMultiplexer();
 

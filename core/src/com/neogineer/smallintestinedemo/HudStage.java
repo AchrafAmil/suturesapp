@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -27,7 +28,7 @@ public class HudStage extends Stage {
 
 
         ImageButton cutButton = createButton("cutButton.png");
-        cutButton.setPosition(15,5);
+        cutButton.setPosition(buttonPosition(1).x, buttonPosition(1).y);
         addActor(cutButton);
         cutButton.addListener(new ClickListener(){
             @Override
@@ -39,7 +40,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton closeButton = createButton("closeButton.png");
-        closeButton.setPosition(150,5);
+        closeButton.setPosition(buttonPosition(2).x, buttonPosition(2).y);
         addActor(closeButton);
         closeButton.addListener(new ClickListener(){
             @Override
@@ -51,7 +52,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton connectButton = createButton("connectButton.png");
-        connectButton.setPosition(295,5);
+        connectButton.setPosition(buttonPosition(3).x, buttonPosition(3).y);
         addActor(connectButton);
         connectButton.addListener(new ClickListener(){
             @Override
@@ -63,7 +64,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton moveButton = createButton("moveButton.png");
-        moveButton.setPosition(440,5);
+        moveButton.setPosition(buttonPosition(4).x, buttonPosition(4).y);
         addActor(moveButton);
         moveButton.addListener(new ClickListener(){
             @Override
@@ -75,7 +76,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton trashButton = createButton("trashButton.png");
-        trashButton.setPosition(585,5);
+        trashButton.setPosition(buttonPosition(5).x, buttonPosition(5).y);
         addActor(trashButton);
         trashButton.addListener(new ClickListener(){
             @Override
@@ -87,7 +88,7 @@ public class HudStage extends Stage {
         });
 
         ImageButton reloadButton = createButton("trashButton.png");
-        reloadButton.setPosition(585,1000);
+        reloadButton.setPosition(buttonPosition(6).x, buttonPosition(6).y);
         addActor(reloadButton);
         reloadButton.addListener(new ClickListener(){
             @Override
@@ -108,8 +109,33 @@ public class HudStage extends Stage {
         TextureRegion myTextureRegion = new TextureRegion(myTexture);
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
         ImageButton button = new ImageButton(myTexRegionDrawable);
-        button.setSize(120,120);
+        button.setSize(getButtonSize().x, getButtonSize().y);
         return button;
+    }
+
+    static Vector2 tmpVec = new Vector2();
+    public static Vector2 buttonPosition(int id){
+        int width = Gdx.graphics.getWidth();
+        int height = Gdx.graphics.getHeight();
+
+        int x,y=5;
+
+        int marge = (int) (width * 0.025f);
+
+        if(id<=5)
+            x = (int) (marge*(id)+getButtonSize().x*(id-1));
+        else{
+            x = (int) (marge*5+getButtonSize().x*4);
+            y = (int) (height*0.95f - getButtonSize().y);
+        }
+
+
+        return tmpVec.set(x,y);
+    }
+
+    public static Vector2 getButtonSize(){
+        int x = (int) (Gdx.graphics.getWidth() * 0.175f) ;
+        return tmpVec.set(x,x);
     }
 
 }

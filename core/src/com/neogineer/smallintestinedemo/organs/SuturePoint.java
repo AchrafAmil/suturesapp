@@ -127,5 +127,13 @@ public class SuturePoint {
         this.relatedOrganPart = relatedOrganPart;
     }
 
+    public void free(){
+        try{
+            this.backgroundedSprite.getTexture().dispose();
+            this.transparentSprite.getTexture().dispose();
+        }catch (NullPointerException npe){
+        }
+    }
+
     enum State{BACKGROUNDED, TRANSPARENT}
 }

@@ -34,8 +34,9 @@ import java.io.InputStream;
  */
 public class Utils {
 
+    static Vector3 tmpVec3 = new Vector3();
     public static Vector3 cameraPosition(OrthographicCamera camera){
-        return new Vector3(camera.position.x-Constants.VIEWPORT_HEIGHT *Gdx.graphics.getWidth()/(float)Gdx.graphics.getHeight()*camera.zoom/2, camera.position.y-Constants.VIEWPORT_HEIGHT*camera.zoom/2,0);
+        return tmpVec3.set(camera.position.x-Constants.VIEWPORT_HEIGHT *Gdx.graphics.getWidth()/(float)Gdx.graphics.getHeight()*camera.zoom/2, camera.position.y-Constants.VIEWPORT_HEIGHT*camera.zoom/2,0);
     }
 
     /**

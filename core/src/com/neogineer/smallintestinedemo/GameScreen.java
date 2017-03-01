@@ -34,7 +34,7 @@ public class GameScreen implements Screen, SettingTool {
     public void render(float delta) {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        SmallIntestineDemoGame.getAssets().update();
         stage.draw();
         stage.act(delta);
         hudStage.draw();

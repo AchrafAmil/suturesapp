@@ -79,6 +79,13 @@ public class OpenableSide {
         }
     }
 
+    public void free(){
+        try{
+            this.openingSprite.getTexture().dispose();
+            this.staplesSprite.getTexture().dispose();
+        }catch (NullPointerException npe){
+        }
+    }
 
     public enum State{
         OPEN, CLOSED, NORMAL
