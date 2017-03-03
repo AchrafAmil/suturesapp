@@ -2,19 +2,26 @@ package com.neogineer.smallintestinedemo;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.neogineer.smallintestinedemo.tools.Tool;
+
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
+import java.util.ArrayList;
 
 /**
  * Created by neogineer on 26/01/17.
@@ -22,6 +29,7 @@ import com.neogineer.smallintestinedemo.tools.Tool;
 public class HudStage extends Stage {
 
     public final SettingTool callback;
+    private final ArrayList<ImageButton> buttons = new ArrayList<>();
 
     public HudStage(final SettingTool callback){
         this.callback = callback;
@@ -38,6 +46,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Cut);
             }
         });
+        this.buttons.add(cutButton);
 
         ImageButton closeButton = createButton("closeButton.png");
         closeButton.setPosition(buttonPosition(2).x, buttonPosition(2).y);
@@ -50,6 +59,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Close);
             }
         });
+        this.buttons.add(closeButton);
 
         ImageButton connectButton = createButton("connectButton.png");
         connectButton.setPosition(buttonPosition(3).x, buttonPosition(3).y);
@@ -62,6 +72,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Connect);
             }
         });
+        this.buttons.add(connectButton);
 
         ImageButton moveButton = createButton("moveButton.png");
         moveButton.setPosition(buttonPosition(4).x, buttonPosition(4).y);
@@ -74,6 +85,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Move);
             }
         });
+        this.buttons.add(moveButton);
 
         ImageButton trashButton = createButton("trashButton.png");
         trashButton.setPosition(buttonPosition(5).x, buttonPosition(5).y);
@@ -86,6 +98,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Trash);
             }
         });
+        this.buttons.add(trashButton);
 
         ImageButton reloadButton = createButton("trashButton.png");
         reloadButton.setPosition(buttonPosition(6).x, buttonPosition(6).y);
@@ -95,13 +108,44 @@ public class HudStage extends Stage {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
-                callback.load();
+                setVisible(false);
+
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        ((SmallIntestineDemoGame) Gdx.app.getApplicationListener()).nativePlatform.saveScreenshot(Gdx.files.external("Sutures/pica.png"));
+                    }
+                },0.3f);
+
+
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        setVisible(true);
+                    }
+                },0.5f);
             }
         });
+        this.buttons.add(reloadButton);
 
 
         InputMultiplexer ip = (InputMultiplexer) Gdx.input.getInputProcessor();
         ip.addProcessor(this);
+    }
+
+    public void setVisible(boolean visible){
+        for(ImageButton b : this.buttons)
+            b.setVisible(visible);
+    }
+
+    /**
+     * @return true if at least one of the buttons are visible
+     */
+    public boolean isVisible(){
+        for(ImageButton b : this.buttons)
+            if(b.isVisible())
+                return true;
+        return false;
     }
 
     private static ImageButton createButton(String path){
