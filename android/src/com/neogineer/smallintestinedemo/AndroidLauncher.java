@@ -77,8 +77,11 @@ public class AndroidLauncher extends AndroidApplication implements NativePlatfor
 		bitmap = Utils.flip(bitmap, Utils.Direction.VERTICAL);
 		bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream );
 
-		Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("com.suturesapp.peditor.peditor");
-		startActivity( LaunchIntent );
+		Intent intent = getPackageManager().getLaunchIntentForPackage("com.suturesapp.peditor.peditor");
+		// TODO: 05/03/17 don't hardcode that!
+		intent.putExtra("imagePath","/Sutures/pica.png");
+		//intent.putExtra("bitmap",bitmap);		// to heavy
+		startActivity( intent );
 
 
 	}
