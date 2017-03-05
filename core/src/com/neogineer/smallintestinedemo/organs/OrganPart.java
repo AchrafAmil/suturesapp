@@ -284,7 +284,7 @@ public abstract class OrganPart extends Actor implements Connectable {
 
 
             batch.setProjectionMatrix(camera.combined);
-            float someScale = 0.1f;
+            float someScale = 0.1f * tumor.scale;
 
             float w = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getWidth())/2f *someScale;
             float h = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getHeight())/2f *someScale;
@@ -545,6 +545,9 @@ public abstract class OrganPart extends Actor implements Connectable {
     }
 
     public void addTumor(Tumor tumor){
+        int w = baseSprite.getTexture().getWidth();
+        int h = baseSprite.getTexture().getHeight();
+        tumor.scale = (w+h) / 200f ;
         this.tumors.add(tumor);
     }
 }

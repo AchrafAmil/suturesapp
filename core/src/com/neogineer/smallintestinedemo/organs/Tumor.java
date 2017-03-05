@@ -15,6 +15,8 @@ public class Tumor {
 
     Sprite sprite;
 
+    public float scale = 1;
+
     public Tumor(){
         Texture tx = new Texture(Gdx.files.internal("tumor.png"));
         this.sprite = new Sprite(tx);
