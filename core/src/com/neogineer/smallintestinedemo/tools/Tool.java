@@ -77,6 +77,6 @@ public abstract class Tool extends InputAdapter {
     }
 
     public enum Tools{
-        Cut, Close, Connect, Move, Trash
+        Cut, Close, Connect, Move, Trash, Tumor
     }
 }

@@ -1,6 +1,7 @@
 package com.neogineer.smallintestinedemo.organs;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.esotericsoftware.kryo.Kryo;
@@ -76,5 +77,23 @@ public abstract class Organ extends Group {
             part.loadBufferedOpenableSides();
         }
         return true;
+    }
+
+    public void drawTumors(Batch batch){
+        for(OrganPart op: organParts.values())
+            op.drawTumors(batch);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if(camera!=null){
+            for(OrganPart op: organParts.values())
+                op.draw(batch);
+            drawTumors(batch);
+        }
+
+
+
     }
 }

@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.utils.Constants;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +49,13 @@ public abstract class OrganPart extends Actor implements Connectable {
     private int globalOrder ;
 
 
-    protected ArrayList<com.neogineer.smallintestinedemo.organs.SuturePoint> suturePoints = new ArrayList<>();
+    protected ArrayList<SuturePoint> suturePoints = new ArrayList<>();
 
-    protected ArrayList<com.neogineer.smallintestinedemo.organs.OpenableSide> openableSides = new ArrayList<>();
+    protected ArrayList<OpenableSide> openableSides = new ArrayList<>();
 
-    protected List<com.neogineer.smallintestinedemo.organs.OpenableSide.State> openableSidesStatesBuffer;
+    protected ArrayList<Tumor> tumors = new ArrayList<>();
+
+    protected List<OpenableSide.State> openableSidesStatesBuffer;
 
 
     public OrganPart(World world, OrthographicCamera camera, com.neogineer.smallintestinedemo.organs.Organ callback, String identifier, float scale, Vector2 position, float rotation ){
@@ -168,10 +171,18 @@ public abstract class OrganPart extends Actor implements Connectable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        //moved to the the Organ ─ Now the Organ$draw() takes care of calling each OrganPart$draw()
+        /*
+        this.draw(Batch batch);
+        }*/
+    }
+
+    public void draw(Batch batch){
         if(camera!=null){
             drawBaseSprite(batch);
             drawOpenableSides(batch);
             drawSuturePoints(batch);
+            drawTumors(batch);
         }
     }
 
@@ -263,6 +274,40 @@ public abstract class OrganPart extends Actor implements Connectable {
             sprite.draw(batch);
         }
     }
+
+    public void drawTumors(Batch batch){
+        for(Tumor tumor : tumors){
+
+            Sprite sprite = tumor.sprite;
+
+            spWorldCoord = body.getWorldPoint(tumor.localCoord);
+
+
+            batch.setProjectionMatrix(camera.combined);
+            float someScale = 0.1f;
+
+            float w = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getWidth())/2f *someScale;
+            float h = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getHeight())/2f *someScale;
+
+            spPixelPos = camera.project(tmpVec.set(spWorldCoord.x, spWorldCoord.y, 0)
+                    .add(Utils.cameraPosition(camera)))
+                    .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom)).sub(w/2, h/2, 0);
+
+
+            sprite.setSize(w,h);
+
+            // it's gonna rotate around this origin, let it be the suturePoint's center.
+            sprite.setOrigin(w/2, h/2);
+
+            // same as origin, here expressed in global screen coordinates (not relative, not local)
+            sprite.setPosition(spPixelPos.x, spPixelPos.y);
+
+            sprite.setRotation((body.getAngle()) * MathUtils.radiansToDegrees);
+
+            sprite.draw(batch);
+        }
+    }
+
 
     /**
      * checks if highlighting is ON.
@@ -497,5 +542,9 @@ public abstract class OrganPart extends Actor implements Connectable {
 
     public void setGlobalOrder(int globalOrder) {
         this.globalOrder = globalOrder;
+    }
+
+    public void addTumor(Tumor tumor){
+        this.tumors.add(tumor);
     }
 }

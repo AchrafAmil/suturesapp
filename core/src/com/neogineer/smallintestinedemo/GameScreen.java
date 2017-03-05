@@ -10,6 +10,7 @@ import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.tools.CutTool;
 import com.neogineer.smallintestinedemo.tools.DndTool;
 import com.neogineer.smallintestinedemo.tools.Tool;
+import com.neogineer.smallintestinedemo.tools.TumorTool;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.tools.TrashTool;
 
@@ -89,6 +90,8 @@ public class GameScreen implements Screen, SettingTool {
             case Trash:
                 stage.setTool(new TrashTool(world, camera));
                 break;
+            case Tumor:
+                stage.setTool(new TumorTool(world, camera));
         }
     }
 
