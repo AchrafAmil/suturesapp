@@ -3,36 +3,141 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:orientation="vertical"
-    tools:context="com.blogspot.android_er.androiddrawbitmap.MainActivity">
+    android:padding="0dp"
+    android:background="@color/colorGrey"
+    tools:context="com.suturesapp.peditor.peditor.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:autoLink="web"
-        android:text="TechverseApp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/loadimage"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Load Image" />
+        android:layout_margin="5dp">
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/flch"
+            android:visibility="invisible"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true" />
 
-    <Button
-        android:id="@+id/saveimage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Image" />
+        <LinearLayout
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true">
+
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/paper"
+                android:layout_marginLeft="10dp"/>
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/paint"
+                android:layout_marginLeft="10dp"/>
+            <Button
+                android:id="@+id/loadimage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/a"
+                android:layout_marginRight="0dp"
+                android:layout_marginLeft="10dp"/>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
 
     <ImageView
         android:id="@+id/result"
-        android:scaleType="centerInside"
-        android:adjustViewBounds="true"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/background_dark" />
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:background="@color/colorGrey"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:padding="0dp"
+            android:background="@color/colorGrey">
+            <Button
+                android:id="@+id/btnDark"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/rounded_button_dark"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                />
+            <Button
+                android:id="@+id/btnWhite"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/rounded_button_white"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                />
+            <Button
+                android:id="@+id/btnRed"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/rounded_button_red"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                />
+            <Button
+                android:id="@+id/btnYellow"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/rounded_button_yellow"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                />
+            <Button
+                android:id="@+id/btnGreen"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/rounded_button_green"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                />
+            <Button
+                android:id="@+id/btnBlue"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/rounded_button_blue"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_alignParentEnd="true"
+            android:id="@+id/saveimage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/download"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="8dp"
+            android:layout_margin="6dp"
+            android:padding="0dp"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
 </LinearLayout>

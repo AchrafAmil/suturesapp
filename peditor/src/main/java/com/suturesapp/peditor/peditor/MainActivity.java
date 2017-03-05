@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -25,10 +26,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * @author ahlam
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnLoadImage, btnSaveImage;
+    Button btnRed, btnGreen,btnYellow,btnDark,btnBlue,btnWhite;
     ImageView imageResult;
+    //SeekBar mSolorSlider;
 
     final int RQS_IMAGE1 = 1;
 
@@ -51,30 +58,22 @@ public class MainActivity extends AppCompatActivity {
 
         btnLoadImage = (Button)findViewById(R.id.loadimage);
         btnSaveImage = (Button)findViewById(R.id.saveimage);
+        btnRed = (Button)findViewById(R.id.btnRed);
+        btnGreen = (Button)findViewById(R.id.btnGreen);
+        btnYellow = (Button)findViewById(R.id.btnYellow);
+        btnDark = (Button)findViewById(R.id.btnDark);
+        btnBlue = (Button)findViewById(R.id.btnBlue);
+        btnWhite = (Button)findViewById(R.id.btnWhite);
+
+
         imageResult = (ImageView)findViewById(R.id.result);
 
         paintDraw = new Paint();
-        paintDraw.setStyle(Paint.Style.FILL);
-        paintDraw.setColor(Color.BLACK);
-        paintDraw.setStrokeWidth(10);
-
-        btnLoadImage.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, RQS_IMAGE1);
-            }
-        });
-
 
         btnSaveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(bitmapMaster != null){
-
                     saveBitmap(bitmapMaster);
                 }
             }
@@ -112,6 +111,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // init color buttons
+        btnRed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNewColor(Color.RED);
+
+            }
+        });
+        btnWhite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNewColor(Color.WHITE);
+            }
+        });
+        btnDark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNewColor(Color.BLACK);
+            }
+        });
+        btnBlue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNewColor(Color.BLUE);
+            }
+        });
+        btnYellow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNewColor(Color.YELLOW);
+            }
+        });
+        btnGreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNewColor(0xFF177b17);
+
+            }
+        });
 
         Intent intent = getIntent();
         String imagePath = intent.getStringExtra("imagePath");
@@ -119,34 +157,35 @@ public class MainActivity extends AppCompatActivity {
         // TODO: 05/03/17 don't hardcode that!
         imagePath = "/Sutures/pica.png";
 
-
         try {
             String fullPath = Environment.getExternalStorageDirectory()+imagePath;
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap tempBitmap = BitmapFactory.decodeFile(fullPath, options);
-
+            Bitmap tmpBitmap = BitmapFactory.decodeFile(fullPath, options);
             Bitmap.Config config;
-            if(tempBitmap.getConfig() != null){
-                config = tempBitmap.getConfig();
+            if(tmpBitmap.getConfig() != null){
+                config = tmpBitmap.getConfig();
             }else{
                 config = Bitmap.Config.ARGB_8888;
             }
 
             //bitmapMaster is Mutable bitmap
             bitmapMaster = Bitmap.createBitmap(
-                    tempBitmap.getWidth(),
-                    tempBitmap.getHeight(),
+                    tmpBitmap.getWidth(),
+                    tmpBitmap.getHeight(),
                     config);
 
             canvasMaster = new Canvas(bitmapMaster);
-            canvasMaster.drawBitmap(tempBitmap, 0, 0, null);
+            canvasMaster.drawBitmap(tmpBitmap, 0, 0, null);
 
             imageResult.setImageBitmap(bitmapMaster);
         }catch (NullPointerException npe){
             npe.printStackTrace();
         }
+
+        setNewColor(Color.BLUE);
+
     }
 
 
@@ -160,7 +199,6 @@ public class MainActivity extends AppCompatActivity {
             //outside ImageView
             return;
         }else{
-
             float ratioWidth = (float)bm.getWidth()/(float)iv.getWidth();
             float ratioHeight = (float)bm.getHeight()/(float)iv.getHeight();
 
@@ -171,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                     y * ratioHeight,
                     paintDraw);
             imageResult.invalidate();
+
         }
     }
 
@@ -209,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
                         imageResult.setImageBitmap(bitmapMaster);
                     } catch (FileNotFoundException e) {
+                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 
@@ -222,19 +262,16 @@ public class MainActivity extends AppCompatActivity {
         File file = Environment.getExternalStorageDirectory();
         File newFile = new File(file, "test.jpg");
 
-
-
-
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(newFile);
             bm.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
-            //byWalid
+
             MediaStore.Images.Media.insertImage(getContentResolver() , bm , "TitleName" , "") ;
             Toast.makeText(MainActivity.this,
-                    "Save Bitmap: " + fileOutputStream.toString(),
-                    Toast.LENGTH_LONG).show();
+                    "Annotations saved",
+                    Toast.LENGTH_SHORT).show();
 
 
         } catch (FileNotFoundException e) {
@@ -249,5 +286,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
-}
 
+    private void setNewColor(int color){
+        paintDraw.setStyle(Paint.Style.FILL);
+        paintDraw.setColor(color);
+        paintDraw.setStrokeWidth(4);
+    }
+
+    private void setNewPaintWidth(int width){
+        paintDraw.setStrokeWidth(width);
+    }
+}
