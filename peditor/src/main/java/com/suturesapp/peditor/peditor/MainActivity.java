@@ -1,6 +1,8 @@
 package com.suturesapp.peditor.peditor;
 
+import android.Manifest;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                0);
 
         btnLoadImage = (Button)findViewById(R.id.loadimage);
         btnSaveImage = (Button)findViewById(R.id.saveimage);
@@ -105,6 +111,42 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+        Intent intent = getIntent();
+        String imagePath = intent.getStringExtra("imagePath");
+
+        // TODO: 05/03/17 don't hardcode that!
+        imagePath = "/Sutures/pica.png";
+
+
+        try {
+            String fullPath = Environment.getExternalStorageDirectory()+imagePath;
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap tempBitmap = BitmapFactory.decodeFile(fullPath, options);
+
+            Bitmap.Config config;
+            if(tempBitmap.getConfig() != null){
+                config = tempBitmap.getConfig();
+            }else{
+                config = Bitmap.Config.ARGB_8888;
+            }
+
+            //bitmapMaster is Mutable bitmap
+            bitmapMaster = Bitmap.createBitmap(
+                    tempBitmap.getWidth(),
+                    tempBitmap.getHeight(),
+                    config);
+
+            canvasMaster = new Canvas(bitmapMaster);
+            canvasMaster.drawBitmap(tempBitmap, 0, 0, null);
+
+            imageResult.setImageBitmap(bitmapMaster);
+        }catch (NullPointerException npe){
+            npe.printStackTrace();
+        }
     }
 
 
@@ -167,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
 
                         imageResult.setImageBitmap(bitmapMaster);
                     } catch (FileNotFoundException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 

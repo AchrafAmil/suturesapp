@@ -1,5 +1,6 @@
 package com.suturesapp.workspace;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -21,6 +22,13 @@ public class AndroidLauncher extends AndroidApplication implements NativePlatfor
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new SmallIntestineDemoGame(this), config);
+	}
+
+	@Override
+	public void saveScreenshot(FileHandle fileHandle) {
+		Pixmap pixmap = getScreenshot(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		OutputStream stream = fileHandle.write(false);
+		savePNG(pixmapToIntArray(pixmap), Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), stream);
 	}
 
 	public Pixmap getScreenshot(int x, int y, int w, int h, boolean flipY ) {
@@ -68,12 +76,14 @@ public class AndroidLauncher extends AndroidApplication implements NativePlatfor
 		Bitmap bitmap = Bitmap.createBitmap( colors, width, height, Bitmap.Config.ARGB_8888 );
 		bitmap = Utils.flip(bitmap, Utils.Direction.VERTICAL);
 		bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream );
+
+		Intent intent = getPackageManager().getLaunchIntentForPackage("com.suturesapp.peditor.peditor");
+		// TODO: 05/03/17 don't hardcode that!
+		intent.putExtra("imagePath","/Sutures/pica.png");
+		//intent.putExtra("bitmap",bitmap);		// to heavy
+		startActivity( intent );
+
+
 	}
 
-	@Override
-	public void saveScreenshot(FileHandle fileHandle) {
-		Pixmap pixmap = getScreenshot(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		OutputStream stream = fileHandle.write(false);
-		savePNG(pixmapToIntArray(pixmap), Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), stream);
-	}
 }
