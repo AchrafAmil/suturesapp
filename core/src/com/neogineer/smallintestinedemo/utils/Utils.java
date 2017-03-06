@@ -231,4 +231,30 @@ public class Utils {
 
         return angle;
     }
+
+    public static float tumorScale(OrganPart op){
+        String name = op.getClass().getSimpleName().split("OrganPart")[0];
+        switch (name){
+            case "AbdominalWall":
+                return Constants.ABDOMINALWALL_TUMOR_SCALE;
+            case "Liver":
+                return Constants.LIVER_TUMOR_SCALE;
+            case "Stomach":
+                return Constants.STOMACH_TUMOR_SCALE;
+            case "Rectum":
+                return Constants.RECTUM_TUMOR_SCALE;
+            case "Duodenum":
+                return Constants.DUODENUM_TUMOR_SCALE;
+            case "Esophagus":
+                return Constants.ESOPHAGUS_TUMOR_SCALE;
+            case "SmallIntestine":
+                return Constants.SMALLINTESTINE_TUMOR_SCALE;
+            case "Appendix":
+                return Constants.APPENDIX_TUMOR_SCALE;
+            case "Colon":
+                return Constants.COLON_TUMOR_SCALE;
+            default:
+                return 1;
+        }
+    }
 }

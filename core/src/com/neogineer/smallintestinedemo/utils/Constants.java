@@ -15,11 +15,11 @@ public class Constants {
 
     public static final float MAX_ZOOM = 6.5f;
     public static final float MIN_ZOOM = 1f;
-    public static final int CAMERA_X_LIMIT_RIGHT = 65;
-    public static final int CAMERA_X_LIMIT_LEFT = 0;
+    public static final int CAMERA_X_LIMIT_RIGHT = 70;
+    public static final int CAMERA_X_LIMIT_LEFT = -5;
     public static final int CAMERA_Y_LIMIT_TOP = 70;
-    public static final int CAMERA_Y_LIMIT_BUTTOM = 0;
-    public static final Vector2 CAMERA_INITIAL_TRANSLATION = new Vector2(0, -50);
+    public static final int CAMERA_Y_LIMIT_BUTTOM = -5;
+    public static final Vector2 CAMERA_INITIAL_TRANSLATION = new Vector2(5, -45);
 
     public static final float VERTICES_SCALE_FACTOR = 40;
 
@@ -58,6 +58,18 @@ public class Constants {
     public static final Vector2 STOMACH_POSITION = new Vector2(47, 59.2f);
     public static final Vector2 APPENDIX_POSITION = SMALLINTESTINE_RIGHT_POSITION.cpy().add(5,3);
     public static final Vector2 LIVER_POSITION = new Vector2(17,64);
+
+    // Tumor scale
+    public static final float TUMOR_SCALE = 5f;
+    public static final float ABDOMINALWALL_TUMOR_SCALE = 0.05f*TUMOR_SCALE;
+    public static final float ESOPHAGUS_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
+    public static final float DUODENUM_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
+    public static final float RECTUM_TUMOR_SCALE = 0.3f*TUMOR_SCALE;
+    public static final float STOMACH_TUMOR_SCALE = 0.5f*TUMOR_SCALE;
+    public static final float COLON_TUMOR_SCALE = 0.3f*TUMOR_SCALE;
+    public static final float APPENDIX_TUMOR_SCALE = 0.15f*TUMOR_SCALE;
+    public static final float SMALLINTESTINE_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
+    public static final float LIVER_TUMOR_SCALE = 0.5f*TUMOR_SCALE;
 
 
 

@@ -545,9 +545,8 @@ public abstract class OrganPart extends Actor implements Connectable {
     }
 
     public void addTumor(Tumor tumor){
-        int w = baseSprite.getTexture().getWidth();
-        int h = baseSprite.getTexture().getHeight();
-        tumor.scale = (w+h) / 200f ;
+        tumor.scale = Utils.tumorScale(this);
         this.tumors.add(tumor);
+        Gdx.app.log("Tumor","tumor with scale "+tumor.scale+" added to "+this);
     }
 }
