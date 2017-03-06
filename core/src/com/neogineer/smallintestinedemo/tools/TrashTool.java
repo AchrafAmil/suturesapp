@@ -50,7 +50,7 @@ public class TrashTool extends Tool {
 
             for(OrganPart op : bloc){
                 //op.body.setTransform(TRASH_POSITION_X+=5,TRASH_POSITION_Y+=5,0);
-                op.organCallback.removeActor(op);
+                op.organCallback.removeOrganPart(op);
                 op.destroy();
             }
 

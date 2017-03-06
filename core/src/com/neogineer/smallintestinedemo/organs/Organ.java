@@ -96,4 +96,11 @@ public abstract class Organ extends Group {
 
 
     }
+
+    public boolean removeOrganPart(OrganPart op){
+        if(!this.organParts.values().remove(op))
+            return false;
+        removeActor(op);
+        return true;
+    }
 }
