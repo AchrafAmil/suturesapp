@@ -32,7 +32,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton btnLoadImage, btnSaveImage;
+    ImageButton btnLoadImage, btnSaveImage, backButton;
     ImageButton btnRed, btnGreen,btnYellow,btnDark,btnBlue,btnWhite;
     ImageView imageResult;
     //SeekBar mSolorSlider;
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnLoadImage = (ImageButton)findViewById(R.id.loadimage);
         btnSaveImage = (ImageButton)findViewById(R.id.saveimage);
+        backButton = (ImageButton)findViewById(R.id.backButton);
         btnRed = (ImageButton)findViewById(R.id.btnRed);
         btnGreen = (ImageButton)findViewById(R.id.btnGreen);
         btnYellow = (ImageButton)findViewById(R.id.btnYellow);
@@ -108,6 +109,13 @@ public class MainActivity extends AppCompatActivity {
      * cannot detect ACTION_MOVE and ACTION_UP.
      */
                 return true;
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
