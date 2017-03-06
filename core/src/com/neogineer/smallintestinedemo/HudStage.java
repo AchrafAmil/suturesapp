@@ -171,7 +171,7 @@ public class HudStage extends Stage {
 
         int x=5,y=5;
 
-        int marge = (int) (width * 0.025f);
+        int marge = (int) (width * 0.02f);
 
         switch (id){
             case 1:

@@ -12,11 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
-        <Button
+        <ImageButton
+            android:padding="8dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/flch"
-            android:visibility="invisible"
+            android:background="@null"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/flch"
+            android:visibility="visible"
             android:layout_marginLeft="0dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true" />
@@ -29,23 +33,35 @@
             android:background="@android:color/transparent"
             android:layout_alignParentRight="true">
 
-            <Button
+            <ImageButton
+                android:padding="8dp"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/paper"
+                android:src="@drawable/paper"
+                android:background="@null"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
                 android:layout_marginLeft="10dp"/>
-            <Button
+            <ImageButton
+                android:padding="8dp"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/paint"
-                android:layout_marginLeft="10dp"/>
-            <Button
+                android:background="@null"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/paint"
+                android:layout_marginLeft="15dp"/>
+            <ImageButton
+                android:padding="8dp"
                 android:id="@+id/loadimage"
-                android:layout_width="48dp"
+                android:layout_width="66dp"
                 android:layout_height="48dp"
-                android:background="@drawable/a"
+                android:src="@drawable/a"
+                android:background="@null"
                 android:layout_marginRight="0dp"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
 
 
         </LinearLayout>
@@ -67,7 +83,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_margin="5dp"
@@ -76,7 +93,7 @@
             android:gravity="center"
             android:padding="0dp"
             android:background="@color/colorGrey">
-            <Button
+            <ImageButton
                 android:id="@+id/btnDark"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -84,7 +101,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
                 />
-            <Button
+            <ImageButton
                 android:id="@+id/btnWhite"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -92,7 +109,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
                 />
-            <Button
+            <ImageButton
                 android:id="@+id/btnRed"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -100,7 +117,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
                 />
-            <Button
+            <ImageButton
                 android:id="@+id/btnYellow"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -108,7 +125,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
                 />
-            <Button
+            <ImageButton
                 android:id="@+id/btnGreen"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -116,7 +133,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
                 />
-            <Button
+            <ImageButton
                 android:id="@+id/btnBlue"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -127,11 +144,11 @@
 
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:layout_alignParentEnd="true"
             android:id="@+id/saveimage"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/download"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="8dp"

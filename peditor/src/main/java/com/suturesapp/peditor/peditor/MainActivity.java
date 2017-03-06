@@ -17,7 +17,7 @@ import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -32,8 +32,8 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnLoadImage, btnSaveImage;
-    Button btnRed, btnGreen,btnYellow,btnDark,btnBlue,btnWhite;
+    ImageButton btnLoadImage, btnSaveImage;
+    ImageButton btnRed, btnGreen,btnYellow,btnDark,btnBlue,btnWhite;
     ImageView imageResult;
     //SeekBar mSolorSlider;
 
@@ -56,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 0);
 
-        btnLoadImage = (Button)findViewById(R.id.loadimage);
-        btnSaveImage = (Button)findViewById(R.id.saveimage);
-        btnRed = (Button)findViewById(R.id.btnRed);
-        btnGreen = (Button)findViewById(R.id.btnGreen);
-        btnYellow = (Button)findViewById(R.id.btnYellow);
-        btnDark = (Button)findViewById(R.id.btnDark);
-        btnBlue = (Button)findViewById(R.id.btnBlue);
-        btnWhite = (Button)findViewById(R.id.btnWhite);
+        btnLoadImage = (ImageButton)findViewById(R.id.loadimage);
+        btnSaveImage = (ImageButton)findViewById(R.id.saveimage);
+        btnRed = (ImageButton)findViewById(R.id.btnRed);
+        btnGreen = (ImageButton)findViewById(R.id.btnGreen);
+        btnYellow = (ImageButton)findViewById(R.id.btnYellow);
+        btnDark = (ImageButton)findViewById(R.id.btnDark);
+        btnBlue = (ImageButton)findViewById(R.id.btnBlue);
+        btnWhite = (ImageButton)findViewById(R.id.btnWhite);
 
 
         imageResult = (ImageView)findViewById(R.id.result);
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // init color buttons
+        // init color ImageButtons
         btnRed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
