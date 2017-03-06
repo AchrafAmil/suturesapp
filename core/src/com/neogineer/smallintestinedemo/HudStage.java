@@ -27,6 +27,14 @@ public class HudStage extends Stage {
         this.callback = callback;
 
 
+        setupButtons();
+
+
+        InputMultiplexer ip = (InputMultiplexer) Gdx.input.getInputProcessor();
+        ip.addProcessor(this);
+    }
+
+    private void setupButtons() {
         ImageButton cutButton = createButton("cutButton.png");
         cutButton.setPosition(buttonPosition(1).x, buttonPosition(1).y);
         addActor(cutButton);
@@ -79,10 +87,10 @@ public class HudStage extends Stage {
         });
         this.buttons.add(moveButton);
 
-        ImageButton trashButton = createButton("trashButton.png");
-        trashButton.setPosition(buttonPosition(5).x, buttonPosition(5).y);
-        addActor(trashButton);
-        trashButton.addListener(new ClickListener(){
+        ImageButton tumorButton = createButton("tumorButton.png");
+        tumorButton.setPosition(buttonPosition(5).x, buttonPosition(5).y);
+        addActor(tumorButton);
+        tumorButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
@@ -90,26 +98,23 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Tumor);
             }
         });
-        this.buttons.add(trashButton);
+        this.buttons.add(tumorButton);
 
-        ImageButton reloadButton = createButton("screenshotButton.png");
-        reloadButton.setPosition(buttonPosition(6).x, buttonPosition(6).y);
-        addActor(reloadButton);
-        reloadButton.addListener(new ClickListener(){
+        ImageButton screenshotButton = createButton("screenshotButton.png");
+        screenshotButton.setPosition(buttonPosition(6).x, buttonPosition(6).y);
+        addActor(screenshotButton);
+        screenshotButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
                 setVisible(false);
-
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
                         ((SmallIntestineDemoGame) Gdx.app.getApplicationListener()).nativePlatform.saveScreenshot(Gdx.files.external("Sutures/pica.png"));
                     }
                 },0.3f);
-
-
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -118,11 +123,21 @@ public class HudStage extends Stage {
                 },0.5f);
             }
         });
-        this.buttons.add(reloadButton);
+        this.buttons.add(screenshotButton);
 
+        ImageButton trashButton = createButton("trashButton.png");
+        trashButton.setPosition(buttonPosition(7).x, buttonPosition(7).y);
+        addActor(trashButton);
+        trashButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
+                super.clicked(event, x, y);
+                callback.setTool(Tool.Tools.Trash);
+            }
+        });
+        this.buttons.add(trashButton);
 
-        InputMultiplexer ip = (InputMultiplexer) Gdx.input.getInputProcessor();
-        ip.addProcessor(this);
     }
 
     public void setVisible(boolean visible){
@@ -154,17 +169,26 @@ public class HudStage extends Stage {
         int width = Gdx.graphics.getWidth();
         int height = Gdx.graphics.getHeight();
 
-        int x,y=5;
+        int x=5,y=5;
 
         int marge = (int) (width * 0.025f);
 
-        if(id<=5)
-            x = (int) (marge*(id)+getButtonSize().x*(id-1));
-        else{
-            x = (int) (marge*4+getButtonSize().x*4);
-            y = (int) (height*0.99f - getButtonSize().y);
+        switch (id){
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                x = (int) (marge*(id)+getButtonSize().x*(id-1));
+                break;
+            case 6:
+                x = (int) (marge*4+getButtonSize().x*4);
+                y = (int) (height*0.99f - getButtonSize().y);
+                break;
+            case 7:
+                x = marge;
+                y = (int) (height*0.99f - getButtonSize().y);
         }
-
 
         return tmpVec.set(x,y);
     }
