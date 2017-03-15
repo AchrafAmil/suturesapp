@@ -17,6 +17,7 @@ import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
 import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
@@ -92,6 +93,12 @@ public class Utils {
                 return Duodenum.SCALE;
             case "Esophagus":
                 return Esophagus.SCALE;
+            case "BileDuct":
+                return Constants.BILEDUCT_SCALE;
+            case "Gallbladder":
+                return Constants.GALLBLADDER_SCALE;
+            case "Pancreas":
+                return Constants.PANCREAS_SCALE;
             case "SmallIntestine":
                 return SmallIntestine.getSCALE();
             case "Appendix":
@@ -120,10 +127,10 @@ public class Utils {
         // TODO: 31/12/16 find a way to get the real value
         spDef.setBvisible(false);
 
-        if(orgA instanceof com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)
-            spDef.idA = ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)orgA).id;
-        if(orgB instanceof com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)
-            spDef.idB = ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)orgB).id;
+        if(orgA instanceof RopeOrganPart)
+            spDef.idA = ((RopeOrganPart)orgA).id;
+        if(orgB instanceof RopeOrganPart)
+            spDef.idB = ((RopeOrganPart)orgB).id;
 
 
         return spDef;
@@ -247,6 +254,12 @@ public class Utils {
                 return Constants.DUODENUM_TUMOR_SCALE;
             case "Esophagus":
                 return Constants.ESOPHAGUS_TUMOR_SCALE;
+            case "BileDuct":
+                return Constants.BILEDUCT_TUMOR_SCALE;
+            case "Gallbladder":
+                return Constants.GALLBLADDER_TUMOR_SCALE;
+            case "Pancreas":
+                return Constants.PANCREAS_TUMOR_SCALE;
             case "SmallIntestine":
                 return Constants.SMALLINTESTINE_TUMOR_SCALE;
             case "Appendix":

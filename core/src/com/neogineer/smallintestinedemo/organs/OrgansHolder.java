@@ -9,11 +9,18 @@ import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWall;
+import com.neogineer.smallintestinedemo.organs.appendix.Appendix;
+import com.neogineer.smallintestinedemo.organs.bileduct.BileDuct;
+import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
+import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
+import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
+import com.neogineer.smallintestinedemo.utils.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,19 +39,21 @@ public class OrgansHolder {
 
     public static HashMap<String, Organ> allOrgans = new HashMap<>();
 
-    public com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWall abdominalWall;
+    public AbdominalWall abdominalWall;
 
-    public com.neogineer.smallintestinedemo.organs.esophagus.Esophagus esophagus;
+    public Esophagus esophagus;
 
-    public com.neogineer.smallintestinedemo.organs.duedenum.Duodenum duodenum;
+    public BileDuct bileDuct;
+
+    public Duodenum duodenum;
 
     public Rectum rectum;
 
-    public com.neogineer.smallintestinedemo.organs.stomach.Stomach stomach;
+    public Stomach stomach;
 
     public Colon colon;
 
-    public com.neogineer.smallintestinedemo.organs.appendix.Appendix appendix;
+    public Appendix appendix;
 
     public SmallIntestine smallIntestine;
 
@@ -58,15 +67,19 @@ public class OrgansHolder {
         if(world==null || camera==null)
             throw new RuntimeException("Holder can't start, World and/or Camera are null");
 
-        this.abdominalWall = new com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWall(world, camera);
+        this.abdominalWall = new AbdominalWall(world, camera);
         stage.addActor(this.abdominalWall);
         allOrgans.put("AbdominalWall", abdominalWall);
 
-        this.esophagus = new com.neogineer.smallintestinedemo.organs.esophagus.Esophagus(world, camera);
+        this.esophagus = new Esophagus(world, camera);
         stage.addActor(this.esophagus);
         allOrgans.put("Esophagus", esophagus);
 
-        this.duodenum = new com.neogineer.smallintestinedemo.organs.duedenum.Duodenum(world, camera);
+        this.bileDuct = new BileDuct(world, camera);
+        stage.addActor(this.bileDuct);
+        allOrgans.put("BileDuct", bileDuct);
+
+        this.duodenum = new Duodenum(world, camera);
         stage.addActor(this.duodenum);
         allOrgans.put("Duodenum", duodenum);
 
@@ -74,7 +87,7 @@ public class OrgansHolder {
         stage.addActor(this.rectum);
         allOrgans.put("Rectum", rectum);
 
-        this.stomach = new com.neogineer.smallintestinedemo.organs.stomach.Stomach(world, camera);
+        this.stomach = new Stomach(world, camera);
         stage.addActor(this.stomach);
         allOrgans.put("Stomach", stomach);
 
@@ -82,7 +95,7 @@ public class OrgansHolder {
         stage.addActor(this.colon);
         allOrgans.put("Colon", colon);
 
-        this.appendix = new com.neogineer.smallintestinedemo.organs.appendix.Appendix(world, camera);
+        this.appendix = new Appendix(world, camera);
         stage.addActor(this.appendix);
         allOrgans.put("Appendix", appendix);
 
@@ -94,9 +107,9 @@ public class OrgansHolder {
         stage.addActor(this.liver);
         allOrgans.put("Liver", liver);
 
-        //setupExternalJoints(world, camera);
+        setupExternalJoints(world, camera);
 
-        stage.load();
+        //stage.load();
 
         new Thread(){
             @Override
@@ -106,7 +119,7 @@ public class OrgansHolder {
                     Gdx.app.postRunnable(new Runnable() {
                         @Override
                         public void run() {
-                            camera.translate(com.neogineer.smallintestinedemo.utils.Constants.CAMERA_INITIAL_TRANSLATION);
+                            camera.translate(Constants.CAMERA_INITIAL_TRANSLATION);
                             camera.update();
                         }
                     });
@@ -115,24 +128,6 @@ public class OrgansHolder {
                 }
             }
         }.start();
-
-
-
-
-        /*Thread thread = new Thread() {
-            public void run() {
-
-                try {
-                    Input input = new Input(Gdx.files.internal("kryo_save.bin").read());
-                    loadStateThreadSafe(stage.kryo, input);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        };
-        thread.start();*/
 
     }
 
@@ -165,6 +160,7 @@ public class OrgansHolder {
     public void saveState(Kryo kryo, Output output){
         abdominalWall.saveState(kryo, output);
         esophagus.saveState(kryo, output);
+        bileDuct.saveState(kryo, output);
         duodenum.saveState(kryo, output);
         rectum.saveState(kryo, output);
         stomach.saveState(kryo, output);
@@ -193,6 +189,7 @@ public class OrgansHolder {
         OrganPart.INSTANCES = 0 ;
         abdominalWall.loadState(kryo, input);
         esophagus.loadState(kryo, input);
+        bileDuct.loadState(kryo, input);
         duodenum.loadState(kryo, input);
         rectum.loadState(kryo, input);
         stomach.loadState(kryo, input);
@@ -276,6 +273,7 @@ public class OrgansHolder {
     private void updateOpenableSides() {
         abdominalWall.loadBufferedOpenableSides();
         esophagus.loadBufferedOpenableSides();
+        bileDuct.loadBufferedOpenableSides();
         duodenum.loadBufferedOpenableSides();
         rectum.loadBufferedOpenableSides();
         stomach.loadBufferedOpenableSides();
