@@ -107,9 +107,13 @@ public abstract class OrganPart extends Actor implements Connectable {
 
 
         if(this.getClass().getSimpleName().equals("AbdominalWallOrganPart"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+            bDef.type = BodyDef.BodyType.KinematicBody;
         if(this.getClass().getSimpleName().equals("EsophagusOrganPart") && this.identifier.equals("1"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+            bDef.type = BodyDef.BodyType.KinematicBody;
+        //if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("4"))
+        //    bDef.type = BodyDef.BodyType.KinematicBody;
+        //if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("5"))
+        //    bDef.type = BodyDef.BodyType.KinematicBody;
         if(this.getClass().getSimpleName().equals("LiverOrganPart") && this.identifier.equals("1"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("StomachOrganPart") && this.identifier.equals("1"))

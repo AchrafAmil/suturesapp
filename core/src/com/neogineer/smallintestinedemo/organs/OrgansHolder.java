@@ -15,6 +15,7 @@ import com.neogineer.smallintestinedemo.organs.bileduct.BileDuct;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.gallbladder.Gallbladder;
+import com.neogineer.smallintestinedemo.organs.pancreas.Pancreas;
 import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
@@ -47,6 +48,8 @@ public class OrgansHolder {
     public BileDuct bileDuct;
 
     public Gallbladder gallbladder;
+
+    public Pancreas pancreas;
 
     public Duodenum duodenum;
 
@@ -89,6 +92,10 @@ public class OrgansHolder {
         this.gallbladder = new Gallbladder(world, camera);
         stage.addActor(this.gallbladder);
         allOrgans.put("Gallbladder", gallbladder);
+
+        this.pancreas = new Pancreas(world, camera);
+        stage.addActor(this.pancreas);
+        allOrgans.put("Pancreas", pancreas);
 
         this.rectum = new Rectum(world, camera);
         stage.addActor(this.rectum);

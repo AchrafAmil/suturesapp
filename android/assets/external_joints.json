@@ -11,6 +11,7 @@
 	{"organA":"Rectum", "organPartA":"1", "anchorAx":0.8880832195281982, "anchorAy":0.5313959121704102, "organB":"Colon", "organPartB":"0", "anchorBx":0.01, "anchorBy":0.08},
 	{"organA":"Rectum", "organPartA":"1", "anchorAx":0.9918332099914551, "anchorAy":0.23139585554599762, "organB":"Colon", "organPartB":"0", "anchorBx":0.985, "anchorBy":0.08},
 	{"organA":"Duodenum", "organPartA":"1", "anchorAx":0.2131812423467636, "anchorAy":1.1692042350769043, "organB":"BileDuct", "organPartB":"1", "anchorBx":0.7737500071525574, "anchorBy":0.2224999964237213},
-	{"organA":"Gallbladder", "organPartA":"1", "anchorAx":0.9281813502311707, "anchorAy":1.0058708190917969, "organB":"BileDuct", "organPartB":"2", "anchorBx":0.10874997079372406, "anchorBy":0.11125001311302185}
+	{"organA":"Gallbladder", "organPartA":"1", "anchorAx":0.9281813502311707, "anchorAy":1.0058708190917969, "organB":"BileDuct", "organPartB":"2", "anchorBx":0.10874997079372406, "anchorBy":0.11125001311302185},
+	{"organA":"Pancreas", "organPartA":"1", "anchorAx":0.09208254516124725, "anchorAy":0.1990906149148941, "organB":"Duodenum", "organPartB":"1", "anchorBx":0.7337499856948853, "anchorBy":0.8000003099441528}
  ]
 }
