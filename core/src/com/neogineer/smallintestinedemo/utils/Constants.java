@@ -59,7 +59,7 @@ public class Constants {
     public static final Vector2 BILEDUCT_POSITION = new Vector2(38,47);
     public static final Vector2 GALLBLADDER_POSITION = new Vector2(38,47);
     public static final Vector2 PANCREAS_POSITION = new Vector2(38,47);
-    public static final Vector2 DUODENUM_POSITION = new Vector2(40,40);
+    public static final Vector2 DUODENUM_POSITION = new Vector2(40,41.3f);
     public static final Vector2 RECTUM_POSITION = COLON_LEFT_POSITION.cpy().add(-9,-6);
     public static final Vector2 STOMACH_POSITION = new Vector2(47, 59.2f);
     public static final Vector2 APPENDIX_POSITION = SMALLINTESTINE_RIGHT_POSITION.cpy().add(5,3);
