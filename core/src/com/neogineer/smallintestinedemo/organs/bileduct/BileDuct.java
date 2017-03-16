@@ -11,6 +11,7 @@ import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.bileduct.BileDuctOrganPart;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.utils.Constants;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,7 +38,7 @@ public class BileDuct extends Organ {
         }
 
 
-        /*JSONArray joints = Utils.loadJoints("bileDuct_initial_joints.json");
+        JSONArray joints = Utils.loadJoints("bileduct_initial_joints.json");
 
         for(int i=0; i<joints.length(); i++){
             JSONObject joint = (JSONObject) joints.get(i);
@@ -54,7 +55,7 @@ public class BileDuct extends Organ {
             connector.anchorB = organB.getVertex(joint.getDouble("anchorBx"), joint.getDouble("anchorBy"));
 
             connector.makeConnection(false);
-        }*/
+        }
     }
 
     @Override
@@ -84,9 +85,9 @@ public class BileDuct extends Organ {
             case 3:
                 return new Vector2(POSITION.x-4f*SCALE, POSITION.y+4f*SCALE);
             case 4:
-                return new Vector2(POSITION.x-7f*SCALE, POSITION.y+5f*SCALE);
-            case 5:
                 return new Vector2(POSITION.x-5.5f*SCALE, POSITION.y+8f*SCALE);
+            case 5:
+                return new Vector2(POSITION.x-7f*SCALE, POSITION.y+5f*SCALE);
             default:
                 return null;
         }
