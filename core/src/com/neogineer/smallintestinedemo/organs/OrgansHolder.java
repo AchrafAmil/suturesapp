@@ -14,6 +14,7 @@ import com.neogineer.smallintestinedemo.organs.appendix.Appendix;
 import com.neogineer.smallintestinedemo.organs.bileduct.BileDuct;
 import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
+import com.neogineer.smallintestinedemo.organs.gallbladder.Gallbladder;
 import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
@@ -44,6 +45,8 @@ public class OrgansHolder {
     public Esophagus esophagus;
 
     public BileDuct bileDuct;
+
+    public Gallbladder gallbladder;
 
     public Duodenum duodenum;
 
@@ -82,6 +85,10 @@ public class OrgansHolder {
         this.duodenum = new Duodenum(world, camera);
         stage.addActor(this.duodenum);
         allOrgans.put("Duodenum", duodenum);
+
+        this.gallbladder = new Gallbladder(world, camera);
+        stage.addActor(this.gallbladder);
+        allOrgans.put("Gallbladder", gallbladder);
 
         this.rectum = new Rectum(world, camera);
         stage.addActor(this.rectum);
@@ -161,6 +168,7 @@ public class OrgansHolder {
         abdominalWall.saveState(kryo, output);
         esophagus.saveState(kryo, output);
         bileDuct.saveState(kryo, output);
+        gallbladder.saveState(kryo, output);
         duodenum.saveState(kryo, output);
         rectum.saveState(kryo, output);
         stomach.saveState(kryo, output);
@@ -190,6 +198,7 @@ public class OrgansHolder {
         abdominalWall.loadState(kryo, input);
         esophagus.loadState(kryo, input);
         bileDuct.loadState(kryo, input);
+        gallbladder.loadState(kryo, input);
         duodenum.loadState(kryo, input);
         rectum.loadState(kryo, input);
         stomach.loadState(kryo, input);
@@ -274,6 +283,7 @@ public class OrgansHolder {
         abdominalWall.loadBufferedOpenableSides();
         esophagus.loadBufferedOpenableSides();
         bileDuct.loadBufferedOpenableSides();
+        gallbladder.loadBufferedOpenableSides();
         duodenum.loadBufferedOpenableSides();
         rectum.loadBufferedOpenableSides();
         stomach.loadBufferedOpenableSides();

@@ -17,6 +17,9 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.neogineer.smallintestinedemo.organs.gallbladder.Gallbladder;
+import com.neogineer.smallintestinedemo.organs.gallbladder.GallbladderOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -132,8 +135,10 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         FixtureDef fix = new FixtureDef();
         fix.density = 0.1f;
-        if(this instanceof com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)
+        if(this instanceof RopeOrganPart)
             fix.density = 0.5f;
+        if(this instanceof GallbladderOrganPart)
+            fix.density = 0.02f;
         fix.friction = 0f;
         fix.restitution = 0.5f;
         fix.filter.categoryBits = this.getCategory();
