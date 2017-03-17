@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
@@ -18,13 +19,13 @@ import com.neogineer.smallintestinedemo.tools.TrashTool;
  * Created by neogineer on 30/08/16.
  */
 public class GameScreen implements Screen, SettingTool {
-    private final com.neogineer.smallintestinedemo.GameStage stage;
-    private final com.neogineer.smallintestinedemo.HudStage hudStage;
+    private final GameStage stage;
+    private final HudStage hudStage;
 
 
     public GameScreen(){
-        stage = new com.neogineer.smallintestinedemo.GameStage();
-        hudStage = new com.neogineer.smallintestinedemo.HudStage(this);
+        stage = new GameStage();
+        hudStage = new HudStage(this);
     }
 
     @Override
@@ -98,5 +99,24 @@ public class GameScreen implements Screen, SettingTool {
     @Override
     public void load() {
         stage.load();
+    }
+
+    Vector2 tmpVec = new Vector2();
+    @Override
+    public void showPathology() {
+        tmpVec.set(TrashTool.TRASH_POSITION_X-Constants.CAMERA_INITIAL_TRANSLATION.x, TrashTool.TRASH_POSITION_Y-Constants.CAMERA_INITIAL_TRANSLATION.y);
+        stage.camera.translate(tmpVec);
+        stage.camera.update();
+        hudStage.showPathologyBoxButtons();
+        setTool(Tool.Tools.Move);
+    }
+
+    @Override
+    public void showWorkspace() {
+        tmpVec.set(-TrashTool.TRASH_POSITION_X+Constants.CAMERA_INITIAL_TRANSLATION.x, -TrashTool.TRASH_POSITION_Y+Constants.CAMERA_INITIAL_TRANSLATION.y);
+        stage.camera.translate(tmpVec);
+        stage.camera.update();
+        hudStage.showWorkspaceButtons();
+        setTool(Tool.Tools.Move);
     }
 }

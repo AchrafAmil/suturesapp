@@ -10,4 +10,8 @@ public interface SettingTool {
     void setTool(Tool.Tools tool);
 
     void load();
+
+    void showPathology();
+
+    void showWorkspace();
 }

@@ -39,6 +39,7 @@ import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.tools.CutTool;
 import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.tools.DndTool;
+import com.neogineer.smallintestinedemo.tools.Tool;
 
 import net.dermetfan.gdx.physics.box2d.kryo.serializers.*;
 
@@ -49,7 +50,7 @@ import java.util.ArrayList;
 /**
  * Created by neogineer on 30/08/16.
  */
-public class GameStage extends Stage{
+public class GameStage extends Stage {
 
     private float TIME_STEP = 1 / 100f;
     private float accumulator = 0f;
@@ -378,7 +379,7 @@ public class GameStage extends Stage{
 
 
 
-    public void setTool(com.neogineer.smallintestinedemo.tools.Tool tool){
+    public void setTool(Tool tool){
         ArrayList<InputProcessor> processorsToRemove = new ArrayList<>();
         int size = inputMultiplexer.getProcessors().size;
         for(int i = 0; i<size; i++){

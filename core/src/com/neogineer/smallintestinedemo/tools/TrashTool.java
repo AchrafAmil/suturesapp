@@ -1,6 +1,7 @@
 package com.neogineer.smallintestinedemo.tools;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
@@ -37,26 +38,33 @@ public class TrashTool extends Tool {
             if(bloc==null)
                 return false;
 
-            boolean eso = false, rectu = false;
-            for(OrganPart op : bloc){
-                if(op instanceof EsophagusOrganPart)
-                    eso = true;
-                if(op instanceof RectumOrganPart)
-                    rectu = true;
-            }
-
-            if(eso && rectu)
+            if(hasRectumAndEsophagus(bloc))
                 return false;
 
             for(OrganPart op : bloc){
                 //op.body.setTransform(TRASH_POSITION_X+=5,TRASH_POSITION_Y+=5,0);
-                op.organCallback.removeOrganPart(op);
-                op.destroy();
+                Vector2 pos = op.body.getPosition();
+                float rotation = op.body.getAngle();
+                op.body.setTransform(pos.x+TRASH_POSITION_X, pos.y+TRASH_POSITION_Y, rotation);
             }
 
         }
 
         return false;
+    }
+
+    private static boolean hasRectumAndEsophagus(ArrayList<OrganPart> bloc) {
+        boolean eso = false, rectu = false;
+        for(OrganPart op : bloc){
+            if(op instanceof EsophagusOrganPart)
+                eso = true;
+            if(op instanceof RectumOrganPart)
+                rectu = true;
+        }
+
+
+            return (eso && rectu);
+
     }
 
     public ArrayList<OrganPart> getOrganPartBloc(OrganPart organPart){

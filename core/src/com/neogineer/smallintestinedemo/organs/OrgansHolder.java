@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.neogineer.smallintestinedemo.GameStage;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWall;
 import com.neogineer.smallintestinedemo.organs.appendix.Appendix;
 import com.neogineer.smallintestinedemo.organs.bileduct.BileDuct;
@@ -69,7 +70,7 @@ public class OrgansHolder {
     public static World world;
     public static OrthographicCamera camera;
 
-    public void start(final com.neogineer.smallintestinedemo.GameStage stage){
+    public void start(final GameStage stage){
         if(world==null || camera==null)
             throw new RuntimeException("Holder can't start, World and/or Camera are null");
 

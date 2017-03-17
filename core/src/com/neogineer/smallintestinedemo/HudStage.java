@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.neogineer.smallintestinedemo.tools.Tool;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by neogineer on 26/01/17.
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public class HudStage extends Stage {
 
     public final SettingTool callback;
-    private final ArrayList<ImageButton> buttons = new ArrayList<>();
+    private final HashMap<String,ImageButton> buttons = new HashMap<>();
 
     public HudStage(final SettingTool callback){
         this.callback = callback;
@@ -46,7 +47,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Cut);
             }
         });
-        this.buttons.add(cutButton);
+        this.buttons.put("cutButton",cutButton);
 
         ImageButton closeButton = createButton("closeButton.png");
         closeButton.setPosition(buttonPosition(2).x, buttonPosition(2).y);
@@ -59,7 +60,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Close);
             }
         });
-        this.buttons.add(closeButton);
+        this.buttons.put("closeButton",closeButton);
 
         ImageButton connectButton = createButton("connectButton.png");
         connectButton.setPosition(buttonPosition(3).x, buttonPosition(3).y);
@@ -72,7 +73,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Connect);
             }
         });
-        this.buttons.add(connectButton);
+        this.buttons.put("connectButton",connectButton);
 
         ImageButton moveButton = createButton("moveButton.png");
         moveButton.setPosition(buttonPosition(4).x, buttonPosition(4).y);
@@ -85,7 +86,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Move);
             }
         });
-        this.buttons.add(moveButton);
+        this.buttons.put("moveButton",moveButton);
 
         ImageButton tumorButton = createButton("tumorButton.png");
         tumorButton.setPosition(buttonPosition(5).x, buttonPosition(5).y);
@@ -98,7 +99,7 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Tumor);
             }
         });
-        this.buttons.add(tumorButton);
+        this.buttons.put("tumorButton",tumorButton);
 
         ImageButton screenshotButton = createButton("screenshotButton.png");
         screenshotButton.setPosition(buttonPosition(6).x, buttonPosition(6).y);
@@ -123,7 +124,7 @@ public class HudStage extends Stage {
                 },0.5f);
             }
         });
-        this.buttons.add(screenshotButton);
+        this.buttons.put("screenshotButton",screenshotButton);
 
         ImageButton trashButton = createButton("trashButton.png");
         trashButton.setPosition(buttonPosition(7).x, buttonPosition(7).y);
@@ -136,20 +137,49 @@ public class HudStage extends Stage {
                 callback.setTool(Tool.Tools.Trash);
             }
         });
-        this.buttons.add(trashButton);
+        this.buttons.put("trashButton",trashButton);
+
+
+        ImageButton pathologyButton = createButton("pathologyButton.png");
+        pathologyButton.setPosition(buttonPosition(8).x, buttonPosition(8).y);
+        addActor(pathologyButton);
+        pathologyButton.addListener(new ClickListener(){
+            boolean isOnPathologyBox = false;
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
+                super.clicked(event, x, y);
+                if(isOnPathologyBox)
+                    callback.showWorkspace();
+                else
+                    callback.showPathology();
+                isOnPathologyBox= !isOnPathologyBox;
+            }
+        });
+        this.buttons.put("pathologyButton",pathologyButton);
 
     }
 
     public void setVisible(boolean visible){
-        for(ImageButton b : this.buttons)
+        for(ImageButton b : this.buttons.values())
             b.setVisible(visible);
+    }
+
+    public void showPathologyBoxButtons(){
+        this.setVisible(false);
+        this.buttons.get("pathologyButton").setVisible(true);
+        this.buttons.get("screenshotButton").setVisible(true);
+    }
+
+    public void showWorkspaceButtons(){
+        this.setVisible(true);
     }
 
     /**
      * @return true if at least one of the buttons are visible
      */
     public boolean isVisible(){
-        for(ImageButton b : this.buttons)
+        for(ImageButton b : this.buttons.values())
             if(b.isVisible())
                 return true;
         return false;
@@ -165,6 +195,19 @@ public class HudStage extends Stage {
     }
 
     static Vector2 tmpVec = new Vector2();
+
+    /**
+     * screen buttons id:
+     * 8.7.....6
+     * .
+     * .
+     * .
+     * .
+     * 1.2.3.4.5
+     *
+     * @param id
+     * @return
+     */
     public static Vector2 buttonPosition(int id){
         int width = Gdx.graphics.getWidth();
         int height = Gdx.graphics.getHeight();
@@ -186,6 +229,10 @@ public class HudStage extends Stage {
                 y = (int) (height*0.99f - getButtonSize().y);
                 break;
             case 7:
+                x = (int) (marge*2+getButtonSize().x*1);
+                y = (int) (height*0.99f - getButtonSize().y);
+                break;
+            case 8:
                 x = marge;
                 y = (int) (height*0.99f - getButtonSize().y);
         }
