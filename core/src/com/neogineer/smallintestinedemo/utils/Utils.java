@@ -105,6 +105,8 @@ public class Utils {
                 return Appendix.SCALE;
             case "Colon":
                 return Colon.getSCALE();
+            case "Spleen":
+                return Constants.SPLEEN_SCALE;
             default:
                 return 1;
         }
@@ -266,6 +268,8 @@ public class Utils {
                 return Constants.APPENDIX_TUMOR_SCALE;
             case "Colon":
                 return Constants.COLON_TUMOR_SCALE;
+            case "Spleen":
+                return Constants.SPLEEN_TUMOR_SCALE;
             default:
                 return 1;
         }

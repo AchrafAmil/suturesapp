@@ -22,9 +22,9 @@ public class Pancreas extends Organ {
 
 
 
-    public static final float SCALE = Constants.BILEDUCT_SCALE;
+    public static final float SCALE = Constants.PANCREAS_SCALE;
 
-    public static final Vector2 POSITION = Constants.BILEDUCT_POSITION;
+    public static final Vector2 POSITION = Constants.PANCREAS_POSITION;
 
     private static final int SIZE = 2;
 

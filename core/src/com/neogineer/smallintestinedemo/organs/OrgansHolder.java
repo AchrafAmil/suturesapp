@@ -20,10 +20,12 @@ import com.neogineer.smallintestinedemo.organs.pancreas.Pancreas;
 import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rope.Colon;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
+import com.neogineer.smallintestinedemo.organs.spleen.Spleen;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.organs.liver.Liver;
 import com.neogineer.smallintestinedemo.utils.Constants;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,6 +67,8 @@ public class OrgansHolder {
     public SmallIntestine smallIntestine;
 
     public Liver liver ;
+
+    public Spleen spleen ;
 
 
     public static World world;
@@ -122,6 +126,10 @@ public class OrgansHolder {
         stage.addActor(this.liver);
         allOrgans.put("Liver", liver);
 
+        this.spleen = new Spleen(world, camera);
+        stage.addActor(this.spleen);
+        allOrgans.put("Spleen", spleen);
+
         setupExternalJoints(world, camera);
 
         //stage.load();
@@ -148,7 +156,7 @@ public class OrgansHolder {
 
     private void setupExternalJoints(World world, OrthographicCamera camera){
 
-        JSONArray joints = com.neogineer.smallintestinedemo.utils.Utils.loadJoints("external_joints.json");
+        JSONArray joints = Utils.loadJoints("external_joints.json");
 
         for(int i=0; i<joints.length(); i++){
             JSONObject joint = (JSONObject) joints.get(i);
@@ -184,6 +192,7 @@ public class OrgansHolder {
         appendix.saveState(kryo, output);
         smallIntestine.saveState(kryo, output);
         liver.saveState(kryo, output);
+        spleen.saveState(kryo, output);
         saveJoints(kryo, output);
     }
 
@@ -214,6 +223,7 @@ public class OrgansHolder {
         appendix.loadState(kryo, input);
         smallIntestine.loadState(kryo, input);
         liver.loadState(kryo, input);
+        spleen.loadState(kryo, input);
         loadJoints(kryo, input);
         updateOpenableSides();
     }
@@ -299,6 +309,7 @@ public class OrgansHolder {
         appendix.loadBufferedOpenableSides();
         smallIntestine.loadBufferedOpenableSides();
         liver.loadBufferedOpenableSides();
+        spleen.loadBufferedOpenableSides();
     }
 
     private void loadJoints(Kryo kryo, Input input){
