@@ -27,13 +27,20 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.util.IntArray;
+import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
 import com.neogineer.smallintestinedemo.organs.appendix.AppendixOrganPart;
+import com.neogineer.smallintestinedemo.organs.bileduct.BileDuctOrganPart;
 import com.neogineer.smallintestinedemo.organs.esophagus.EsophagusOrganPart;
+import com.neogineer.smallintestinedemo.organs.gallbladder.GallbladderOrganPart;
+import com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart;
+import com.neogineer.smallintestinedemo.organs.pancreas.PancreasOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.spleen.SpleenOrganPart;
 import com.neogineer.smallintestinedemo.tools.CloseTool;
 import com.neogineer.smallintestinedemo.tools.ConnectTool;
 import com.neogineer.smallintestinedemo.tools.CutTool;
@@ -258,7 +265,7 @@ public class GameStage extends Stage {
             }
         });
 
-        kryo.register(com.neogineer.smallintestinedemo.organs.liver.LiverOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+        kryo.register(LiverOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
             @Override
             public void write(Kryo kryo, Output output, com.neogineer.smallintestinedemo.organs.OrganPart op) {
                 kryo.writeObject(output, op.getOPDef());
@@ -271,7 +278,7 @@ public class GameStage extends Stage {
             }
         });
 
-        kryo.register(com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+        kryo.register(SmallIntestineOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
             @Override
             public void write(Kryo kryo, Output output, com.neogineer.smallintestinedemo.organs.OrganPart op) {
                 kryo.writeObject(output, op.getOPDef());
@@ -320,6 +327,58 @@ public class GameStage extends Stage {
             public com.neogineer.smallintestinedemo.organs.OrganPart read(Kryo kryo, Input input, Class<com.neogineer.smallintestinedemo.organs.OrganPart> type) {
                 OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
                 return new AbdominalWallOrganPart(opDef);
+            }
+        });
+
+        kryo.register(SpleenOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new SpleenOrganPart(opDef);
+            }
+        });
+
+        kryo.register(PancreasOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new PancreasOrganPart(opDef);
+            }
+        });
+
+        kryo.register(BileDuctOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new BileDuctOrganPart(opDef);
+            }
+        });
+
+        kryo.register(GallbladderOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new GallbladderOrganPart(opDef);
             }
         });
 
@@ -505,10 +564,10 @@ public class GameStage extends Stage {
                 break;
             default:
                 Gdx.app.log("Keydown", "not handled, code: "+keyCode);
-                break;
+                return false;
         }
 
-        return super.keyDown(keyCode);
+        return true;
     }
 
     private void clickedA(){
