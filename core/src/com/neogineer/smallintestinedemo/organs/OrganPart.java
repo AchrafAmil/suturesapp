@@ -110,6 +110,8 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;
         if(this.getClass().getSimpleName().equals("EsophagusOrganPart") && this.identifier.equals("1"))
             bDef.type = BodyDef.BodyType.KinematicBody;
+        //if(this.getClass().getSimpleName().equals("SpleenOrganPart") && this.identifier.equals("1"))
+        //    bDef.type = BodyDef.BodyType.KinematicBody;
         //if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("4"))
         //    bDef.type = BodyDef.BodyType.KinematicBody;
         //if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("5"))
@@ -120,7 +122,7 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("DuodenumOrganPart") && this.identifier.equals("1"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
+        /*if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
@@ -129,7 +131,7 @@ public abstract class OrganPart extends Actor implements Connectable {
         if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)this).id==118)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)this).id==57)
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing*/
         //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==13)
         //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         bDef.position.set(this.position);

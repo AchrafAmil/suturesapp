@@ -30,6 +30,7 @@ import com.esotericsoftware.kryo.util.IntArray;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
+import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
 import com.neogineer.smallintestinedemo.organs.appendix.AppendixOrganPart;
 import com.neogineer.smallintestinedemo.organs.bileduct.BileDuctOrganPart;
@@ -379,6 +380,19 @@ public class GameStage extends Stage {
             public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
                 OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
                 return new GallbladderOrganPart(opDef);
+            }
+        });
+
+        kryo.register(AbdominalConnectorOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+            @Override
+            public void write(Kryo kryo, Output output, OrganPart op) {
+                kryo.writeObject(output, op.getOPDef());
+            }
+
+            @Override
+            public OrganPart read(Kryo kryo, Input input, Class<OrganPart> type) {
+                OrganPartDefinition opDef = kryo.readObject(input, OrganPartDefinition.class);
+                return new AbdominalConnectorOrganPart(opDef);
             }
         });
 

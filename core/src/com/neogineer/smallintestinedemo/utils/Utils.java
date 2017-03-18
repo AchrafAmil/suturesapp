@@ -107,6 +107,8 @@ public class Utils {
                 return Colon.getSCALE();
             case "Spleen":
                 return Constants.SPLEEN_SCALE;
+            case "AbdominalConnector":
+                return Constants.ABDOMINALCONNECTOR_SCALE;
             default:
                 return 1;
         }
@@ -270,6 +272,8 @@ public class Utils {
                 return Constants.COLON_TUMOR_SCALE;
             case "Spleen":
                 return Constants.SPLEEN_TUMOR_SCALE;
+            case "AbdominalConnector":
+                return Constants.ABDOMINALCONNECTOR_TUMOR_SCALE;
             default:
                 return 1;
         }

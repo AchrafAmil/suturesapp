@@ -10,6 +10,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.neogineer.smallintestinedemo.GameStage;
+import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnector;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWall;
 import com.neogineer.smallintestinedemo.organs.appendix.Appendix;
 import com.neogineer.smallintestinedemo.organs.bileduct.BileDuct;
@@ -70,6 +71,7 @@ public class OrgansHolder {
 
     public Spleen spleen ;
 
+    public AbdominalConnector abdominalConnector;
 
     public static World world;
     public static OrthographicCamera camera;
@@ -129,6 +131,10 @@ public class OrgansHolder {
         this.spleen = new Spleen(world, camera);
         stage.addActor(this.spleen);
         allOrgans.put("Spleen", spleen);
+
+        this.abdominalConnector = new AbdominalConnector(world, camera);
+        stage.addActor(this.abdominalConnector);
+        allOrgans.put("AbdominalConnector", abdominalConnector);
 
         setupExternalJoints(world, camera);
 
@@ -193,6 +199,7 @@ public class OrgansHolder {
         smallIntestine.saveState(kryo, output);
         liver.saveState(kryo, output);
         spleen.saveState(kryo, output);
+        abdominalConnector.saveState(kryo, output);
         saveJoints(kryo, output);
     }
 
@@ -224,6 +231,7 @@ public class OrgansHolder {
         smallIntestine.loadState(kryo, input);
         liver.loadState(kryo, input);
         spleen.loadState(kryo, input);
+        abdominalConnector.loadState(kryo, input);
         loadJoints(kryo, input);
         updateOpenableSides();
     }
@@ -310,6 +318,7 @@ public class OrgansHolder {
         smallIntestine.loadBufferedOpenableSides();
         liver.loadBufferedOpenableSides();
         spleen.loadBufferedOpenableSides();
+        abdominalConnector.loadBufferedOpenableSides();
     }
 
     private void loadJoints(Kryo kryo, Input input){
