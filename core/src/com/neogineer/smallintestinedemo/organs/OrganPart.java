@@ -128,13 +128,13 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        /*if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
+        if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        */if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("6"))
+        if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("6"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        /*if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)this).id==118)
+        if(this instanceof RopeOrganPart)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)this).id==57)
+        /*if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==57)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing*/
         //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==13)
         //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
