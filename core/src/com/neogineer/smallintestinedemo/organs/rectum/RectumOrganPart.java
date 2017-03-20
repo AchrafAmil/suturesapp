@@ -3,7 +3,9 @@ package com.neogineer.smallintestinedemo.organs.rectum;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.organs.Organ;
+import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
@@ -12,7 +14,7 @@ import aurelienribon.bodyeditor.BodyEditorLoader;
 /**
  * Created by neogineer on 26/01/17.
  */
-public class RectumOrganPart extends com.neogineer.smallintestinedemo.organs.OrganPart {
+public class RectumOrganPart extends OrganPart {
 
 
     public RectumOrganPart(World world, OrthographicCamera camera, Organ callback, String identifier, float scale, Vector2 position, float rotation) {
@@ -46,4 +48,14 @@ public class RectumOrganPart extends com.neogineer.smallintestinedemo.organs.Org
         return Constants.MASK_RECTUM;
     }
 
+    @Override
+    public boolean connectionIntent(Vector2 point) {
+        return true;
+    }
+
+    @Override
+    public void correctJointDef(RevoluteJointDef def) {
+        Vector2 vec = (this.body==def.bodyA)? def.localAnchorA:def.localAnchorB;
+        vec.set(pushToEdge(vec));
+    }
 }

@@ -19,7 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.gallbladder.Gallbladder;
 import com.neogineer.smallintestinedemo.organs.gallbladder.GallbladderOrganPart;
+import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -122,13 +126,13 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("DuodenumOrganPart") && this.identifier.equals("1"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        /*if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
+        if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
+        /*if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("6"))
+        */if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("6"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)this).id==118)
+        /*if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)this).id==118)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)this).id==57)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing*/
@@ -140,11 +144,8 @@ public abstract class OrganPart extends Actor implements Connectable {
         body.setUserData(this);
 
         FixtureDef fix = new FixtureDef();
-        fix.density = 0.1f;
-        if(this instanceof RopeOrganPart)
-            fix.density = 0.5f;
-        if(this instanceof GallbladderOrganPart)
-            fix.density = 0.02f;
+        fix.density = this.getOrganDensity();
+
         fix.friction = 0f;
         fix.restitution = 0.5f;
         fix.filter.categoryBits = this.getCategory();
@@ -166,6 +167,31 @@ public abstract class OrganPart extends Actor implements Connectable {
         
         attachFixture(loader, identifier, fix);
 
+    }
+
+    private float getOrganDensity() {
+        if(this instanceof RopeOrganPart)
+            return 0.5f;
+        if(this instanceof GallbladderOrganPart)
+            return 0.02f;
+        if(this instanceof RectumOrganPart)
+            switch(identifier){
+                case "6":
+                    return 3f;
+                case "5":
+                    return 3f;
+                case "4":
+                case "2":
+                    return 0.5f;
+                case "1":
+                    return 0.5f;
+                case "3":
+                    return 0.5f;
+                default:
+                    break;
+            }
+
+        return 0.1f;
     }
 
     /**
@@ -445,7 +471,7 @@ public abstract class OrganPart extends Actor implements Connectable {
      * @return
      */
     @Override
-    public com.neogineer.smallintestinedemo.organs.SuturePoint correctAnchorAndRotation(com.neogineer.smallintestinedemo.organs.SuturePoint suturePoint) {
+    public SuturePoint correctAnchorAndRotation(SuturePoint suturePoint) {
         return suturePoint;
     }
 
@@ -460,7 +486,7 @@ public abstract class OrganPart extends Actor implements Connectable {
     /**
      * @return a small representation of this organPart state. can be used to clone or store.
      */
-    public com.neogineer.smallintestinedemo.organs.OrganPartDefinition getOPDef(){
+    public OrganPartDefinition getOPDef(){
         com.neogineer.smallintestinedemo.organs.OrganPartDefinition opDef = new com.neogineer.smallintestinedemo.organs.OrganPartDefinition();
         opDef.position = this.body.getPosition().cpy();
         opDef.angle = this.body.getAngle();

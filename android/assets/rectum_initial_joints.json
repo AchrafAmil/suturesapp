@@ -1,9 +1,17 @@
 {"joints": [
-	{"organA":"1", "organB":"2","anchorAx":0.0016664195358753204, "anchorAy":0.012520563900470734, "anchorBx":0.12141665816307068, "anchorBy":0.3072290325164795},
-	{"organA":"1", "organB":"2","anchorAx":0.39391642808914185, "anchorAy":0.012770562544465065, "anchorBx":0.8414167022705078, "anchorBy":0.3072290325164795},
-	{"organA":"2", "organB":"3","anchorAx":0.5, "anchorAy":0.01, "anchorBx":0.5, "anchorBy":0.48},
-	{"organA":"3", "organB":"4","anchorAx":0.5, "anchorAy":0.01, "anchorBx":0.5, "anchorBy":0.5},
-	{"organA":"4", "organB":"5","anchorAx":0.5, "anchorAy":0.01, "anchorBx":0.5, "anchorBy":0.94},
-	{"organA":"5", "organB":"6","anchorAx":0.5, "anchorAy":0.01, "anchorBx":0.5, "anchorBy":0.22}
+	{"organA":"1", "organB":"2","anchorAx":0.0016664195358753204, "anchorAy":0.002520563900470734, "anchorBx":0.12141665816307068, "anchorBy":0.3072290325164795},
+	{"organA":"1", "organB":"2","anchorAx":0.39081642808914185, "anchorAy":0.002770562544465065, "anchorBx":0.8414167022705078, "anchorBy":0.3072290325164795},
+	
+	{"organA":"2", "organB":"3","anchorAx":0.015, "anchorAy":0.01722899079322815, "anchorBx":0.024749755859375, "anchorBy":0.4705623388290405},
+	{"organA":"2", "organB":"3","anchorAx":0.9800833625793457, "anchorAy":0.01722899079322815, "anchorBx":0.9730831384658813, "anchorBy":0.4705623388290405},
+	
+	{"organA":"3", "organB":"4","anchorAx":0.0597497820854187, "anchorAy":0.01722899079322815, "anchorBx":0.016416460275650024, "anchorBy":0.5305624008178711},
+	{"organA":"3", "organB":"4","anchorAx":0.9380831718444824, "anchorAy":0.01722899079322815, "anchorBx":0.9797497987747192, "anchorBy":0.5305624008178711},
+	
+	{"organA":"4", "organB":"5","anchorAx":0.33708311223983765, "anchorAy":0.01479138433933258, "anchorBx":0.03666675090789795, "anchorBy":0.9235413670539856},
+	{"organA":"4", "organB":"5","anchorAx":0.6617497820854187, "anchorAy":0.01479138433933258, "anchorBx":0.9591666460037231, "anchorBy":0.9235413670539856},
+	
+	{"organA":"5", "organB":"6","anchorAx":0.1130831241607666, "anchorAy":0.04139569401741028, "anchorBx":0.26641669631004333, "anchorBy":0.2422291487455368},
+	{"organA":"5", "organB":"6","anchorAx":0.8805831670761108, "anchorAy":0.04139569401741028, "anchorBx":0.7897500610351562, "anchorBy":0.2422291487455368}
  ]
 }

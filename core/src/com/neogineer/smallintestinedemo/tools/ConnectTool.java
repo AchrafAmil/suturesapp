@@ -6,8 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
+import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
+import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
 /**
@@ -117,7 +120,7 @@ public class ConnectTool extends Tool {
             def = new RevoluteJointDef();
             def.bodyA = organA.body;
             def.bodyB = organB.body;
-            def.collideConnected=COLLIDE_CONNECTED;
+            def.collideConnected=collideConnected(organA,organB);
             def.localAnchorA.set(anchorA);
             def.localAnchorB.set(anchorB);
             def.enableLimit=true;
@@ -191,7 +194,7 @@ public class ConnectTool extends Tool {
             def = new RevoluteJointDef();
             def.bodyA = organA.body;
             def.bodyB = organB.body;
-            def.collideConnected=COLLIDE_CONNECTED;
+            def.collideConnected=collideConnected(organA,organB);
             def.localAnchorA.set(anchorA);
             def.localAnchorB.set(anchorB);
             def.enableLimit=true;
@@ -212,7 +215,7 @@ public class ConnectTool extends Tool {
                 def = new RevoluteJointDef();
                 def.bodyA = organA.body;
                 def.bodyB = organB.body;
-                def.collideConnected=COLLIDE_CONNECTED;
+                def.collideConnected=collideConnected(organA,organB);
                 def.localAnchorA.set(anchorA);
                 def.localAnchorB.set(anchorB);
                 def.enableLimit=true;
@@ -261,7 +264,13 @@ public class ConnectTool extends Tool {
         if((organA instanceof com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart && organB instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)
             || (organA instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart && organB instanceof com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart) )
             return SMALLINTESTINE_MAX_ANGLE;
+        if(organA instanceof RectumOrganPart || organB instanceof RectumOrganPart)
+            return SMALLINTESTINE_MAX_ANGLE;
         else
             return MAX_ANGLE;
+    }
+
+    public static boolean collideConnected(OrganPart organA, OrganPart organB){
+        return COLLIDE_CONNECTED || (organA instanceof RectumOrganPart && organB instanceof RectumOrganPart);
     }
 }

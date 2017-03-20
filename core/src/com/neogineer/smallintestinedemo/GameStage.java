@@ -344,7 +344,7 @@ public class GameStage extends Stage {
             }
         });
 
-        kryo.register(PancreasOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+        kryo.register(PancreasOrganPart.class, new Serializer<OrganPart>() {
             @Override
             public void write(Kryo kryo, Output output, OrganPart op) {
                 kryo.writeObject(output, op.getOPDef());
@@ -370,7 +370,7 @@ public class GameStage extends Stage {
             }
         });
 
-        kryo.register(GallbladderOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+        kryo.register(GallbladderOrganPart.class, new Serializer<OrganPart>() {
             @Override
             public void write(Kryo kryo, Output output, OrganPart op) {
                 kryo.writeObject(output, op.getOPDef());
@@ -383,7 +383,7 @@ public class GameStage extends Stage {
             }
         });
 
-        kryo.register(AbdominalConnectorOrganPart.class, new Serializer<com.neogineer.smallintestinedemo.organs.OrganPart>() {
+        kryo.register(AbdominalConnectorOrganPart.class, new Serializer<OrganPart>() {
             @Override
             public void write(Kryo kryo, Output output, OrganPart op) {
                 kryo.writeObject(output, op.getOPDef());
