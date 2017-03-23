@@ -3,6 +3,12 @@ package com.neogineer.smallintestinedemo.tools;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.neogineer.smallintestinedemo.organs.Organ;
+import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.SuturePoint;
+import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 import java.util.List;
 
@@ -23,32 +29,43 @@ public class CutTool extends Tool {
         super.touchDown(screenX, screenY, pointer, button);
 
         if(hitBody!=null){
-            com.neogineer.smallintestinedemo.organs.SuturePoint sp = getConcernedSuturePoint();
+            OrganPart op = (OrganPart) hitBody.getUserData();
+            if( op instanceof AbdominalConnectorOrganPart){
+                //for(SuturePoint suturePoint : op.getSuturePoints())
+                if(op.getSuturePoints().size()!=0)
+                    this.destroySuturePoint(op.getSuturePoints().get(0), op);
+                Organ organ = op.organCallback;
+                organ.organParts.values().remove(op);
+                organ.removeActor(op);
+                op.destroy();
+                return true;
+            }
+            SuturePoint sp = getConcernedSuturePoint();
             if(sp==null)
                 return false;
-            return this.destroySuturePoint(sp);
+            return this.destroySuturePoint(sp, (OrganPart) hitBody.getUserData());
         }else
             cutDone = false;
 
         return false;
     }
 
-    private com.neogineer.smallintestinedemo.organs.SuturePoint getConcernedSuturePoint(){
+    private SuturePoint getConcernedSuturePoint(){
 
-        com.neogineer.smallintestinedemo.organs.OrganPart organPart = (com.neogineer.smallintestinedemo.organs.OrganPart) hitBody.getUserData();
+        OrganPart organPart = (OrganPart) hitBody.getUserData();
 
         //do not cut Small Intestine unless it's in the very middle (to avoid Small Intestine OP singleton).
-        if(organPart instanceof com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)
-            if(!((com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart) organPart).isVeryMiddle())
+        if(organPart instanceof RopeOrganPart)
+            if(!((RopeOrganPart) organPart).isVeryMiddle())
                 return null;
 
 
-        List<com.neogineer.smallintestinedemo.organs.SuturePoint> suturePoints = organPart.getSuturePoints();
+        List<SuturePoint> suturePoints = organPart.getSuturePoints();
 
-        for (com.neogineer.smallintestinedemo.organs.SuturePoint sp : suturePoints){
+        for (SuturePoint sp : suturePoints){
             Vector2 vec = hitBody.getWorldPoint(sp.getLocalCoord());
 
-            float distance = com.neogineer.smallintestinedemo.utils.Utils.getDistance(new Vector2(testPoint.x, testPoint.y), vec);
+            float distance = Utils.getDistance(new Vector2(testPoint.x, testPoint.y), vec);
             if(distance<DISTANCE_LIMIT)
                 return sp;
         }
@@ -56,11 +73,9 @@ public class CutTool extends Tool {
         return null;
     }
 
-    private boolean destroySuturePoint(com.neogineer.smallintestinedemo.organs.SuturePoint sp){
+    private boolean destroySuturePoint(SuturePoint sp, OrganPart organPart){
         if(cutDone)
             return false;
-
-        com.neogineer.smallintestinedemo.organs.OrganPart organPart = (com.neogineer.smallintestinedemo.organs.OrganPart) hitBody.getUserData();
 
         organPart.deleteSuturePoint(sp);
 
@@ -69,7 +84,7 @@ public class CutTool extends Tool {
         world.destroyJoint(sp.getRelatedJoint());
 
         //small intestine cutting should not destroy more than one suture point. So we're done.
-        if(organPart instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)
+        if(organPart instanceof RopeOrganPart)
             cutDone = true;
         return true;
     }

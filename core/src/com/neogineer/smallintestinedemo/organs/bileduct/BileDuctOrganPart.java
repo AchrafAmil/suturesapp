@@ -3,6 +3,7 @@ package com.neogineer.smallintestinedemo.organs.bileduct;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
@@ -45,5 +46,17 @@ public class BileDuctOrganPart extends OrganPart {
     @Override
     public short getMask() {
         return Constants.MASK_BILEDUCT;
+    }
+
+
+    @Override
+    public boolean connectionIntent(Vector2 point) {
+        return true;
+    }
+
+    @Override
+    public void correctJointDef(RevoluteJointDef def) {
+        Vector2 vec = (this.body==def.bodyA)? def.localAnchorA:def.localAnchorB;
+        vec.set(pushToEdge(vec));
     }
 }

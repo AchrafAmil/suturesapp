@@ -106,6 +106,7 @@ public class GameScreen implements Screen, SettingTool {
     public void showPathology() {
         tmpVec.set(TrashTool.TRASH_POSITION_X-Constants.CAMERA_INITIAL_TRANSLATION.x, TrashTool.TRASH_POSITION_Y-Constants.CAMERA_INITIAL_TRANSLATION.y);
         stage.camera.translate(tmpVec);
+        stage.camera.zoom = Constants.INITIAL_ZOOM;
         stage.camera.update();
         hudStage.showPathologyBoxButtons();
         setTool(Tool.Tools.Move);
@@ -115,6 +116,7 @@ public class GameScreen implements Screen, SettingTool {
     public void showWorkspace() {
         tmpVec.set(-TrashTool.TRASH_POSITION_X+Constants.CAMERA_INITIAL_TRANSLATION.x, -TrashTool.TRASH_POSITION_Y+Constants.CAMERA_INITIAL_TRANSLATION.y);
         stage.camera.translate(tmpVec);
+        stage.camera.zoom = Constants.INITIAL_ZOOM;
         stage.camera.update();
         hudStage.showWorkspaceButtons();
         setTool(Tool.Tools.Move);

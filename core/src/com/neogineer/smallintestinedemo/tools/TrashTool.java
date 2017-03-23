@@ -38,7 +38,7 @@ public class TrashTool extends Tool {
             if(bloc==null)
                 return false;
 
-            if(hasRectumAndEsophagus(bloc))
+            if(hasRectumOrEsophagus(bloc))
                 return false;
 
             for(OrganPart op : bloc){
@@ -53,18 +53,17 @@ public class TrashTool extends Tool {
         return false;
     }
 
-    private static boolean hasRectumAndEsophagus(ArrayList<OrganPart> bloc) {
+    private static boolean hasRectumOrEsophagus(ArrayList<OrganPart> bloc) {
         boolean eso = false, rectu = false;
         for(OrganPart op : bloc){
             if(op instanceof EsophagusOrganPart)
-                eso = true;
+                if(op.identifier.equals("1"))
+                    eso = true;
             if(op instanceof RectumOrganPart)
-                rectu = true;
+                if(op.identifier.equals("6"))
+                    rectu = true;
         }
-
-
-            return (eso && rectu);
-
+        return (eso || rectu);
     }
 
     public ArrayList<OrganPart> getOrganPartBloc(OrganPart organPart){

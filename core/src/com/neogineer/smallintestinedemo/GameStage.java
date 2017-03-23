@@ -48,6 +48,7 @@ import com.neogineer.smallintestinedemo.tools.CutTool;
 import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.tools.DndTool;
 import com.neogineer.smallintestinedemo.tools.Tool;
+import com.neogineer.smallintestinedemo.utils.Constants;
 
 import net.dermetfan.gdx.physics.box2d.kryo.serializers.*;
 
@@ -574,7 +575,7 @@ public class GameStage extends Stage {
                 camera.update();
                 break;
             case 129:
-                com.neogineer.smallintestinedemo.utils.Constants.ENABLE_DEBUG = !com.neogineer.smallintestinedemo.utils.Constants.ENABLE_DEBUG;
+                Constants.ENABLE_DEBUG = !Constants.ENABLE_DEBUG;
                 break;
             default:
                 Gdx.app.log("Keydown", "not handled, code: "+keyCode);

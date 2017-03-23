@@ -111,6 +111,15 @@ public class SuturePoint {
         return this;
     }
 
+    public SuturePoint setBackgrounded(boolean backgrounded){
+        if(!backgrounded)
+            return this;
+        Texture tx = new Texture(Gdx.files.internal("SuturePointTransparent.png"));
+        this.backgroundedSprite = new Sprite(tx);
+        this.state = State.BACKGROUNDED;
+        return this;
+    }
+
     public Sprite getTransparentSprite() {
         return transparentSprite;
     }

@@ -24,6 +24,7 @@ import com.neogineer.smallintestinedemo.organs.duedenum.Duodenum;
 import com.neogineer.smallintestinedemo.organs.stomach.Stomach;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -71,12 +72,24 @@ public class Utils {
         }
 
         JSONObject data = new JSONObject(str);
-        JSONArray joints = data.getJSONArray("joints");
+        JSONArray joints = (JSONArray) data.getJSONArray("joints");
         for(int i=0; i<joints.length(); i++){
             if(joints.isNull(i))
-                joints.remove(i);
+                removeJSONArray(joints, i);
         }
         return joints;
+    }
+
+    public static JSONArray removeJSONArray( JSONArray jarray,int pos) {
+
+        JSONArray Njarray=new JSONArray();
+        try{
+            for(int i=0;i<jarray.length();i++){
+                if(i!=pos)
+                    Njarray.put(jarray.get(i));
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return Njarray;
     }
 
     public static float scaleFromName(String name){

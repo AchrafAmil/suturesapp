@@ -9,6 +9,9 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
+import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnector;
+import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
+import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
@@ -21,6 +24,7 @@ public class ConnectTool extends Tool {
     // RevoluteJoint allows rotation around the joint point, let's limit the rotation angle.
     public static final double MAX_ANGLE = 0 ;
     public static final double SMALLINTESTINE_MAX_ANGLE = Math.PI/24 ;
+    public static final double ABDOMINALCONNECTOR_MAX_ANGLE = Math.PI*2 ;
     public static final double COLON_MAX_ANGLE = Math.PI/30 ;
 
     public static final float MAX_ACCEPTED_DISTANCE = 1.35f;
@@ -200,6 +204,8 @@ public class ConnectTool extends Tool {
             def.enableLimit=true;
             def.lowerAngle= - (float) (getMaxAngle(organA, organB));
             def.upperAngle= (float) (getMaxAngle(organA, organB));
+            if(organA instanceof AbdominalConnectorOrganPart || organB instanceof AbdominalConnectorOrganPart)
+                def.referenceAngle = def.bodyB.getAngle() - def.bodyA.getAngle();
 
             return makeConnection(spDef.isAvisible() || spDef.isBvisible());
         }
@@ -221,6 +227,7 @@ public class ConnectTool extends Tool {
                 def.enableLimit=true;
                 def.lowerAngle= - (float) (getMaxAngle(organA, organB));
                 def.upperAngle= (float) (getMaxAngle(organA, organB));
+                def.referenceAngle = def.bodyB.getAngle() - def.bodyA.getAngle();
             }
 
             RevoluteJoint joint = (RevoluteJoint) world.createJoint(def);
@@ -235,6 +242,7 @@ public class ConnectTool extends Tool {
             visibleSp.setLocalCoord(visibleAnc)
                     .setVisible(visible)
                     .setRelatedJoint(joint)
+                    .setBackgrounded((organA instanceof AbdominalWallOrganPart) || (organB instanceof AbdominalWallOrganPart))
                     .setRotation(visibleOrg.getRotation());
             visibleOrg.addSuturePoint(visibleSp);
 
@@ -266,6 +274,8 @@ public class ConnectTool extends Tool {
             return SMALLINTESTINE_MAX_ANGLE;
         if(organA instanceof RectumOrganPart || organB instanceof RectumOrganPart)
             return SMALLINTESTINE_MAX_ANGLE;
+        if(organA instanceof AbdominalConnectorOrganPart || organB instanceof AbdominalConnectorOrganPart)
+            return ABDOMINALCONNECTOR_MAX_ANGLE;
         else
             return MAX_ANGLE;
     }

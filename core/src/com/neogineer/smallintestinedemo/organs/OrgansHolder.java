@@ -84,6 +84,10 @@ public class OrgansHolder {
         stage.addActor(this.abdominalWall);
         allOrgans.put("AbdominalWall", abdominalWall);
 
+        this.abdominalConnector = new AbdominalConnector(world, camera);
+        stage.addActor(this.abdominalConnector);
+        allOrgans.put("AbdominalConnector", abdominalConnector);
+
         this.esophagus = new Esophagus(world, camera);
         stage.addActor(this.esophagus);
         allOrgans.put("Esophagus", esophagus);
@@ -132,13 +136,13 @@ public class OrgansHolder {
         stage.addActor(this.spleen);
         allOrgans.put("Spleen", spleen);
 
-        this.abdominalConnector = new AbdominalConnector(world, camera);
-        stage.addActor(this.abdominalConnector);
-        allOrgans.put("AbdominalConnector", abdominalConnector);
 
-        setupExternalJoints(world, camera);
+        //setupExternalJoints(world, camera);
 
-        //stage.load();
+        stage.load();
+
+        setupAdditionalExternalJoints(world, camera);
+
 
         new Thread(){
             @Override
@@ -165,7 +169,32 @@ public class OrgansHolder {
         JSONArray joints = Utils.loadJoints("external_joints.json");
 
         for(int i=0; i<joints.length(); i++){
-            JSONObject joint = (JSONObject) joints.get(i);
+            JSONObject joint;try{joint = (JSONObject) joints.get(i);}catch(Exception e){continue;}
+            ConnectTool tool = new ConnectTool(world, camera);
+            ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
+
+            Organ organA = this.organFromName(joint.getString("organA"));
+            Organ organB = this.organFromName(joint.getString("organB"));
+
+            connector.organA = organA.organParts.get(joint.getString("organPartA"));
+            connector.organB = organB.organParts.get(joint.getString("organPartB"));
+
+            connector.anchorA = connector.organA.getVertex(joint.getDouble("anchorAx"), joint.getDouble("anchorAy"));
+            connector.anchorB = connector.organB.getVertex(joint.getDouble("anchorBx"), joint.getDouble("anchorBy"));
+
+            connector.makeConnection(false);
+
+        }
+
+
+    }
+
+    private void setupAdditionalExternalJoints(World world, OrthographicCamera camera){
+
+        JSONArray joints = Utils.loadJoints("additional_external_joints.json");
+
+        for(int i=0; i<joints.length(); i++){
+            JSONObject joint;try{joint = (JSONObject) joints.get(i);}catch(Exception e){continue;}
             ConnectTool tool = new ConnectTool(world, camera);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 

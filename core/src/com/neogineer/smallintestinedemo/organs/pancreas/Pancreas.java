@@ -41,7 +41,7 @@ public class Pancreas extends Organ {
         JSONArray joints = Utils.loadJoints("pancreas_initial_joints.json");
 
         for(int i=0; i<joints.length(); i++){
-            JSONObject joint = (JSONObject) joints.get(i);
+            JSONObject joint;try{joint = (JSONObject) joints.get(i);}catch(Exception e){continue;}
             ConnectTool tool = new ConnectTool(world, camera);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
@@ -81,13 +81,7 @@ public class Pancreas extends Organ {
             case 1:
                 return new Vector2(POSITION.x, POSITION.y );
             case 2:
-                return new Vector2(POSITION.x-2f*SCALE, POSITION.y+2f*SCALE);
-            case 3:
-                return new Vector2(POSITION.x-4f*SCALE, POSITION.y+4f*SCALE);
-            case 4:
-                return new Vector2(POSITION.x-5.5f*SCALE, POSITION.y+8f*SCALE);
-            case 5:
-                return new Vector2(POSITION.x-7f*SCALE, POSITION.y+5f*SCALE);
+                return new Vector2(POSITION.x+8f*SCALE, POSITION.y+2f*SCALE);
             default:
                 return null;
         }

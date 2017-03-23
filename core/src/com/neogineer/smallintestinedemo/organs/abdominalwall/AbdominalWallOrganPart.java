@@ -3,6 +3,7 @@ package com.neogineer.smallintestinedemo.organs.abdominalwall;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
@@ -42,5 +43,20 @@ public class AbdominalWallOrganPart extends com.neogineer.smallintestinedemo.org
     @Override
     public short getMask() {
         return Constants.MASK_ABDOMINALWALL;
+    }
+
+
+    @Override
+    public boolean connectionIntent(Vector2 point) {
+        return true;
+    }
+
+    @Override
+    public void correctJointDef(RevoluteJointDef def) {
+        Vector2 vec = (this.body==def.bodyA)? def.localAnchorA:def.localAnchorB;
+        if(vec.x>0.5)
+            vec.set(pushToEdge(vec,false));
+        else
+            vec.set(pushToEdge(vec,true));
     }
 }

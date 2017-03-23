@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnector;
+import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
 import com.neogineer.smallintestinedemo.organs.gallbladder.Gallbladder;
 import com.neogineer.smallintestinedemo.organs.gallbladder.GallbladderOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
@@ -24,6 +26,8 @@ import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
+import com.neogineer.smallintestinedemo.organs.spleen.Spleen;
+import com.neogineer.smallintestinedemo.organs.spleen.SpleenOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -128,12 +132,20 @@ public abstract class OrganPart extends Actor implements Connectable {
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
+        /*if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("6"))
+        */if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("6"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this instanceof RopeOrganPart)
+        if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("4"))
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("5"))
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this.getClass().getSimpleName().equals("AbdominalConnectorOrganPart") && !identifier.equals("3"))
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        if(this instanceof SpleenOrganPart)
+            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        //if(this instanceof RopeOrganPart)
+        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
         /*if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==57)
             bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing*/
         //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==13)
@@ -190,6 +202,9 @@ public abstract class OrganPart extends Actor implements Connectable {
                 default:
                     break;
             }
+
+        if(this instanceof AbdominalConnectorOrganPart)
+            return 0.01f;
 
         return 0.1f;
     }
@@ -429,6 +444,8 @@ public abstract class OrganPart extends Actor implements Connectable {
     @Override
     public boolean deleteSuturePoint(com.neogineer.smallintestinedemo.organs.SuturePoint sp) {
         this.suturePoints.remove(sp);
+        if(sp.getTheOtherOrganPart() instanceof AbdominalConnectorOrganPart)
+            return true;
 
         if(this instanceof Openable){
             Vector2 vec = body.getWorldPoint(new Vector2(sp.getLocalCoord().x, sp.getLocalCoord().y));
@@ -451,7 +468,7 @@ public abstract class OrganPart extends Actor implements Connectable {
     }
 
     @Override
-    public ArrayList<com.neogineer.smallintestinedemo.organs.SuturePoint> getSuturePoints() {
+    public ArrayList<SuturePoint> getSuturePoints() {
         return this.suturePoints;
     }
 
@@ -564,6 +581,35 @@ public abstract class OrganPart extends Actor implements Connectable {
             if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec8.x+=step, vec8.y-=step)){
 
                 return this.body.getLocalPoint(vec8).cpy();
+            }
+        }
+        return null;
+    }
+
+    public Vector2 pushToEdge(Vector2 vec, boolean toTheRight){
+        Vector2 vec1 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec2 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec3 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec4 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec5 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec6 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec7 = this.body.getWorldPoint(vec).cpy();
+        Vector2 vec8 = this.body.getWorldPoint(vec).cpy();
+
+        Array<Fixture> fixtures = this.body.getFixtureList();
+
+        float step = 0.01f;
+        for(float i=0; i<200; i+=step){
+            if(toTheRight){
+                if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec1.x+=step, vec1.y)){
+                    //vec1.x-=step;
+                    return this.body.getLocalPoint(vec1).cpy();
+                }
+            }else{
+                if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec1.x-=step, vec1.y)){
+                    //vec1.x-=step;
+                    return this.body.getLocalPoint(vec1).cpy();
+                }
             }
         }
         return null;

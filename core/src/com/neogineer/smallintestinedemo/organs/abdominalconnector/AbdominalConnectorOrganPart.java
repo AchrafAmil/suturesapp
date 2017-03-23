@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
+import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;

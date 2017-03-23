@@ -41,7 +41,7 @@ public class Stomach extends Organ {
         JSONArray joints = Utils.loadJoints("stomach_initial_joints.json");
 
         for(int i=0; i<joints.length(); i++){
-            JSONObject joint = (JSONObject) joints.get(i);
+            JSONObject joint;try{joint = (JSONObject) joints.get(i);}catch(Exception e){continue;}
             ConnectTool tool = new ConnectTool(world, camera);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
