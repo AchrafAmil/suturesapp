@@ -2,6 +2,7 @@ package com.neogineer.smallintestinedemo.tools;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
@@ -20,8 +21,8 @@ public class CutTool extends Tool {
     private static final float DISTANCE_LIMIT = 1.2f;
     private boolean cutDone = false;
 
-    public CutTool(World world, OrthographicCamera camera) {
-        super(world, camera);
+    public CutTool(World world, OrthographicCamera camera, Body groundBody) {
+        super(world, camera, groundBody);
     }
 
     @Override
@@ -92,6 +93,17 @@ public class CutTool extends Tool {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         return this.touchDown(screenX, screenY, pointer, 0);
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return false;
+    }
+
+    @Override
+    public boolean bodyMoving() throws NullPointerException {
+        //disable body moving for cut tool.
+        return false;
     }
 }
 

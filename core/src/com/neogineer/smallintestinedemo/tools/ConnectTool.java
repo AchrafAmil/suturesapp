@@ -3,16 +3,15 @@ package com.neogineer.smallintestinedemo.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
-import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnector;
 import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
-import com.neogineer.smallintestinedemo.organs.rectum.Rectum;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
@@ -33,8 +32,8 @@ public class ConnectTool extends Tool {
 
     ConnectToolHelper helper = new ConnectToolHelper();
 
-    public ConnectTool(World world, OrthographicCamera camera) {
-        super(world, camera);
+    public ConnectTool(World world, OrthographicCamera camera, Body groundBody) {
+        super(world, camera, groundBody);
     }
 
     @Override

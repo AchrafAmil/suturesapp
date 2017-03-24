@@ -36,7 +36,7 @@ public class Rectum extends com.neogineer.smallintestinedemo.organs.Organ {
 
         for(int i=0; i<joints.length(); i++){
             JSONObject joint;try{joint = (JSONObject) joints.get(i);}catch(Exception e){continue;}
-            ConnectTool tool = new ConnectTool(world, camera);
+            ConnectTool tool = new ConnectTool(world, camera, null);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
             RectumOrganPart organA = (RectumOrganPart) this.organParts.get(joint.getString("organA"));

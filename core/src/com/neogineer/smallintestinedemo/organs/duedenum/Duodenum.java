@@ -32,7 +32,7 @@ public class Duodenum extends Organ {
         }
 
         // Duodenum has only one internal joint.
-        ConnectTool tool = new ConnectTool(world, camera);
+        ConnectTool tool = new ConnectTool(world, camera, null);
         ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
         DuodenumOrganPart organA = (DuodenumOrganPart) this.organParts.get("1");

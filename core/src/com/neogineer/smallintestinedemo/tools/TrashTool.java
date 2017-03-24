@@ -2,6 +2,7 @@ package com.neogineer.smallintestinedemo.tools;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
@@ -22,8 +23,8 @@ public class TrashTool extends Tool {
     public static int TRASH_POSITION_Y = 150 ;
 
 
-    public TrashTool(World world, OrthographicCamera camera) {
-        super(world, camera);
+    public TrashTool(World world, OrthographicCamera camera, Body groundBody) {
+        super(world, camera, groundBody);
     }
 
     @Override

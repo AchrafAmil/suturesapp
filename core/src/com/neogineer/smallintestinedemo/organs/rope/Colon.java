@@ -57,7 +57,7 @@ public class Colon extends com.neogineer.smallintestinedemo.organs.Organ {
             this.organParts.put(""+ size++, actor );
             body = actor.body;
 
-            ConnectTool tool = new ConnectTool(world, camera);
+            ConnectTool tool = new ConnectTool(world, camera, null);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
             // TODO: 18/11/16 review the offset,

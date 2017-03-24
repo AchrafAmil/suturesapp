@@ -100,19 +100,23 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
     @Override
     public boolean close(float x, float y) {
         try {
-            this.getTheOpenOs().close();
-        }catch (NullPointerException e){
             try {
-                ((RopeOrganPart)this.getSuturePoints().get(0).getTheOtherOrganPart()).getTheOpenOs().close();
-            }catch (NullPointerException | ClassCastException ee){
+                this.getTheOpenOs().close();
+            }catch (NullPointerException e){
                 try {
-                    ((RopeOrganPart)this.getSuturePoints().get(1).getTheOtherOrganPart()).getTheOpenOs().close();
-                }catch (NullPointerException | ClassCastException eee){
-                    return false;
+                    ((RopeOrganPart)this.getSuturePoints().get(0).getTheOtherOrganPart()).getTheOpenOs().close();
+                }catch (NullPointerException | ClassCastException ee){
+                    try {
+                        ((RopeOrganPart)this.getSuturePoints().get(1).getTheOtherOrganPart()).getTheOpenOs().close();
+                    }catch (NullPointerException | ClassCastException eee){
+                        return false;
+                    }
                 }
             }
+            return true;
+        }catch (IndexOutOfBoundsException ioobe){
+            return false;
         }
-        return true;
     }
 
     @Override

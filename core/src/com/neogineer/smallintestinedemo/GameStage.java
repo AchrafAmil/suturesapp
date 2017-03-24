@@ -465,6 +465,7 @@ public class GameStage extends Stage {
             inputMultiplexer.removeProcessor(ip);
         }
 
+        this.inputMultiplexer.addProcessor(new GestureDetector(tool));
         this.inputMultiplexer.addProcessor(tool);
 
         if(tool instanceof CutTool)
@@ -472,8 +473,8 @@ public class GameStage extends Stage {
         else
             organsHolder.unhighlight();
 
-        if(tool instanceof DndTool)
-            this.inputMultiplexer.addProcessor(new GestureDetector((DndTool)tool));
+        //if(tool instanceof DndTool)
+        //    this.inputMultiplexer.addProcessor(new GestureDetector((DndTool)tool));
     }
 
 
@@ -594,15 +595,15 @@ public class GameStage extends Stage {
                 Gdx.app.log("keyDown","DND tool");
                 break;
             case 1:
-                setTool(new CutTool(world, camera));
+                setTool(new CutTool(world, camera, groundBody));
                 Gdx.app.log("keyDown", "Cut tool");
                 break;
             case 2:
-                setTool(new CloseTool(world, camera));
+                setTool(new CloseTool(world, camera, groundBody));
                 Gdx.app.log("keyDown", "Close tool");
                 break;
             case 3:
-                setTool(new ConnectTool(world, camera));
+                setTool(new ConnectTool(world, camera, groundBody));
                 Gdx.app.log("keyDown","Connect Tool");
                 break;
         }

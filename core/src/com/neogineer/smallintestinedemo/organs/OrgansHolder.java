@@ -170,7 +170,7 @@ public class OrgansHolder {
 
         for(int i=0; i<joints.length(); i++){
             JSONObject joint;try{joint = (JSONObject) joints.get(i);}catch(Exception e){continue;}
-            ConnectTool tool = new ConnectTool(world, camera);
+            ConnectTool tool = new ConnectTool(world, camera, null);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
             Organ organA = this.organFromName(joint.getString("organA"));
@@ -195,7 +195,7 @@ public class OrgansHolder {
 
         for(int i=0; i<joints.length(); i++){
             JSONObject joint;try{joint = (JSONObject) joints.get(i);}catch(Exception e){continue;}
-            ConnectTool tool = new ConnectTool(world, camera);
+            ConnectTool tool = new ConnectTool(world, camera, null);
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
 
             Organ organA = this.organFromName(joint.getString("organA"));
@@ -358,7 +358,7 @@ public class OrgansHolder {
             spDefs.add(spDef);
         }
 
-        ConnectTool tool = new ConnectTool(world, camera);
+        ConnectTool tool = new ConnectTool(world, camera, null);
         for(SuturePointDef spDef : spDefs){
             ConnectTool.ConnectToolHelper connector = tool.new ConnectToolHelper();
             connector.proceed(spDef);

@@ -1,18 +1,17 @@
 package com.neogineer.smallintestinedemo.tools;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.neogineer.smallintestinedemo.organs.Openable;
-import com.neogineer.smallintestinedemo.organs.OpenableSide;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
-import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 
 /**
  * Created by neogineer on 25/10/16.
  */
 public class CloseTool extends Tool {
-    public CloseTool(World world, OrthographicCamera camera) {
-        super(world, camera);
+    public CloseTool(World world, OrthographicCamera camera, Body groundBody) {
+        super(world, camera, groundBody);
     }
 
     @Override

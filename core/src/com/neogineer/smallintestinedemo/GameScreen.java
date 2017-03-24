@@ -77,22 +77,22 @@ public class GameScreen implements Screen, SettingTool {
 
         switch (tool){
             case Cut:
-                stage.setTool(new CutTool(world,camera));
+                stage.setTool(new CutTool(world, camera, stage.groundBody));
                 break;
             case Close:
-                stage.setTool(new CloseTool(world, camera));
+                stage.setTool(new CloseTool(world, camera, stage.groundBody));
                 break;
             case Connect:
-                stage.setTool(new ConnectTool(world, camera));
+                stage.setTool(new ConnectTool(world, camera, stage.groundBody));
                 break;
             case Move:
                 stage.setTool(new DndTool(world, camera, stage.groundBody));
                 break;
             case Trash:
-                stage.setTool(new TrashTool(world, camera));
+                stage.setTool(new TrashTool(world, camera, stage.groundBody));
                 break;
             case Tumor:
-                stage.setTool(new TumorTool(world, camera));
+                stage.setTool(new TumorTool(world, camera, stage.groundBody));
         }
     }
 
