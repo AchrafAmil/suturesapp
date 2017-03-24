@@ -8,7 +8,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Created by neogineer on 24/10/16.
@@ -17,7 +17,7 @@ public abstract class Organ extends Group {
 
     OrthographicCamera camera;
     World mWorld;
-    public HashMap<String, OrganPart> organParts = new HashMap<String, OrganPart>();
+    public TreeMap<String, OrganPart> organParts = new TreeMap<>();
     public int size=0;
 
     public Organ(World world, OrthographicCamera camera) {
@@ -46,7 +46,7 @@ public abstract class Organ extends Group {
             npe.printStackTrace();
         }
 
-        organParts = new HashMap<>();
+        organParts = new TreeMap<>();
     }
 
     /**
