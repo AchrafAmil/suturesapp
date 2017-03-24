@@ -23,33 +23,32 @@ public class CloseTool extends Tool {
         if(hitBody!=null){
             OrganPart op = (OrganPart) hitBody.getUserData();
             if(op instanceof Openable){
-
-                if(op instanceof RopeOrganPart){
-                    RopeOrganPart ropeOp = (RopeOrganPart) op;
-                    try {
-                        ropeOp.getTheOpenOs().close();
-                    }catch (NullPointerException e){
-                        try {
-                            ((RopeOrganPart)ropeOp.getSuturePoints().get(0).getTheOtherOrganPart()).getTheOpenOs().close();
-                        }catch (NullPointerException | ClassCastException ee){
-                            try {
-                                ((RopeOrganPart)ropeOp.getSuturePoints().get(1).getTheOtherOrganPart()).getTheOpenOs().close();
-                            }catch (NullPointerException | ClassCastException eee){
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
-                }
-
-                OpenableSide side = ((Openable) hitBody.getUserData()).getOpenableSide(testPoint.x, testPoint.y);
-                if(side==null)
-                    return false;
-                if(side.getState() == OpenableSide.State.OPEN){
-                    side.close();
-                    return true;
-                }
-
+                op.close(testPoint.x,testPoint.y);
+//                if(op instanceof RopeOrganPart){
+//                    RopeOrganPart ropeOp = (RopeOrganPart) op;
+//                    try {
+//                        ropeOp.getTheOpenOs().close();
+//                    }catch (NullPointerException e){
+//                        try {
+//                            ((RopeOrganPart)ropeOp.getSuturePoints().get(0).getTheOtherOrganPart()).getTheOpenOs().close();
+//                        }catch (NullPointerException | ClassCastException ee){
+//                            try {
+//                                ((RopeOrganPart)ropeOp.getSuturePoints().get(1).getTheOtherOrganPart()).getTheOpenOs().close();
+//                            }catch (NullPointerException | ClassCastException eee){
+//                                return false;
+//                            }
+//                        }
+//                    }
+//                    return true;
+//                }
+//
+//                OpenableSide side = ((Openable) hitBody.getUserData()).getOpenableSide(testPoint.x, testPoint.y);
+//                if(side==null)
+//                    return false;
+//                if(side.getState() == OpenableSide.State.OPEN){
+//                    side.close();
+//                    return true;
+//                }
             }
         }
 

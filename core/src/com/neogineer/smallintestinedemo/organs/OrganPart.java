@@ -88,7 +88,7 @@ public abstract class OrganPart extends Actor implements Connectable {
 
     public OrganPart(com.neogineer.smallintestinedemo.organs.OrganPartDefinition opDef){
         this(com.neogineer.smallintestinedemo.organs.OrgansHolder.world, com.neogineer.smallintestinedemo.organs.OrgansHolder.camera, com.neogineer.smallintestinedemo.organs.OrgansHolder.organFromName(opDef.getOrganName()),
-                com.neogineer.smallintestinedemo.utils.Utils.scaleFromName(opDef.getOrganName()), opDef );
+                Utils.scaleFromName(opDef.getOrganName()), opDef );
     }
 
     public boolean loadBufferedOpenableSides(){
@@ -249,7 +249,7 @@ public abstract class OrganPart extends Actor implements Connectable {
         float h = scale * (baseSprite.getTexture().getHeight())/2 *someScale;
 
         bodyPixelPos = camera.project(tmpVec.set(
-                body.getPosition().x, body.getPosition().y, 0).add(com.neogineer.smallintestinedemo.utils.Utils.cameraPosition(camera)))
+                body.getPosition().x, body.getPosition().y, 0).add(Utils.cameraPosition(camera)))
                 .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom))
                 .sub(w/2, h/2, 0);
 
@@ -277,7 +277,7 @@ public abstract class OrganPart extends Actor implements Connectable {
 
 
             bodyPixelPos = camera.project(tmpVec.set(
-                    body.getPosition().x, body.getPosition().y, 0).add(com.neogineer.smallintestinedemo.utils.Utils.cameraPosition(camera)))
+                    body.getPosition().x, body.getPosition().y, 0).add(Utils.cameraPosition(camera)))
                     .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom))
                     .sub(w/2, h/2, 0);
 
@@ -309,7 +309,7 @@ public abstract class OrganPart extends Actor implements Connectable {
             float h = Constants.SMALLINTESTINE_SCALE * (sprite.getTexture().getHeight())/2f *someScale;
 
             spPixelPos = camera.project(tmpVec.set(spWorldCoord.x, spWorldCoord.y, 0)
-                    .add(com.neogineer.smallintestinedemo.utils.Utils.cameraPosition(camera)))
+                    .add(Utils.cameraPosition(camera)))
                     .scl(camera.viewportHeight/(Gdx.graphics.getHeight()/camera.zoom)).sub(w/2, h/2, 0);
 
 
@@ -550,35 +550,35 @@ public abstract class OrganPart extends Actor implements Connectable {
 
         float step = 0.01f;
         for(float i=0; i<200; i+=step){
-            if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec1.x+=step, vec1.y)){
+            if(!Utils.fixturesContains(fixtures,vec1.x+=step, vec1.y)){
                 //vec1.x-=step;
                 return this.body.getLocalPoint(vec1).cpy();
             }
-            if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec2.x-=step, vec2.y)){
+            if(!Utils.fixturesContains(fixtures,vec2.x-=step, vec2.y)){
                 //vec2.x+=step;
                 return this.body.getLocalPoint(vec2).cpy();
             }
-            if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec3.x, vec3.y+=step)){
+            if(!Utils.fixturesContains(fixtures,vec3.x, vec3.y+=step)){
                 //vec3.y-=step;
                 return this.body.getLocalPoint(vec3).cpy();
             }
-            if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec4.x, vec4.y-=step)){
+            if(!Utils.fixturesContains(fixtures,vec4.x, vec4.y-=step)){
                 //vec4.y+=step;
                 return this.body.getLocalPoint(vec4).cpy();
             }
-            if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec5.x+=step, vec5.y+=step)){
+            if(!Utils.fixturesContains(fixtures,vec5.x+=step, vec5.y+=step)){
 
                 return this.body.getLocalPoint(vec5).cpy();
             }
-            if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec6.x-=step, vec6.y-=step)){
+            if(!Utils.fixturesContains(fixtures,vec6.x-=step, vec6.y-=step)){
 
                 return this.body.getLocalPoint(vec6).cpy();
             }
-            if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec7.x-=step, vec7.y+=step)){
+            if(!Utils.fixturesContains(fixtures,vec7.x-=step, vec7.y+=step)){
 
                 return this.body.getLocalPoint(vec7).cpy();
             }
-            if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec8.x+=step, vec8.y-=step)){
+            if(!Utils.fixturesContains(fixtures,vec8.x+=step, vec8.y-=step)){
 
                 return this.body.getLocalPoint(vec8).cpy();
             }
@@ -601,18 +601,89 @@ public abstract class OrganPart extends Actor implements Connectable {
         float step = 0.01f;
         for(float i=0; i<200; i+=step){
             if(toTheRight){
-                if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec1.x+=step, vec1.y)){
+                if(!Utils.fixturesContains(fixtures,vec1.x+=step, vec1.y)){
                     //vec1.x-=step;
                     return this.body.getLocalPoint(vec1).cpy();
                 }
             }else{
-                if(!com.neogineer.smallintestinedemo.utils.Utils.fixturesContains(fixtures,vec1.x-=step, vec1.y)){
+                if(!Utils.fixturesContains(fixtures,vec1.x-=step, vec1.y)){
                     //vec1.x-=step;
                     return this.body.getLocalPoint(vec1).cpy();
                 }
             }
         }
         return null;
+    }
+
+    public OpenableSide getClosestOpenableSide(Vector2 vec){
+        Vector2 vec1 = vec.cpy();
+        Vector2 vec2 = vec.cpy();
+        Vector2 vec3 = vec.cpy();
+        Vector2 vec4 = vec.cpy();
+        Vector2 vec5 = vec.cpy();
+        Vector2 vec6 = vec.cpy();
+        Vector2 vec7 = vec.cpy();
+        Vector2 vec8 = vec.cpy();
+
+        OpenableSide side = null;
+
+        Array<Fixture> fixtures = this.body.getFixtureList();
+
+        float step = 0.05f;
+        for(float i=0; i<200; i+=step){
+            if(((Openable) this).getOpenableSide(vec1.x+=step, vec1.y)!=null){
+                side = ((Openable) this).getOpenableSide(vec1.x, vec1.y);
+                break;
+            }
+            if(((Openable) this).getOpenableSide(vec2.x, vec2.y)!=null){
+                side = ((Openable) this).getOpenableSide(vec2.x, vec2.y);
+                break;
+            }
+            if(((Openable) this).getOpenableSide(vec3.x, vec3.y+=step)!=null){
+                side = ((Openable) this).getOpenableSide(vec3.x, vec3.y);
+                break;
+            }
+            if(((Openable) this).getOpenableSide(vec4.x, vec4.y-=step)!=null){
+                side = ((Openable) this).getOpenableSide(vec4.x, vec4.y);
+                break;
+            }
+            if(((Openable) this).getOpenableSide(vec5.x+=step, vec5.y+=step)!=null){
+                side = ((Openable) this).getOpenableSide(vec5.x, vec5.y);
+                break;
+            }
+            if(((Openable) this).getOpenableSide(vec6.x-=step, vec6.y-=step)!=null){
+                side = ((Openable) this).getOpenableSide(vec6.x, vec6.y);
+                break;
+            }
+            if(((Openable) this).getOpenableSide(vec7.x-=step, vec7.y+=step)!=null){
+                side = ((Openable) this).getOpenableSide(vec7.x, vec7.y);
+                break;
+            }
+            if(((Openable) this).getOpenableSide(vec8.x+=step, vec8.y-=step)!=null){
+                side = ((Openable) this).getOpenableSide(vec8.x, vec8.y);
+                break;
+            }
+        }
+
+        return side;
+    }
+    
+    public boolean close(float x, float y){
+        if(!(this instanceof Openable))
+            return false;
+
+        OpenableSide side = ((Openable)this).getOpenableSide(x, y);
+        if(side==null){
+            side = getClosestOpenableSide(new Vector2(x, y));
+        }
+
+
+        if(side!=null)
+            if(side.getState() == OpenableSide.State.OPEN){
+                side.close();
+                return true;
+            }
+        return false;
     }
 
     public abstract short getCategory();

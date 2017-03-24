@@ -85,16 +85,6 @@ public class DuodenumOrganPart extends OrganPart implements Openable {
     }
 
     @Override
-    public boolean close(float x, float y) {
-        try {
-            this.getOpenableSide(x,y).close();
-            return true;
-        }catch (NullPointerException npe){
-            return false;
-        }
-    }
-
-    @Override
     public boolean open(float x, float y) {
         try {
             this.getOpenableSide(x,y).open();
