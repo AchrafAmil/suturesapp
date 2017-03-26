@@ -13,7 +13,10 @@ import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
+import com.neogineer.smallintestinedemo.utils.Utils;
 
 /**
  * Created by neogineer on 25/10/16.
@@ -41,11 +44,13 @@ public class ConnectTool extends Tool {
         super.touchDown(screenX,screenY,pointer,button);
         if (hitBody != null) {
             if(helper.organA==null){
-                helper.organA = (com.neogineer.smallintestinedemo.organs.OrganPart) hitBody.getUserData();
-                helper.anchorA = helper.organA.body.getLocalPoint(new Vector2(testPoint.x, testPoint.y));
+                helper.organA = (OrganPart) hitBody.getUserData();
+                helper.anchorA = new Vector2()
+                                .set(helper.organA.body.getLocalPoint(new Vector2(testPoint.x, testPoint.y)));
             }else{
-                helper.organB = (com.neogineer.smallintestinedemo.organs.OrganPart) hitBody.getUserData();
-                helper.anchorB = helper.organB.body.getLocalPoint(new Vector2(testPoint.x, testPoint.y));
+                helper.organB = (OrganPart) hitBody.getUserData();
+                helper.anchorB = new Vector2()
+                                .set(helper.organB.body.getLocalPoint(new Vector2(testPoint.x, testPoint.y)));
                 this.proceed();
             }
             return true;
@@ -66,11 +71,12 @@ public class ConnectTool extends Tool {
     }
 
     public class ConnectToolHelper{
-        public com.neogineer.smallintestinedemo.organs.OrganPart organA;
-        public com.neogineer.smallintestinedemo.organs.OrganPart organB;
+        public OrganPart organA;
+        public OrganPart organB;
         public Vector2 anchorA;
         public Vector2 anchorB;
         public RevoluteJointDef def;
+        private boolean resutureAgain = false;
 
         public boolean checkSimilar(){
             return organA!=organB;
@@ -131,8 +137,8 @@ public class ConnectTool extends Tool {
             def.upperAngle= (float) (getMaxAngle(organA, organB));
             def.referenceAngle = def.bodyB.getAngle() - def.bodyA.getAngle();
 
-            if(organA instanceof com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart && organB instanceof com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)
-                def.referenceAngle = (float) com.neogineer.smallintestinedemo.utils.Utils.fitClosestWellKnowAngle(def.referenceAngle);
+            if(organA instanceof RopeOrganPart && organB instanceof RopeOrganPart)
+                def.referenceAngle = (float) Utils.fitClosestWellKnowAngle(def.referenceAngle);
 
             Gdx.app.log("ConnectTool", "referenceAngle = "+Math.toDegrees(def.referenceAngle));
 
@@ -140,25 +146,39 @@ public class ConnectTool extends Tool {
             organB.correctJointDef(def);
 
             //check distance after def has been updated
-            anchorA=def.localAnchorA;
-            anchorB=def.localAnchorB;
+            anchorA.set(def.localAnchorA);
+            anchorB.set(def.localAnchorB);
             if(!checkDistance())
                 return null;
 
             // check SmallIntestine end-to-end suturing regions
-            if((organA instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)
-                    &&(organB instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)){
+            if((organA instanceof SmallIntestineOrganPart)
+                    &&(organB instanceof SmallIntestineOrganPart)){
                 //otherwise it's side-to-... : regions doesn't make sens.
                 if(anchorA.y !=0 && anchorB.y!=0){
-                    int regionA = com.neogineer.smallintestinedemo.utils.Utils.getRegion(def.localAnchorA);
-                    int regionB = com.neogineer.smallintestinedemo.utils.Utils.getRegion(def.localAnchorB);
+                    int regionA = Utils.getRegion(def.localAnchorA);
+                    int regionB = Utils.getRegion(def.localAnchorB);
 
-                    if(!com.neogineer.smallintestinedemo.utils.Utils.regionsMatch(regionA, regionB))
-                        return null;
+                    if(!Utils.regionsMatch(regionA, regionB)){
+                        def.localAnchorB.set(((SmallIntestineOrganPart) organB).getSuturableRegion(regionA));
+                        anchorB.set(def.localAnchorB);
+                        anchorA.set(def.localAnchorA);
+                    }
+                    resutureAgain = ((SmallIntestineOrganPart) organA).hasAnOpenSide()
+                            && ((SmallIntestineOrganPart) organB).hasAnOpenSide();
                 }
             }
 
             RevoluteJoint joint = makeConnection(visible);
+
+            if(resutureAgain && (organB instanceof SmallIntestineOrganPart)){
+                anchorA = anchorA.cpy();
+                anchorB = anchorB.cpy();
+                anchorA.x*= -1;
+                anchorB.set(((SmallIntestineOrganPart) organB).getSuturableRegion(Utils.getRegion(anchorA)));
+                def = null;
+                proceed(true);
+            }
 
             // bad idea while suturing two small intestine edges
             /*if(organA instanceof Openable){

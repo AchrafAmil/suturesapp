@@ -39,17 +39,21 @@ public class ColonOrganPart extends RopeOrganPart {
 
     @Override
     public boolean isVeryMiddle(){
-        if(hasAnOpenSide())
+        try{
+            if(hasAnOpenSide())
+                return false;
+            for(SuturePoint sp: suturePoints){
+                com.neogineer.smallintestinedemo.organs.OrganPart other = sp.getTheOtherOrganPart();
+                // connected to another organ = not very middle.
+                if(!(other instanceof ColonOrganPart))
+                    return false;
+                if(!sp.isNoXY() && !(((ColonOrganPart)other).isMiddle()))
+                    return false;
+            }
+            return true;
+        }catch(NullPointerException npe){
             return false;
-        for(SuturePoint sp: suturePoints){
-            com.neogineer.smallintestinedemo.organs.OrganPart other = sp.getTheOtherOrganPart();
-            // connected to another organ = not very middle.
-            if(!(other instanceof ColonOrganPart))
-                return false;
-            if(!sp.isNoXY() && !(((ColonOrganPart)other).isMiddle()))
-                return false;
         }
-        return true;
     }
 
     @Override

@@ -289,4 +289,58 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
         return true;
     }
 
+    /**
+     * @return the region that should be sutured with another organ's region
+     * @param region the other organ's region.
+     */
+    public Vector2 getSuturableRegion(int region){
+
+        switch (region){
+            case 1:
+                if(upSuturing())
+                    return getRegion(2);
+                else
+                    return getRegion(3);
+            case 2:
+                if(upSuturing())
+                    return getRegion(1);
+                else
+                    return getRegion(4);
+            case 3:
+                if(upSuturing())
+                    return getRegion(1);
+                else
+                    return getRegion(4);
+            case 4:
+                if(upSuturing())
+                    return getRegion(2);
+                else
+                    return getRegion(3);
+            case 5:
+            case 8:
+                // TODO: 25/03/17
+            case 6:
+            case 7:
+                // TODO: 25/03/17
+            default:
+                return null;
+        }
+
+    }
+
+    public Vector2 getRegion(int region){
+        Vector2 vec = new Vector2(0.01f,0.01f);
+        boolean up = upSuturing();
+        vec.y = this
+                .getVertex(0,this.origin.y + this.origin.y * 2 * SmallIntestine.getJointOffsetPercent()).y
+                * ((up) ? 1 : (-1));
+        float xStep = this
+                .getVertex(this.origin.x
+                                + this.origin.x * 2 * getHorizontalSuturePointPosition(vec),
+                        0).x;
+        vec.x = (region==1 || region==3)? +xStep:-xStep;
+
+        return vec;
+    }
+
 }

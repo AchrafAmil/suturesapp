@@ -216,6 +216,7 @@ public class Utils {
     }
 
     public static boolean regionsMatch(int regionA, int regionB){
+        Gdx.app.log("RegionsMatch", regionA+" and "+regionB+((regionA==regionB || regionA+regionB==5)?" doesn't ":" does ")+"match");
         return !(   //doesn't match (refuse suturing) when :
                     regionA==regionB || regionA+regionB==5
                 );

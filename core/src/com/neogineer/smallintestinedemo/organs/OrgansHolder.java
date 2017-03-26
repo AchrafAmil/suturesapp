@@ -220,6 +220,7 @@ public class OrgansHolder {
         esophagus.saveState(kryo, output);
         bileDuct.saveState(kryo, output);
         gallbladder.saveState(kryo, output);
+        pancreas.saveState(kryo, output);
         duodenum.saveState(kryo, output);
         rectum.saveState(kryo, output);
         stomach.saveState(kryo, output);
@@ -252,6 +253,7 @@ public class OrgansHolder {
         esophagus.loadState(kryo, input);
         bileDuct.loadState(kryo, input);
         gallbladder.loadState(kryo, input);
+        pancreas.loadState(kryo, input);
         duodenum.loadState(kryo, input);
         rectum.loadState(kryo, input);
         stomach.loadState(kryo, input);
@@ -339,6 +341,7 @@ public class OrgansHolder {
         esophagus.loadBufferedOpenableSides();
         bileDuct.loadBufferedOpenableSides();
         gallbladder.loadBufferedOpenableSides();
+        pancreas.loadBufferedOpenableSides();
         duodenum.loadBufferedOpenableSides();
         rectum.loadBufferedOpenableSides();
         stomach.loadBufferedOpenableSides();
