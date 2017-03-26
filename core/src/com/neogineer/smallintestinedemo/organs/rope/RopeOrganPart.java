@@ -224,7 +224,7 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
 
     public abstract boolean isVeryEdge();
 
-    public boolean isMiddle(){
+    protected boolean isMiddle(){
         int count=0;
         for(SuturePoint sp: suturePoints){
             if(sp.getLocalCoord().x==0)

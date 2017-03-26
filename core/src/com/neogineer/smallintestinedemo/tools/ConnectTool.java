@@ -7,7 +7,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
@@ -62,6 +64,7 @@ public class ConnectTool extends Tool {
     }
 
     public boolean proceed(){
+        helper.correctSelectedOrganParts();
         if( !( helper.checkSimilar()
                 && helper.checkPossibility() && helper.checkConnectionIntents()) ){
             helper = new ConnectToolHelper();
@@ -121,6 +124,11 @@ public class ConnectTool extends Tool {
 
         public boolean checkConnectionIntents(){
             return organA.connectionIntent(anchorA) && organB.connectionIntent(anchorB);
+        }
+
+        public void correctSelectedOrganParts(){
+            organA = correctSelectedOrganPart(organA);
+            organB = correctSelectedOrganPart(organB);
         }
 
         /**
@@ -282,7 +290,7 @@ public class ConnectTool extends Tool {
     }
 
 
-    public static double getMaxAngle(com.neogineer.smallintestinedemo.organs.OrganPart organA, com.neogineer.smallintestinedemo.organs.OrganPart organB){
+    public static double getMaxAngle(OrganPart organA, OrganPart organB){
         if(organA instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart
                 && organB instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)
             return SMALLINTESTINE_MAX_ANGLE;
@@ -298,6 +306,24 @@ public class ConnectTool extends Tool {
             return ABDOMINALCONNECTOR_MAX_ANGLE;
         else
             return MAX_ANGLE;
+    }
+
+    /**
+     * @param op
+     * @return either op or the open edge beside (if op is neither veryMiddle nor veryEdge = it has an open Op just beside).
+     */
+    private static OrganPart correctSelectedOrganPart(OrganPart op){
+        if(op instanceof RopeOrganPart)
+            if(!((RopeOrganPart) op).isVeryEdge() && !((RopeOrganPart) op).isVeryMiddle()){
+                for (SuturePoint sp: op.getSuturePoints()) {
+                    OrganPart theOtherOp = sp.getTheOtherOrganPart();
+                    if(theOtherOp instanceof RopeOrganPart)
+                        if(((RopeOrganPart) theOtherOp).isVeryEdge()){
+                            op = theOtherOp;
+                        }
+                }
+            }
+        return op;
     }
 
     public static boolean collideConnected(OrganPart organA, OrganPart organB){
