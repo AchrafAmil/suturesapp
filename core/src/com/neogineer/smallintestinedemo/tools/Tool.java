@@ -94,6 +94,9 @@ public abstract class Tool extends InputAdapter implements GestureDetector.Gestu
         //then let the specific child tool do what it got to do...
     }
 
+    /**
+     * Override this to disable Drag'n'drop
+     */
     public boolean bodyMoving() throws NullPointerException{
         if (hitBody != null) {
             if(!hitBody.getType().equals(BodyDef.BodyType.DynamicBody))

@@ -39,7 +39,7 @@ public class TrashTool extends Tool {
             if(bloc==null)
                 return false;
 
-            if(hasRectumOrEsophagus(bloc))
+            if(hasNonTrashableOrganParts(bloc))
                 return false;
 
             for(OrganPart op : bloc){
@@ -54,17 +54,24 @@ public class TrashTool extends Tool {
         return false;
     }
 
-    private static boolean hasRectumOrEsophagus(ArrayList<OrganPart> bloc) {
-        boolean eso = false, rectu = false;
+    @Override
+    public boolean bodyMoving() throws NullPointerException {
+        // disabled
+        return false;
+    }
+
+    private static boolean hasNonTrashableOrganParts(ArrayList<OrganPart> bloc) {
         for(OrganPart op : bloc){
             if(op instanceof EsophagusOrganPart)
                 if(op.identifier.equals("1"))
-                    eso = true;
+                    return true;
             if(op instanceof RectumOrganPart)
                 if(op.identifier.equals("6"))
-                    rectu = true;
+                    return true;
+            if(op instanceof AbdominalWallOrganPart)
+                return true;
         }
-        return (eso || rectu);
+        return false;
     }
 
     public ArrayList<OrganPart> getOrganPartBloc(OrganPart organPart){
