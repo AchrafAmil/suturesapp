@@ -11,7 +11,7 @@ public class Constants {
     public static final int VIEWPORT_WIDTH = 32;
     public static final int VIEWPORT_HEIGHT = 24;
 
-    public static final int SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE = 5 ;
+    public static final int ROPE_MIN_CONNECTION_ID_DIFFERENCE = 5 ;
 
     public static final float MAX_ZOOM = 6.5f;
     public static final float MIN_ZOOM = 1f;

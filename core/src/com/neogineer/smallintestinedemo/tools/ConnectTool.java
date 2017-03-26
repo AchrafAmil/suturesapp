@@ -12,7 +12,9 @@ import com.neogineer.smallintestinedemo.organs.SuturePointDef;
 import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
+import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
@@ -96,19 +98,18 @@ public class ConnectTool extends Tool {
         public boolean checkPossibility(){
             //todo check possibilities matrix
 
-            if((organA instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart) && (organB instanceof com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart)){
-                if(Math.abs(((com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart) organA).id - ((com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart) organB).id)
-                        < Constants.SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE)
+            if((organA instanceof RopeOrganPart) && (organB instanceof RopeOrganPart)){
+                if(
+                        //if both are very edge (we are end to end suturing) tolerate and continue the suturing
+                        !(((RopeOrganPart) organA).isVeryEdge() && ((RopeOrganPart) organB).isVeryEdge())
+                    &&
+                        (Math.abs(((RopeOrganPart) organA).id - ((RopeOrganPart) organB).id)
+                        < Constants.ROPE_MIN_CONNECTION_ID_DIFFERENCE)
+                        )
                     return false;
             }
 
-            if((organA instanceof com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart) && (organB instanceof com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart)){
-                if(Math.abs(((com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart) organA).id - ((com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart) organB).id)
-                        < Constants.SMALL_INTESTINE_MIN_CONNECTION_ID_DIFFERENCE)
-                    return false;
-            }
-
-            if(organA instanceof com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart && organB instanceof com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart)
+            if(organA instanceof DuodenumOrganPart && organB instanceof DuodenumOrganPart)
                 return false;
 
             return true;
