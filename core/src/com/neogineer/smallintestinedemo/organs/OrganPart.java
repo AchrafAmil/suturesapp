@@ -19,6 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnector;
 import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
+import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
+import com.neogineer.smallintestinedemo.organs.appendix.AppendixOrganPart;
+import com.neogineer.smallintestinedemo.organs.bileduct.BileDuctOrganPart;
+import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
+import com.neogineer.smallintestinedemo.organs.esophagus.EsophagusOrganPart;
 import com.neogineer.smallintestinedemo.organs.gallbladder.Gallbladder;
 import com.neogineer.smallintestinedemo.organs.gallbladder.GallbladderOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
@@ -28,6 +33,7 @@ import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.organs.spleen.Spleen;
 import com.neogineer.smallintestinedemo.organs.spleen.SpleenOrganPart;
+import com.neogineer.smallintestinedemo.organs.stomach.StomachOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
@@ -111,45 +117,7 @@ public abstract class OrganPart extends Actor implements Connectable {
     protected void setupBody(String path){
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal(path));
         BodyDef bDef = new BodyDef();
-        bDef.type = BodyDef.BodyType.DynamicBody;
-
-
-        if(this.getClass().getSimpleName().equals("AbdominalWallOrganPart"))
-            bDef.type = BodyDef.BodyType.KinematicBody;
-        if(this.getClass().getSimpleName().equals("EsophagusOrganPart") && this.identifier.equals("1"))
-            bDef.type = BodyDef.BodyType.KinematicBody;
-        //if(this.getClass().getSimpleName().equals("SpleenOrganPart") && this.identifier.equals("1"))
-        //    bDef.type = BodyDef.BodyType.KinematicBody;
-        //if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("4"))
-        //    bDef.type = BodyDef.BodyType.KinematicBody;
-        //if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("5"))
-        //    bDef.type = BodyDef.BodyType.KinematicBody;
-        if(this.getClass().getSimpleName().equals("LiverOrganPart") && this.identifier.equals("1"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("StomachOrganPart") && this.identifier.equals("1"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("DuodenumOrganPart") && this.identifier.equals("1"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("AppendixOrganPart") && this.identifier.equals("2"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        /*if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("3"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        */if(this.getClass().getSimpleName().equals("RectumOrganPart") && this.identifier.equals("6"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("4"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("BileDuctOrganPart") && this.identifier.equals("5"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this.getClass().getSimpleName().equals("AbdominalConnectorOrganPart") && !identifier.equals("3"))
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        if(this instanceof SpleenOrganPart)
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        //if(this instanceof RopeOrganPart)
-        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
-        /*if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==57)
-            bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing*/
-        //if(this.getClass().getSimpleName().equals("ColonOrganPart") && ((RopeOrganPart)this).id==13)
-        //    bDef.type = BodyDef.BodyType.KinematicBody;         // just while developing
+        bDef.type = getOganBodyType();
         bDef.position.set(this.position);
         bDef.angle = this.rotation;
         body = mWorld.createBody(bDef);
@@ -181,11 +149,31 @@ public abstract class OrganPart extends Actor implements Connectable {
 
     }
 
+    private BodyDef.BodyType getOganBodyType(){
+        if(this instanceof AbdominalWallOrganPart
+                || this instanceof SpleenOrganPart
+                || (this instanceof StomachOrganPart && identifier.equals("1"))
+                || (this instanceof DuodenumOrganPart && identifier.equals("1"))
+                || (this instanceof AppendixOrganPart && identifier.equals("2"))
+                || (this instanceof RectumOrganPart && identifier.equals("6"))
+                || (this instanceof BileDuctOrganPart && identifier.equals("4"))
+                || (this instanceof BileDuctOrganPart && identifier.equals("5"))
+                || (this instanceof AbdominalConnectorOrganPart && identifier.equals("4"))
+                || (this instanceof AbdominalConnectorOrganPart && identifier.equals("5"))
+
+                )
+            return BodyDef.BodyType.KinematicBody;
+        else
+            return BodyDef.BodyType.DynamicBody;
+    }
+
     private float getOrganDensity() {
         if(this instanceof RopeOrganPart)
             return 0.5f;
         if(this instanceof GallbladderOrganPart)
             return 0.02f;
+        if(this instanceof EsophagusOrganPart)
+            return 1.5f;
         if(this instanceof RectumOrganPart)
             switch(identifier){
                 case "6":
@@ -394,6 +382,15 @@ public abstract class OrganPart extends Actor implements Connectable {
     public Vector2 getVertex(double x, double y){
         return
                 new Vector2( (float)(x-this.origin.x)*getVerticesScale()*scale , (float)(y-this.origin.y)*getVerticesScale()*scale) ;
+    }
+
+    /**
+     * inverse of getVertex.
+     * jsonCoordinatesFromVertex(getVertex(X)) = X
+     */
+    public Vector2 jsonCoordinatesFromVertex(Vector2 vec){
+        return
+                new Vector2( ((vec.x/getVerticesScale()/scale)+this.origin.x) , ((vec.y/getVerticesScale()/scale)+this.origin.y)) ;
     }
 
     public float getVerticesScale(){
@@ -702,5 +699,18 @@ public abstract class OrganPart extends Actor implements Connectable {
         tumor.scale = Utils.tumorScale(this);
         this.tumors.add(tumor);
         Gdx.app.log("Tumor","tumor with scale "+tumor.scale+" added to "+this);
+    }
+
+    public boolean syncToken = false;
+    public void destroyAllSuturePoints(){
+        syncToken=true;
+        for (SuturePoint sp:
+             suturePoints) {
+            sp.getTheOtherOrganPart().deleteSuturePoint(sp.getRelatedJoint());
+            mWorld.destroyJoint(sp.getRelatedJoint());
+        }
+        suturePoints.clear();
+
+        syncToken=false;
     }
 }

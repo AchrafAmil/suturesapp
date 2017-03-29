@@ -14,6 +14,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.utils.Array;
+import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.utils.Constants;
 import com.neogineer.smallintestinedemo.utils.Utils;
@@ -68,9 +70,13 @@ public abstract class Tool extends InputAdapter implements GestureDetector.Gestu
             if(hitBody!=null)
                 Gdx.app.log("extractHitBody", "Hit: "+hitBody.getUserData().getClass().getSimpleName()
                         +( (com.neogineer.smallintestinedemo.organs.OrganPart) hitBody.getUserData() ).getIdentifier()
-                        + ((hitBody.getUserData() instanceof com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart)?
-                        ( (com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart) hitBody.getUserData() ).id:"")
-                        +" at "+((com.neogineer.smallintestinedemo.organs.OrganPart)hitBody.getUserData()).body.getLocalPoint(new Vector2(testPoint.x, testPoint.y)));
+                        + ((hitBody.getUserData() instanceof RopeOrganPart)?
+                        ( (RopeOrganPart) hitBody.getUserData() ).id:"")
+                        +" at "+((OrganPart)hitBody.getUserData()).body.getLocalPoint(new Vector2(testPoint.x, testPoint.y))
+                        +" equivalent to json coordinates: "
+                        +((OrganPart)hitBody.getUserData()).jsonCoordinatesFromVertex(
+                        ((OrganPart)hitBody.getUserData()).body.getLocalPoint(new Vector2(testPoint.x, testPoint.y))
+                ).toString());
         }
     }
 

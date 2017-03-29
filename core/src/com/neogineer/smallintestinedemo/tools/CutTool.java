@@ -11,6 +11,7 @@ import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConne
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,14 +33,23 @@ public class CutTool extends Tool {
         if(hitBody!=null){
             OrganPart op = (OrganPart) hitBody.getUserData();
             if( op instanceof AbdominalConnectorOrganPart){
-                //for(SuturePoint suturePoint : op.getSuturePoints())
-                if(op.getSuturePoints().size()!=0)
-                    this.destroySuturePoint(op.getSuturePoints().get(0), op);
-                Organ organ = op.organCallback;
-                organ.organParts.values().remove(op);
-                organ.removeActor(op);
-                op.destroy();
-                return true;
+                op.destroyAllSuturePoints();
+                op.body.setTransform(1000,1000,0);
+                return true;/*
+                ArrayList<SuturePoint> sps = op.getSuturePoints();
+                int size = sps.size();
+                for(int i=0; i<sps.size(); i++){
+                    this.destroySuturePoint(sps.get(i), op);
+                }
+                op.body.setTransform(1000,1000,0);
+//                for(int i=0; i<op.getSuturePoints().size();i++){
+//                    this.destroySuturePoint(op.getSuturePoints().get(i), op);
+//                }
+//                Organ organ = op.organCallback;
+//                organ.organParts.values().remove(op);
+//                organ.removeActor(op);
+//                op.destroy();
+                return true;*/
             }
             SuturePoint sp = getConcernedSuturePoint();
             if(sp==null)

@@ -15,6 +15,7 @@ import com.neogineer.smallintestinedemo.organs.OrgansHolder;
 import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnectorOrganPart;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganPart;
 import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
+import com.neogineer.smallintestinedemo.organs.pancreas.PancreasOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
@@ -271,6 +272,7 @@ public class ConnectTool extends Tool {
                     .setVisible(visible)
                     .setRelatedJoint(joint)
                     .setBackgrounded((organA instanceof AbdominalWallOrganPart) || (organB instanceof AbdominalWallOrganPart))
+                    .setBackgrounded(organA instanceof PancreasOrganPart || organB instanceof PancreasOrganPart)
                     .setRotation(visibleOrg.getRotation());
             visibleOrg.addSuturePoint(visibleSp);
 
