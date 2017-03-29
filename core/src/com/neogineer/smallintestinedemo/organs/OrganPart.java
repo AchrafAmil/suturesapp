@@ -160,6 +160,8 @@ public abstract class OrganPart extends Actor implements Connectable {
                 || (this instanceof BileDuctOrganPart && identifier.equals("5"))
                 || (this instanceof AbdominalConnectorOrganPart && identifier.equals("4"))
                 || (this instanceof AbdominalConnectorOrganPart && identifier.equals("5"))
+                || (this instanceof AbdominalConnectorOrganPart && identifier.equals("7"))
+                || (this instanceof AbdominalConnectorOrganPart && identifier.equals("8"))
 
                 )
             return BodyDef.BodyType.KinematicBody;

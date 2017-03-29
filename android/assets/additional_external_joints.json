@@ -1,0 +1,26 @@
+{"joints": [
+	{"organA":"AbdominalConnector", "organPartA":"7", "anchorAx":0.99, "anchorAy":0.01, "organB":"Colon", "organPartB":"120", "anchorBx":1.0001, "anchorBy":0.1},
+	{"organA":"AbdominalConnector", "organPartA":"8", "anchorAx":0.01, "anchorAy":0.01, "organB":"Colon", "organPartB":"53", "anchorBx":1.0001, "anchorBy":0.1},
+	
+	{"organA":"AbdominalConnector", "organPartA":"1", "anchorAx":0.03, "anchorAy":0.03, "organB":"Spleen", "organPartB":"1", "anchorBx":0.9812501668930054, "anchorBy":0.9337502717971802},
+	{"organA":"AbdominalConnector", "organPartA":"1", "anchorAx":0.98, "anchorAy":0.1, "organB":"AbdominalWall", "organPartB":"1", "anchorBx":0.9871876835823059, "anchorBy":1.1689376621246338},
+
+	{"organA":"AbdominalConnector", "organPartA":"2", "anchorAx":0.001, "anchorAy":0.02, "organB":"Stomach", "organPartB":"6", "anchorBx":0.98, "anchorBy":0.25},
+	{"organA":"AbdominalConnector", "organPartA":"2", "anchorAx":0.92, "anchorAy":0.02, "organB":"Spleen", "organPartB":"1", "anchorBx":0.2857142984867096, "anchorBy":0.843537449836731},
+
+	{"organA":"AbdominalConnector", "organPartA":"3", "anchorAx":0.9939971566200256, "anchorAy":2.039374828338623, "organB":"Spleen", "organPartB":"1", "anchorBx":0.2857142984867096, "anchorBy":0.843537449836731},
+	{"organA":"AbdominalConnector", "organPartA":"3", "anchorAx":0.04, "anchorAy":0.07, "organB":"Pancreas", "organPartB":"2", "anchorBx":0.97322834, "anchorBy":0.41017342},
+
+
+	{"organA":"AbdominalConnector", "organPartA":"4", "anchorAx":0.21757633984088898, "anchorAy":0.09927976876497269, "organB":"Liver", "organPartB":"8", "anchorBx":0.43438403, "anchorBy":0.50505203},
+
+
+	{"organA":"AbdominalConnector", "organPartA":"5", "anchorAx":0.9424250721931458, "anchorAy":0.06367365270853043, "organB":"Liver", "organPartB":"1", "anchorBx":0.16777289, "anchorBy":1.0891408},
+
+
+	{"organA":"AbdominalConnector", "organPartA":"6", "anchorAx":0.711496889591217, "anchorAy":3.3964202404022217, "organB":"Liver", "organPartB":"6", "anchorBx":0.33954063, "anchorBy":0.16309476},
+	{"organA":"AbdominalConnector", "organPartA":"6", "anchorAx":0.27210280299186707, "anchorAy":0.03278422728180885, "organB":"Gallbladder", "organPartB":"1", "anchorBx":0.0965668, "anchorBy":0.5323082},
+
+
+ ]
+}
