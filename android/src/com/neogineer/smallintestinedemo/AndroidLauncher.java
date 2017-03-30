@@ -3,6 +3,10 @@ package com.neogineer.smallintestinedemo;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.widget.Toast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -10,11 +14,12 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.neogineer.smallintestinedemo.utils.NativePlatform;
 
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
-public class AndroidLauncher extends AndroidApplication implements com.neogineer.smallintestinedemo.utils.NativePlatform {
+public class AndroidLauncher extends AndroidApplication implements NativePlatform {
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -28,6 +33,15 @@ public class AndroidLauncher extends AndroidApplication implements com.neogineer
 		Pixmap pixmap = getScreenshot(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		OutputStream stream = fileHandle.write(false);
 		savePNG(pixmapToIntArray(pixmap), Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), stream);
+	}
+
+	@Override
+	public void showMessage(final String msg) {
+		this.runOnUiThread(new Runnable() {
+			public void run() {
+				Toast.makeText(AndroidLauncher.this, msg, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 
 	public Pixmap getScreenshot(int x, int y, int w, int h, boolean flipY ) {

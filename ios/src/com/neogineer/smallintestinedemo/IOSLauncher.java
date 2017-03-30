@@ -25,4 +25,9 @@ public class IOSLauncher extends IOSApplication.Delegate implements NativePlatfo
     public void saveScreenshot(FileHandle fileHandle) {
 
     }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
 }

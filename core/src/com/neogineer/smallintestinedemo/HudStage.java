@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.neogineer.smallintestinedemo.tools.Tool;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -23,6 +22,8 @@ public class HudStage extends Stage {
 
     public final SettingTool callback;
     private final HashMap<String,ImageButton> buttons = new HashMap<>();
+
+    private Tool.Tools selectedTool = Tool.Tools.Move;
 
     public HudStage(final SettingTool callback){
         this.callback = callback;
@@ -36,7 +37,7 @@ public class HudStage extends Stage {
     }
 
     private void setupButtons() {
-        ImageButton cutButton = createButton("cutButton.png");
+        final ImageButton cutButton = createButton("cutButton.png","cutButtonDown.png");
         cutButton.setPosition(buttonPosition(1).x, buttonPosition(1).y);
         addActor(cutButton);
         cutButton.addListener(new ClickListener(){
@@ -44,12 +45,12 @@ public class HudStage extends Stage {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
-                callback.setTool(Tool.Tools.Cut);
+                HudStage.this.clicked(cutButton, Tool.Tools.Cut);
             }
         });
         this.buttons.put("cutButton",cutButton);
 
-        ImageButton closeButton = createButton("closeButton.png");
+        final ImageButton closeButton = createButton("closeButton.png","closeButtonDown.png");
         closeButton.setPosition(buttonPosition(2).x, buttonPosition(2).y);
         addActor(closeButton);
         closeButton.addListener(new ClickListener(){
@@ -57,12 +58,12 @@ public class HudStage extends Stage {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
-                callback.setTool(Tool.Tools.Close);
+                HudStage.this.clicked(closeButton, Tool.Tools.Close);
             }
         });
         this.buttons.put("closeButton",closeButton);
 
-        ImageButton connectButton = createButton("connectButton.png");
+        final ImageButton connectButton = createButton("connectButton.png","connectButtonDown.png");
         connectButton.setPosition(buttonPosition(3).x, buttonPosition(3).y);
         addActor(connectButton);
         connectButton.addListener(new ClickListener(){
@@ -70,25 +71,12 @@ public class HudStage extends Stage {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
-                callback.setTool(Tool.Tools.Connect);
+                HudStage.this.clicked(connectButton, Tool.Tools.Connect);
             }
         });
         this.buttons.put("connectButton",connectButton);
 
-        ImageButton moveButton = createButton("moveButton.png");
-        moveButton.setPosition(buttonPosition(4).x, buttonPosition(4).y);
-        addActor(moveButton);
-        moveButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
-                super.clicked(event, x, y);
-                callback.setTool(Tool.Tools.Move);
-            }
-        });
-        this.buttons.put("moveButton",moveButton);
-
-        ImageButton tumorButton = createButton("tumorButton.png");
+        final ImageButton tumorButton = createButton("tumorButton.png","tumorButtonDown.png");
         tumorButton.setPosition(buttonPosition(5).x, buttonPosition(5).y);
         addActor(tumorButton);
         tumorButton.addListener(new ClickListener(){
@@ -96,12 +84,12 @@ public class HudStage extends Stage {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
-                callback.setTool(Tool.Tools.Tumor);
+                HudStage.this.clicked(tumorButton, Tool.Tools.Tumor);
             }
         });
         this.buttons.put("tumorButton",tumorButton);
 
-        ImageButton screenshotButton = createButton("screenshotButton.png");
+        final ImageButton screenshotButton = createButton("screenshotButton.png","screenshotButtonDown.png");
         screenshotButton.setPosition(buttonPosition(6).x, buttonPosition(6).y);
         addActor(screenshotButton);
         screenshotButton.addListener(new ClickListener(){
@@ -109,7 +97,9 @@ public class HudStage extends Stage {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
-                setVisible(false);
+                ((SmallIntestineDemoGame) Gdx.app.getApplicationListener()).nativePlatform.showMessage("-Sutures Annotations- \n    ...coming soon");
+                screenshotButton.setChecked(false);
+                /*setVisible(false);
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -121,26 +111,27 @@ public class HudStage extends Stage {
                     public void run() {
                         setVisible(true);
                     }
-                },0.5f);
+                },0.5f);*/
             }
         });
         this.buttons.put("screenshotButton",screenshotButton);
 
-        ImageButton trashButton = createButton("trashButton.png");
-        trashButton.setPosition(buttonPosition(7).x, buttonPosition(7).y);
+        final ImageButton trashButton = createButton("trashButton.png","trashButtonDown.png");
+        trashButton.setPosition(buttonPosition(4).x, buttonPosition(4).y);
         addActor(trashButton);
         trashButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
-                callback.setTool(Tool.Tools.Trash);
+                HudStage.this.clicked(trashButton, Tool.Tools.Trash);
+
             }
         });
         this.buttons.put("trashButton",trashButton);
 
 
-        ImageButton pathologyButton = createButton("pathologyButton.png");
+        final ImageButton pathologyButton = createButton("pathologyButton.png","pathologyButtonDown.png");
         pathologyButton.setPosition(buttonPosition(8).x, buttonPosition(8).y);
         addActor(pathologyButton);
         pathologyButton.addListener(new ClickListener(){
@@ -149,11 +140,13 @@ public class HudStage extends Stage {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("BUTTON", "oh clicked! x"+x+"  y:"+y);
                 super.clicked(event, x, y);
-                if(isOnPathologyBox)
+                ((SmallIntestineDemoGame) Gdx.app.getApplicationListener()).nativePlatform.showMessage("-External View- \n ...coming soon");
+                pathologyButton.setChecked(false);
+                /*if(isOnPathologyBox)
                     callback.showWorkspace();
                 else
                     callback.showPathology();
-                isOnPathologyBox= !isOnPathologyBox;
+                isOnPathologyBox= !isOnPathologyBox;*/
             }
         });
         this.buttons.put("pathologyButton",pathologyButton);
@@ -185,11 +178,15 @@ public class HudStage extends Stage {
         return false;
     }
 
-    private static ImageButton createButton(String path){
-        Texture myTexture = new Texture(Gdx.files.internal(path));
-        TextureRegion myTextureRegion = new TextureRegion(myTexture);
-        TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-        ImageButton button = new ImageButton(myTexRegionDrawable);
+    private static ImageButton createButton(String pathUp, String pathDown){
+        Texture texUp = new Texture(Gdx.files.internal(pathUp));
+        TextureRegion texRegUp = new TextureRegion(texUp);
+        TextureRegionDrawable rexRegDrawUp = new TextureRegionDrawable(texRegUp);
+
+        Texture texDown = new Texture(Gdx.files.internal(pathDown));
+        TextureRegion texRegDown = new TextureRegion(texDown);
+        TextureRegionDrawable rexRegDrawDown = new TextureRegionDrawable(texRegDown);
+        ImageButton button = new ImageButton(rexRegDrawUp, rexRegDrawDown, rexRegDrawDown);
         button.setSize(getButtonSize().x, getButtonSize().y);
         return button;
     }
@@ -198,12 +195,12 @@ public class HudStage extends Stage {
 
     /**
      * screen buttons id:
-     * 8.7.....6
+     * 8.7........6
      * .
      * .
      * .
      * .
-     * 1.2.3.4.5
+     * 1.2.3....4.5
      *
      * @param id
      * @return
@@ -220,12 +217,17 @@ public class HudStage extends Stage {
             case 1:
             case 2:
             case 3:
-            case 4:
-            case 5:
                 x = (int) (marge*(id)+getButtonSize().x*(id-1));
                 break;
+            case 4:
+                x = (int) (marge*(id)+getButtonSize().x*(5));
+                break;
+            case 5:
+                x = (int) (marge*(id)+getButtonSize().x*(6));
+                break;
+
             case 6:
-                x = (int) (marge*4+getButtonSize().x*4);
+                x = (int) (marge*4+getButtonSize().x*6);
                 y = (int) (height*0.99f - getButtonSize().y);
                 break;
             case 7:
@@ -241,8 +243,30 @@ public class HudStage extends Stage {
     }
 
     public static Vector2 getButtonSize(){
-        int x = (int) (Gdx.graphics.getWidth() * 0.175f) ;
+        int x = (int) (Gdx.graphics.getWidth() * 0.12f) ;
         return tmpVec.set(x,x);
+    }
+
+    private void clicked(ImageButton button, Tool.Tools tool){
+        if(selectedTool==tool){
+            // unselecting the tool
+            callback.setTool(Tool.Tools.Move);
+            selectedTool= Tool.Tools.Move;
+        }
+        else{
+            if(selectedTool== Tool.Tools.Move){
+                //nothing selected
+                callback.setTool(tool);
+                selectedTool = tool;
+            }else{
+                for(ImageButton ib : buttons.values())
+                    ib.setChecked(false);
+                button.setChecked(true);
+                callback.setTool(tool);
+                selectedTool = tool;
+            }
+        }
+
     }
 
 }

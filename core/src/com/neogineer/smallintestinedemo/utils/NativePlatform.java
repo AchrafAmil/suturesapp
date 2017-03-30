@@ -7,4 +7,5 @@ import com.badlogic.gdx.files.FileHandle;
  */
 public interface NativePlatform {
     void saveScreenshot(FileHandle fileHandle);
+    void showMessage(String msg);
 }

@@ -13,6 +13,11 @@ public class DesktopLauncher{
 			@Override
 			public void saveScreenshot(FileHandle fileHandle) {
 			}
+
+			@Override
+			public void showMessage(String msg) {
+
+			}
 		}), config);
 
 		Gdx.app.log("screen size", ""+config.width+" "+config.height);
