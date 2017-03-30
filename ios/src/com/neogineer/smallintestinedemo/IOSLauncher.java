@@ -30,4 +30,9 @@ public class IOSLauncher extends IOSApplication.Delegate implements NativePlatfo
     public void showMessage(String msg) {
 
     }
+
+    @Override
+    public void loadingFinished() {
+
+    }
 }

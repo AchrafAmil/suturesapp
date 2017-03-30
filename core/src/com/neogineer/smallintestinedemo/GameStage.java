@@ -95,7 +95,6 @@ public class GameStage extends Stage {
 
 
 
-
     }
 
     private void setupKryo() {

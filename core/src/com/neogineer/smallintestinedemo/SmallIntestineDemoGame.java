@@ -17,7 +17,10 @@ public class SmallIntestineDemoGame extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new GameScreen());
+		//setScreen(new SplashScreen());
+		GameScreen mainScreen = new GameScreen();
+		Gdx.app.log("Game","setScreen(mainScreen)");
+		setScreen(mainScreen);
 	}
 
 	public static AssetManager getAssets() {

@@ -18,6 +18,11 @@ public class DesktopLauncher{
 			public void showMessage(String msg) {
 
 			}
+
+			@Override
+			public void loadingFinished() {
+
+			}
 		}), config);
 
 		Gdx.app.log("screen size", ""+config.width+" "+config.height);

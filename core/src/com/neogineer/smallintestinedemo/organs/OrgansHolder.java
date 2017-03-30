@@ -10,6 +10,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.neogineer.smallintestinedemo.GameStage;
+import com.neogineer.smallintestinedemo.SmallIntestineDemoGame;
 import com.neogineer.smallintestinedemo.organs.abdominalconnector.AbdominalConnector;
 import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWall;
 import com.neogineer.smallintestinedemo.organs.appendix.Appendix;
@@ -154,6 +155,7 @@ public class OrgansHolder {
                         public void run() {
                             camera.translate(Constants.CAMERA_INITIAL_TRANSLATION);
                             camera.update();
+                            ((SmallIntestineDemoGame) Gdx.app.getApplicationListener()).nativePlatform.loadingFinished();
                         }
                     });
                 } catch (InterruptedException e) {
