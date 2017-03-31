@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import com.neogineer.smallintestinedemo.organs.Organ;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
 import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.organs.SuturePointDef;
@@ -17,7 +16,6 @@ import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganP
 import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
 import com.neogineer.smallintestinedemo.organs.pancreas.PancreasOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
-import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestineOrganPart;
 import com.neogineer.smallintestinedemo.utils.Constants;
@@ -271,8 +269,8 @@ public class ConnectTool extends Tool {
             visibleSp.setLocalCoord(visibleAnc)
                     .setVisible(visible)
                     .setRelatedJoint(joint)
-                    .setBackgrounded((organA instanceof AbdominalWallOrganPart) || (organB instanceof AbdominalWallOrganPart))
-                    .setBackgrounded(organA instanceof PancreasOrganPart || organB instanceof PancreasOrganPart)
+                    .setTransparent((organA instanceof AbdominalWallOrganPart) || (organB instanceof AbdominalWallOrganPart))
+                    .setTransparent(organA instanceof PancreasOrganPart || organB instanceof PancreasOrganPart)
                     .setRotation(visibleOrg.getRotation());
             visibleOrg.addSuturePoint(visibleSp);
 

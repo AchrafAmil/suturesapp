@@ -3,7 +3,9 @@ package com.neogineer.smallintestinedemo.organs.esophagus;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.neogineer.smallintestinedemo.organs.OrganPartDefinition;
+import com.neogineer.smallintestinedemo.organs.SuturePoint;
 import com.neogineer.smallintestinedemo.utils.Constants;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
@@ -45,4 +47,22 @@ public class EsophagusOrganPart extends com.neogineer.smallintestinedemo.organs.
         return Constants.MASK_ESOPHAGUS;
     }
 
+    @Override
+    public boolean connectionIntent(Vector2 point) {
+        return true;
+    }
+
+    @Override
+    public void correctJointDef(RevoluteJointDef def) {
+        Vector2 vec = (this.body==def.bodyA)? def.localAnchorA:def.localAnchorB;
+        vec.set(pushToEdge(vec));
+    }
+
+
+    @Override
+    public boolean addSuturePoint(SuturePoint sp) {
+        if(sp.isVisible())
+            sp.setTransparent(true);
+        return super.addSuturePoint(sp);
+    }
 }

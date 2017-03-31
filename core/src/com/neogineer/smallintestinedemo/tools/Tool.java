@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.neogineer.smallintestinedemo.organs.OrganPart;
+import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.SmallIntestine;
 import com.neogineer.smallintestinedemo.utils.Constants;

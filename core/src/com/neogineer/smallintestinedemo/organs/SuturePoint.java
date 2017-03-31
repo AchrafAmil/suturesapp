@@ -111,12 +111,16 @@ public class SuturePoint {
         return this;
     }
 
-    public SuturePoint setBackgrounded(boolean backgrounded){
+    /**
+     *
+     * @param backgrounded false == white bg ; true == transparent bg.
+     */
+    public SuturePoint setTransparent(boolean backgrounded){
         if(!backgrounded)
             return this;
         Texture tx = new Texture(Gdx.files.internal("SuturePointTransparent.png"));
-        this.backgroundedSprite = new Sprite(tx);
-        this.state = State.BACKGROUNDED;
+        this.transparentSprite = new Sprite(tx);
+        this.state = State.TRANSPARENT;
         return this;
     }
 

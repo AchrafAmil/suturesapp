@@ -23,9 +23,11 @@ import com.neogineer.smallintestinedemo.organs.abdominalwall.AbdominalWallOrganP
 import com.neogineer.smallintestinedemo.organs.appendix.AppendixOrganPart;
 import com.neogineer.smallintestinedemo.organs.bileduct.BileDuctOrganPart;
 import com.neogineer.smallintestinedemo.organs.duedenum.DuodenumOrganPart;
+import com.neogineer.smallintestinedemo.organs.esophagus.Esophagus;
 import com.neogineer.smallintestinedemo.organs.esophagus.EsophagusOrganPart;
 import com.neogineer.smallintestinedemo.organs.gallbladder.Gallbladder;
 import com.neogineer.smallintestinedemo.organs.gallbladder.GallbladderOrganPart;
+import com.neogineer.smallintestinedemo.organs.pancreas.PancreasOrganPart;
 import com.neogineer.smallintestinedemo.organs.rectum.RectumOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.ColonOrganPart;
 import com.neogineer.smallintestinedemo.organs.rope.RopeOrganPart;
@@ -152,6 +154,7 @@ public abstract class OrganPart extends Actor implements Connectable {
     private BodyDef.BodyType getOganBodyType(){
         if(this instanceof AbdominalWallOrganPart
                 || this instanceof SpleenOrganPart
+                || (this instanceof EsophagusOrganPart && identifier.equals("1"))
                 || (this instanceof StomachOrganPart && identifier.equals("1"))
                 || (this instanceof DuodenumOrganPart && identifier.equals("1"))
                 || (this instanceof AppendixOrganPart && identifier.equals("2"))
@@ -176,6 +179,10 @@ public abstract class OrganPart extends Actor implements Connectable {
             return 0.02f;
         if(this instanceof EsophagusOrganPart)
             return 1.5f;
+        if(this instanceof PancreasOrganPart)
+            return 1.5f;
+        if(this instanceof BileDuctOrganPart)
+            return 1.2f;
         if(this instanceof RectumOrganPart)
             switch(identifier){
                 case "6":
