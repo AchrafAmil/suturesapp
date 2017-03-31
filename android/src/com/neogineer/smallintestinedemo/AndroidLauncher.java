@@ -47,7 +47,7 @@ public class AndroidLauncher extends AndroidApplication implements AndroidFragme
 		view = initializeForView(new SmallIntestineDemoGame(AndroidLauncher.this), config);
 
 		rl = (RelativeLayout) findViewById(R.id.splashRL);
-		ImageView splashImg = (ImageView) findViewById(R.id.splashImage);
+		RelativeLayout splashImg = (RelativeLayout) findViewById(R.id.splashImage);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		rl.addView(view, params);
 		splashImg.bringToFront();
