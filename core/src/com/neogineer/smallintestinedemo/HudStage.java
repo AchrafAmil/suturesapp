@@ -227,7 +227,7 @@ public class HudStage extends Stage {
                 break;
 
             case 6:
-                x = (int) (marge*4+getButtonSize().x*6);
+                x = (int) (marge*5+getButtonSize().x*6);
                 y = (int) (height*0.99f - getButtonSize().y);
                 break;
             case 7:
