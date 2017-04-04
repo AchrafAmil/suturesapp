@@ -1,6 +1,9 @@
 package com.neogineer.smallintestinedemo.organs.pancreas;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
@@ -29,13 +32,13 @@ public class PancreasOrganPart extends OrganPart{
 
     @Override
     protected void loadHighlightedSprite(BodyEditorLoader loader, String identifier) {
-        // TODO: 27/11/16 implement highlighting
+        Texture texture = new Texture(Gdx.files.internal( loader.getImagePath("base_highlighted"+ identifier) ));
+        highlightedBaseSprite = new Sprite(texture);
     }
-
     @Override
     public boolean setHighlighted(boolean highlighted) {
-        // TODO: 27/11/16 implement highlighting
-        return false;
+        this.highlighted = highlighted;
+        return true;
     }
 
 

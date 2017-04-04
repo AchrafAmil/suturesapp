@@ -372,21 +372,18 @@ public class OrgansHolder {
     }
 
     public void highlight(){
-        // TODO: 02/11/16 iterate over all organs.
         try {
-            stomach.highlightCutting();
-            liver.highlightCutting();
-            abdominalWall.highlightCutting();
+            for(Organ organ : allOrgans.values())
+                organ.highlightCutting();
         }catch (NullPointerException npe){
 
         }
     }
 
     public void unhighlight(){
-        // TODO: 02/11/16 iterate over all organs.
         try {
-            stomach.unhighlightCutting();
-            liver.unhighlightCutting();
+            for(Organ organ : allOrgans.values())
+                organ.unhighlightCutting();
         }catch (NullPointerException npe){
 
         }
