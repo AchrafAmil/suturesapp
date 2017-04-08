@@ -3,16 +3,8 @@ package com.neogineer.smallintestinedemo;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -24,7 +16,7 @@ import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.neogineer.smallintestinedemo.utils.NativePlatform;
+import com.suturesapp.workspace.utils.NativePlatform;
 
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
@@ -44,7 +36,7 @@ public class AndroidLauncher extends AndroidApplication implements AndroidFragme
 		setContentView(R.layout.launcher_android);
 		final AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 
-		view = initializeForView(new SmallIntestineDemoGame(AndroidLauncher.this), config);
+		view = initializeForView(new com.suturesapp.workspace.SmallIntestineDemoGame(AndroidLauncher.this), config);
 
 		rl = (RelativeLayout) findViewById(R.id.splashRL);
 		RelativeLayout splashImg = (RelativeLayout) findViewById(R.id.splashImage);
