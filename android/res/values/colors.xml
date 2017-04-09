@@ -2,4 +2,20 @@
 
     <color name="black_overlay">#66000000</color>
 
+    <color name="colorPrimary">#b18860</color>
+    <color name="colorPrimaryDark">#60385c</color>
+    <color name="colorAccent">#e9b347</color>
+    <color name="white">#e1e2e1</color>
+    <color name="transparent">#00ffffff</color>
+
+
+    <array name="pb_colors">
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorAccent</item>
+        <item>@color/colorPrimary</item>
+        <item>@color/white</item>
+        <item>@color/transparent</item>
+
+    </array>
+
 </resources>

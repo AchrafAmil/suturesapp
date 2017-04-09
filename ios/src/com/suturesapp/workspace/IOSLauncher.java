@@ -1,4 +1,4 @@
-package com.neogineer.smallintestinedemo;
+package com.suturesapp.workspace;
 
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;

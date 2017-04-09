@@ -1,4 +1,4 @@
-package com.neogineer.smallintestinedemo;
+package com.suturesapp.workspace;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

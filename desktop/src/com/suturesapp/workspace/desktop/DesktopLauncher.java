@@ -1,4 +1,4 @@
-package com.neogineer.smallintestinedemo.desktop;
+package com.suturesapp.workspace.desktop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
