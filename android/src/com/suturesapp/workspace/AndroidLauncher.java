@@ -1,8 +1,10 @@
 package com.suturesapp.workspace;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -105,6 +107,16 @@ public class AndroidLauncher extends AndroidApplication implements AndroidFragme
 		this.runOnUiThread(new Runnable() {
 			public void run() {
 				rl.removeView(findViewById(R.id.splashImage));
+				new AlertDialog.Builder(AndroidLauncher.this, R.style.AlertDialogStyle)
+						.setTitle("Disclaimer")
+						.setMessage(getString(R.string.disclaimer_text))
+						.setPositiveButton("Agree", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								// continue with delete
+							}
+						})
+						.setIcon(R.drawable.ic_launcher)
+						.show();
 			}
 		});
 	}
