@@ -4,7 +4,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.suturesapp.workspace.organs.OrganPart;
+import com.suturesapp.workspace.organs.abdominalconnector.AbdominalConnectorOrganPart;
+import com.suturesapp.workspace.organs.abdominalwall.AbdominalWallOrganPart;
 import com.suturesapp.workspace.organs.esophagus.EsophagusOrganPart;
+import com.suturesapp.workspace.organs.rectum.RectumOrganPart;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,16 +33,16 @@ public class TrashTool extends Tool {
 
 
         if(hitBody!=null){
-            if(hitBody.getUserData() instanceof com.suturesapp.workspace.organs.abdominalwall.AbdominalWallOrganPart)
+            if(hitBody.getUserData() instanceof AbdominalWallOrganPart)
                 return false;
-            ArrayList<com.suturesapp.workspace.organs.OrganPart> bloc = getOrganPartBloc((com.suturesapp.workspace.organs.OrganPart) hitBody.getUserData());
+            ArrayList<OrganPart> bloc = getOrganPartBloc((OrganPart) hitBody.getUserData());
             if(bloc==null)
                 return false;
 
             if(hasNonTrashableOrganParts(bloc))
                 return false;
 
-            for(com.suturesapp.workspace.organs.OrganPart op : bloc){
+            for(OrganPart op : bloc){
                 //op.body.setTransform(TRASH_POSITION_X+=5,TRASH_POSITION_Y+=5,0);
                 Vector2 pos = op.body.getPosition();
                 float rotation = op.body.getAngle();
@@ -56,33 +60,37 @@ public class TrashTool extends Tool {
         return false;
     }
 
-    private static boolean hasNonTrashableOrganParts(ArrayList<com.suturesapp.workspace.organs.OrganPart> bloc) {
-        for(com.suturesapp.workspace.organs.OrganPart op : bloc){
+    private static boolean hasNonTrashableOrganParts(ArrayList<OrganPart> bloc) {
+        for(OrganPart op : bloc){
             if(op instanceof EsophagusOrganPart)
                 if(op.identifier.equals("1"))
                     return true;
-            if(op instanceof com.suturesapp.workspace.organs.rectum.RectumOrganPart)
+            if(op instanceof RectumOrganPart)
                 if(op.identifier.equals("6"))
                     return true;
-            if(op instanceof com.suturesapp.workspace.organs.abdominalwall.AbdominalWallOrganPart)
+            if(op instanceof AbdominalConnectorOrganPart)
+                if(op.identifier.equals("4") || op.identifier.equals("5"))
+                    return true;
+            if(op instanceof AbdominalWallOrganPart)
                 return true;
+
         }
         return false;
     }
 
-    public ArrayList<com.suturesapp.workspace.organs.OrganPart> getOrganPartBloc(com.suturesapp.workspace.organs.OrganPart organPart){
+    public ArrayList<OrganPart> getOrganPartBloc(OrganPart organPart){
 
-        Set<com.suturesapp.workspace.organs.OrganPart> set = new HashSet<>();
+        Set<OrganPart> set = new HashSet<>();
         set.add(organPart);
 
         int size ;
 
         do {
             size = set.size();
-            Set<com.suturesapp.workspace.organs.OrganPart> tmpSet = new HashSet<>();
-            for(com.suturesapp.workspace.organs.OrganPart op : set){
+            Set<OrganPart> tmpSet = new HashSet<>();
+            for(OrganPart op : set){
                 for(com.suturesapp.workspace.organs.SuturePoint sp: op.getSuturePoints()){
-                    com.suturesapp.workspace.organs.OrganPart other = sp.getTheOtherOrganPart();
+                    OrganPart other = sp.getTheOtherOrganPart();
                     tmpSet.add(other);
                 }
             }
