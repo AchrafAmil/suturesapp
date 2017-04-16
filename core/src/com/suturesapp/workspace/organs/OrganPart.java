@@ -26,6 +26,8 @@ import com.suturesapp.workspace.organs.esophagus.EsophagusOrganPart;
 import com.suturesapp.workspace.organs.gallbladder.GallbladderOrganPart;
 import com.suturesapp.workspace.organs.pancreas.PancreasOrganPart;
 import com.suturesapp.workspace.organs.rectum.RectumOrganPart;
+import com.suturesapp.workspace.organs.spleen.SpleenOrganPart;
+import com.suturesapp.workspace.organs.stomach.StomachOrganPart;
 import com.suturesapp.workspace.utils.Constants;
 import com.suturesapp.workspace.utils.Utils;
 
@@ -143,11 +145,10 @@ public abstract class OrganPart extends Actor implements Connectable {
 
     private BodyDef.BodyType getOganBodyType(){
         if(this instanceof AbdominalWallOrganPart
-                || this instanceof com.suturesapp.workspace.organs.spleen.SpleenOrganPart
+                || this instanceof SpleenOrganPart
                 || (this instanceof EsophagusOrganPart && identifier.equals("1"))
-                || (this instanceof com.suturesapp.workspace.organs.stomach.StomachOrganPart && identifier.equals("1"))
+                || (this instanceof StomachOrganPart && identifier.equals("1"))
                 || (this instanceof DuodenumOrganPart && identifier.equals("1"))
-                || (this instanceof AppendixOrganPart && identifier.equals("2"))
                 || (this instanceof RectumOrganPart && identifier.equals("6"))
                 || (this instanceof BileDuctOrganPart && identifier.equals("4"))
                 || (this instanceof BileDuctOrganPart && identifier.equals("5"))
