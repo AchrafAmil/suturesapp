@@ -77,13 +77,13 @@ public class Constants {
     public static final float GALLBLADDER_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
     public static final float PANCREAS_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
     public static final float DUODENUM_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
-    public static final float RECTUM_TUMOR_SCALE = 0.3f*TUMOR_SCALE;
-    public static final float STOMACH_TUMOR_SCALE = 0.5f*TUMOR_SCALE;
-    public static final float COLON_TUMOR_SCALE = 0.3f*TUMOR_SCALE;
-    public static final float APPENDIX_TUMOR_SCALE = 0.15f*TUMOR_SCALE;
+    public static final float RECTUM_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
+    public static final float STOMACH_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
+    public static final float COLON_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
+    public static final float APPENDIX_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
     public static final float SMALLINTESTINE_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
-    public static final float LIVER_TUMOR_SCALE = 0.5f*TUMOR_SCALE;
-    public static final float SPLEEN_TUMOR_SCALE = 0.35f*TUMOR_SCALE;
+    public static final float LIVER_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
+    public static final float SPLEEN_TUMOR_SCALE = 0.2f*TUMOR_SCALE;
     public static final float ABDOMINALCONNECTOR_TUMOR_SCALE = 0.05f*TUMOR_SCALE;
 
 
