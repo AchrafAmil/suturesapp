@@ -184,6 +184,30 @@ public abstract class RopeOrganPart extends OrganPart implements Openable {
 
     }
 
+    public static final int BLOCKING_JOINTS_SCOPE=8;
+
+    /**
+     * Once called, all the BLOCKING_JOINTS_SCOPE*2+1 organ parts became like one part.
+     * This is done by limiting joints rotation.
+     */
+    public void lockJoints(boolean lock){
+        this.lockJoints(lock, BLOCKING_JOINTS_SCOPE, null);
+    }
+
+    private void lockJoints(boolean lock, int scope, RopeOrganPart o) {
+        if(scope>0)
+            for (SuturePoint sp : this.suturePoints) {
+                OrganPart op = sp.getTheOtherOrganPart();
+                if((op instanceof RopeOrganPart) && (op != o)){
+                    sp.lock(lock);
+                    OrganPart other = sp.getTheOtherOrganPart();
+                    if(other instanceof RopeOrganPart)
+                        ((RopeOrganPart)other).lockJoints(lock,scope-1, o);
+
+                }
+            }
+    }
+
     protected abstract float getHorizontalSuturePointPosition(Vector2 vec);
 
     @Override

@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.utils.Array;
+import com.suturesapp.workspace.organs.rope.RopeOrganPart;
 import com.suturesapp.workspace.utils.Constants;
 
 /**
@@ -103,6 +104,9 @@ public abstract class Tool extends InputAdapter implements GestureDetector.Gestu
         if (hitBody != null) {
             if(!hitBody.getType().equals(BodyDef.BodyType.DynamicBody))
                 return false;
+            //locking joints (let's make a jam here!)
+            if(hitBody.getUserData() instanceof RopeOrganPart)
+                ((RopeOrganPart)hitBody.getUserData()).lockJoints(true);
             MouseJointDef def = new MouseJointDef();
             def.bodyA = groundBody;
             def.bodyB = hitBody;
@@ -134,6 +138,9 @@ public abstract class Tool extends InputAdapter implements GestureDetector.Gestu
         if (mouseJoint != null) {
             world.destroyJoint(mouseJoint);
             mouseJoint = null;
+            // unlocking joints
+            if(hitBody.getUserData() instanceof RopeOrganPart)
+                ((RopeOrganPart)hitBody.getUserData()).lockJoints(false);
         }
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);

@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import com.suturesapp.workspace.organs.rope.RopeOrganPart;
+import com.suturesapp.workspace.organs.rope.SmallIntestine;
+import com.suturesapp.workspace.tools.ConnectTool;
 
 /**
  * Created by neogineer on 24/10/16.
@@ -56,8 +59,18 @@ public class SuturePoint {
             return (OrganPart) this.getRelatedJoint().getBodyB().getUserData();
     }
 
-
-
+    public void lock(boolean lock){
+        //only for ropes
+        if(relatedOrganPart instanceof RopeOrganPart){
+            if(lock){
+                float angle = relatedJoint.getJointAngle();
+                getRelatedJoint().setLimits(angle,angle);
+            }
+            else {
+                getRelatedJoint().setLimits(-(float) ConnectTool.SMALLINTESTINE_MAX_ANGLE, (float) ConnectTool.SMALLINTESTINE_MAX_ANGLE);
+            }
+        }
+    }
 
 
 
