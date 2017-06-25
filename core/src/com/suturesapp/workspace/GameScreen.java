@@ -13,7 +13,7 @@ import com.suturesapp.workspace.utils.Constants;
 import com.suturesapp.workspace.tools.TrashTool;
 
 /**
- * Created by neogineer on 30/08/16.
+ * TEST TEST
  */
 public class GameScreen implements Screen, SettingTool {
     private final GameStage stage;
