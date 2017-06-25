@@ -1,1 +1,1 @@
-include 'desktop', 'android', 'ios', 'core', ':peditor', ':sample', ':process-phoenix'
+include 'desktop', 'android', 'ios', 'core', ':peditor'
